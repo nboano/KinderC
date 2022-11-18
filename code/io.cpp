@@ -1,5 +1,5 @@
 #pragma once
-#include "../io.hpp"
+#include "../kinderc.hpp"
 
 	/// <summary>
 	/// Converts a string into an integer.

@@ -1,5 +1,14 @@
 #pragma once
-#include "../malloc.hpp"
+
+#define OFFSET_BASE 8192 + (unsigned long)&__heap_base
+
+#define EMPTY_CELL 0
+#define ALLOC_CELL 0x11
+#define LAST_CELL 0x12
+#define LAST_CELL_COUNT 4
+#define SPACELEN 1
+
+unsigned long memsz = 0;
 
 unsigned long checkmem(unsigned long start, unsigned long size) {
 	while ((unsigned long)start + size > Memory::GetSize())
@@ -28,11 +37,6 @@ int isendofmem(char* pt, int n) {
 	}
 	return 1;
 }
-/// <summary>
-/// Allocates a free number of bytes and returns a pointer to them.
-/// </summary>
-/// <param name="size"></param>
-/// <returns></returns>
 void* malloc(unsigned long size) {
 	char* pt = (char*)getpos(OFFSET_BASE, size + LAST_CELL_COUNT);
 	for (int i = 0; i < size; i++)
@@ -45,10 +49,6 @@ void* malloc(unsigned long size) {
 	}
 	return pt;
 }
-/// <summary>
-/// Passing a pointer, it clears the memory associated with it.
-/// </summary>
-/// <param name="ptr"></param>
 void free(void* ptr) {
 	int i = 0;
 	char* p = (char*)ptr;
@@ -83,7 +83,6 @@ unsigned long memlen(char* pt) {
 	for (s = pt; isendofmem(s, 0) == 0; s++);
 	return(s - pt);
 }
-
 void* Memory::Allocate(unsigned long size) {
 	return malloc(size);
 }

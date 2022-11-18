@@ -1,5 +1,4 @@
 #pragma once
-#include "../dobject.hpp"
 
 DynamicObject::DynamicObject() {
 	int index = (int)DynamicObject("dp")["push"]("{}") - 1;

@@ -1,5 +1,3 @@
-#include "string.hpp"
-#include "malloc.hpp"
 #include "kinderc.hpp"
 
 class HTMLElement;
