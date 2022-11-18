@@ -1,5 +1,5 @@
 #pragma once
-#include "../net.hpp"
+#include "../kinderc.hpp"
 
 string encodeURIComponent(const char* decodedURI)
 {

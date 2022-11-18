@@ -207,6 +207,14 @@
 	typedef DynamicObject object;
 
 #pragma endregion
+#pragma region JSON CLASS
+
+	class JSON {
+	public:
+		static DynamicObject Parse(string s);
+	};
+
+#pragma endregion
 #pragma region URI METHODS
 
 	string encodeURIComponent(const char* decodedURI);
@@ -294,9 +302,12 @@
 
 #pragma region SOURCE REFERRERS
 
+#include "code/string.cpp"
 #include "code/dobject.cpp"
+#include "code/json.cpp"
 #include "code/handlers.cpp"
 #include "code/io.cpp"
 #include "code/malloc.cpp"
+#include "code/net.cpp"
 
 #pragma endregion

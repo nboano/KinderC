@@ -1,5 +1,4 @@
 #pragma once
-#include "../string.hpp"
 /// <summary>
 /// Returns the length of a given string.
 /// </summary>
