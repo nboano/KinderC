@@ -23,10 +23,15 @@
 		#define ev_XMLHttpRequest(evname) void set_##evname(void(*e)(XMLHttpRequest&)) { setAttribute(#evname, getJSHandler(new EventHandler(e))); }; __declspec(property(put = set_##evname)) void(*evname)(XMLHttpRequest&);
 		#define prop(name) char* get_##name() {return getProperty(#name);}; void set_##name(const char* v) {setProperty(#name, v);}; __declspec(property(get = get_##name, put = set_##name)) char* name;
 	#else
-		#define exported {}
+		// Declares an exported function.
+		#define exported extern "C"
+		// Macro to add a listener to an event.
 		#define ev(evname) __declspec(property(put = set_##evname)) EventHandler* evname;
-		#define ev_HTMLElement(evname) void(*evname)(HTMLElement*);
+		// Macro to add a listener to an HTMLElement event.
+		#define ev_HTMLElement(evname) void(*evname)(HTMLElement&);
+		// Macro to add a listener to an XMLHttpRequest event.
 		#define ev_XMLHttpRequest(evname) void(*evname)(XMLHttpRequest&);
+		// Macro to declare a property with getter and setter.
 		#define prop(name) __declspec(property(get = get_##name, put = set_##name)) char* name;
 	#endif
 
@@ -34,16 +39,40 @@
 #pragma region MAIN
 
 	int main();
+
+	/// <summary>
+	/// Default program enter point.
+	/// </summary>
 	exported int __main() {
 		return main();
 	}
 
 #pragma endregion
 #pragma region JAVASCRIPT CLASS
-
+	/// <summary>
+	/// This class is used to run JavaScript commands.
+	/// </summary>
 	class JavaScript {
 	public:
+		/// <summary>
+		/// Makes the JavaScript interpreter evaluates the code <paramref name="fmt"/> and returns the result.
+		/// </summary>
+		/// <param name="fmt">The code to evaluate, optionally formatted using the <see cref="sprintf(const char*, ...)"/> flags.</param>
+		/// <param name="...">[OPTIONAL FORMAT FLAGS]</param>
+		/// <returns>The expression result. If you expect a result type that is not a string, use an explicit cast.</returns>
+		/// <example>
+		/// <code>
+		/// int n = (int)JavaScript::Eval("5 + 10");
+		/// char* s = JavaScript::Eval("location.href");
+		/// </code>
+		/// </example>
 		static char* Eval(const char* fmt, ...);
+		/// <summary>
+		/// Given a string pointer, returns a JS String reference.
+		/// </summary>
+		/// <param name="str"></param>
+		/// <param name="len">String length. If nothing is specified, the system will automatically calculate it.</param>
+		/// <returns>A string that references the original given string.</returns>
 		static char* GetStringFromPointer(const char* str, int len = -1);
 	};
 
@@ -51,17 +80,47 @@
 #pragma region DYNAMIC ALLOCATION METHODS
 
 	extern "C" {
+		/// <summary>
+		/// Gets the current WebAssembly memory size.
+		/// </summary>
+		/// <returns>The memory size in bytes.</returns>
 		unsigned long get_memory_size();
+		/// <summary>
+		/// Expands the memory of <paramref name="q"/> units.
+		/// </summary>
+		/// <param name="q">The number of units. One unit is 65536 bytes long.</param>
 		void memory_grow(int q);
 
 		void* memset(void* s, int c, unsigned long len);
 		void* memcpy(void* dest, const void* src, unsigned long n);
 
+		/// <summary>
+		/// Heap pointer.
+		/// </summary>
 		unsigned char __heap_base;
+		/// <summary>
+		/// End of stack data pointer.
+		/// </summary>
 		unsigned char __data_end;
 	}
 
+	/// <summary>
+	/// Given a <paramref name="size"/>, allocates memory as large as that size and returns a pointer to the allocated memory.
+	/// </summary>
+	/// <param name="size">The number of bytes to allocate.</param>
+	/// <returns>A pointer to the allocated memory.</returns>
+	/// <example>
+	/// <code>
+	/// char* myString = (char*)malloc(25);
+	/// strcpy(myString, "Hello World");
+	/// </code>
+	/// </example>
 	exported void* malloc(unsigned long size);
+	/// <summary>
+	/// Given a heap pointer (<paramref name="ptr"/>), cleans the memory associated.
+	/// </summary>
+	/// <param name="ptr">The pointer (created using <see cref="malloc(unsigned long)"/>)</param>
+	/// <returns></returns>
 	exported void free(void* ptr);
 
 	unsigned long memlen(char* pt);
@@ -145,16 +204,17 @@
 #pragma endregion
 #pragma region I/O METHODS
 
+	void alert(const char* text);
+	bool confirm(const char* text);
+	char* prompt(const char* text, const char* defaultResponse = "");
 	void print(const char* text, int len);
 	void puts(const char* text);
-
 	int atoi(char* str);
 	int htoi(const char* c);
 	int normalize(double* val);
 	char* itoa(int num, char* str, int base);
 	void ftoa_fixed(char* buffer, double value);
 	void ftoa_sci(char* buffer, double value);
-
 	int printf(const char* fmt, ...);
 	int sprintf(char* string, const char* fmt, ...);
 	int _sprintf(char* string, const char* fmt, va_list arg);
