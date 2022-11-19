@@ -297,8 +297,170 @@
 	typedef Fetch fetch;
 
 #pragma endregion
+#pragma region RAPID CSS SELECTORS ($, $$)
 
-#include "dom.cpp"
+	HTMLElement $(const char* CSS_QUERY);
+
+#pragma endregion
+#pragma region HTMLDOCUMENT CLASS
+	class HTMLBodyElement;
+
+	class HTMLDocument {
+	public:
+		HTMLDocument(const char* n);
+		HTMLDocument();
+		void Append(HTMLElement* element);
+		void Append(const char* text);
+		void operator << (const HTMLElement* res) {
+			Append((HTMLElement*)res);
+		}
+		void operator << (const char* res) {
+			Append(res);
+		}
+		HTMLElement querySelector(const char* CSS_QUERY);
+		HTMLElement getElementById(const char* ID);
+
+		#ifndef __INTELLISENSE__
+				const char* getname() { if ((int)name != -1) return (const char*)name; else return "document"; }
+		#endif
+
+		HTMLBodyElement getbody();
+		__declspec(property(get = getname)) const char* Name;
+		__declspec(property(get = getbody)) HTMLBodyElement body;
+	private:
+		char* name;
+	};
+
+	HTMLDocument document;
+
+#pragma endregion
+#pragma region HTMLELEMENT CLASS
+
+	class HTMLElement
+	{
+	public:
+		HTMLElement(const char* CSS_QUERY, HTMLDocument doc = document);
+		HTMLElement(const char* TAGNAME, const char* ID, HTMLDocument doc = document);
+		~HTMLElement();
+		void Append(const char* text);
+		void Append(HTMLElement* element);
+
+		void operator << (const HTMLElement* res) {
+			Append((HTMLElement*)res);
+		}
+		void operator << (const char* res) {
+			Append(res);
+		}
+
+		void setProperty(const char* key, const char* value);
+		char* getProperty(const char* key);
+		void setAttribute(const char* key, const char* value);
+		char* getAttribute(const char* key);
+		void setStyleProperty(const char* key, const char* value);
+		char* getStyleProperty(const char* key);
+		void addEventListener(const char* eventname, EventHandler* handler);
+	#pragma region PROPERTIES 
+			__declspec(property(get = getAttribute, put = setAttribute)) char* attributes[];
+			__declspec(property(get = getStyleProperty, put = setStyleProperty)) char* style[];
+			bool Destroyable = true;
+			/// <summary>
+			/// Sets or returns the value of the id attribute of an element
+			/// </summary>
+			/// <returns></returns>
+			prop(id);
+			prop(innerHTML);
+			prop(outerHTML);
+			prop(innerText);
+			prop(outerText);
+			prop(textContent);
+			prop(nodeName);
+			prop(nodeType);
+			prop(nodeValue);
+			prop(lang);
+			prop(title);
+			prop(tagName);
+			prop(scrollHeight);
+			prop(scrollLeft);
+			prop(scrollTop);
+			prop(scrollWidth);
+			prop(dir);
+			prop(className);
+			prop(accessKey);
+
+			ev_HTMLElement(onclick);
+			ev_HTMLElement(ondblclick);
+			ev_HTMLElement(onmousedown);
+			ev_HTMLElement(onmousemove);
+			ev_HTMLElement(onmouseout);
+			ev_HTMLElement(onmouseover);
+			ev_HTMLElement(onmouseup);
+			ev_HTMLElement(onmousewheel);
+			ev_HTMLElement(onwheel);
+	#pragma endregion
+	protected:
+		char* runFunction(const char* fname, const char* p1, const char* p2 = "null");
+		const char* getJSHandler(EventHandler* handler, bool function = false);
+		char* query;
+		bool inBody;
+		char* docname;
+	};
+
+#pragma endregion
+#pragma region HTML MEDIA ELEMENT
+
+	class HTMLMediaElement : public HTMLElement {
+	public:
+		ev(onabort);
+		ev(oncanplay);
+		ev(oncanplaythrough);
+		ev(oncuechange);
+		ev(ondurationchange);
+		ev(onemptied);
+		ev(onended);
+		ev(onerror);
+		ev(onloadeddata);
+		ev(onloadedmetadata);
+		ev(onloadstart);
+		ev(onpause);
+		ev(onplay);
+		ev(onplaying);
+		ev(onprogress);
+		ev(onratechange);
+		ev(onseeked);
+		ev(onseeking);
+		ev(onstalled);
+		ev(onsuspend);
+		ev(ontimeupdate);
+		ev(onvolumechange);
+		ev(onwaiting);
+	};
+
+#pragma endregion
+#pragma region HTML BODY
+
+	class HTMLBodyElement : public HTMLElement {
+	public:
+		HTMLBodyElement(HTMLDocument doc) : HTMLElement("body", doc) {
+
+		}
+		ev(onafterprint);
+		ev(onbeforeprint);
+		ev(onbeforeunload);
+		ev(onerror);
+		ev(onhashchange);
+		ev(onload);
+		ev(onmessage);
+		ev(onoffline);
+		ev(ononline);
+		ev(onpagehide);
+		ev(onpageshow);
+		ev(onpopstate);
+		ev(onresize);
+		ev(onstorage);
+		ev(onunload);
+	};
+
+#pragma endregion
 
 #pragma region SOURCE REFERRERS
 
@@ -309,5 +471,6 @@
 #include "code/io.cpp"
 #include "code/malloc.cpp"
 #include "code/net.cpp"
+#include "code/dom.cpp"
 
 #pragma endregion
