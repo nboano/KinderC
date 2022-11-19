@@ -16,13 +16,13 @@
 
 #pragma region KINDERC MACROS
 
-	#ifndef __INTELLISENSE__
+	//#ifndef __INTELLISENSE__
 		#define exported __attribute__((visibility("default"))) extern "C"
 		#define ev(evname) void set_##evname(EventHandler* e) { setAttribute(#evname, getJSHandler(e)); }; __declspec(property(put = set_##evname)) EventHandler* evname;
 		#define ev_HTMLElement(evname) void set_##evname(void(*e)(HTMLElement&)) { setAttribute(#evname, getJSHandler(new EventHandler(e))); }; __declspec(property(put = set_##evname)) void(*evname)(HTMLElement&);
 		#define ev_XMLHttpRequest(evname) void set_##evname(void(*e)(XMLHttpRequest&)) { setAttribute(#evname, getJSHandler(new EventHandler(e))); }; __declspec(property(put = set_##evname)) void(*evname)(XMLHttpRequest&);
 		#define prop(name) char* get_##name() {return getProperty(#name);}; void set_##name(const char* v) {setProperty(#name, v);}; __declspec(property(get = get_##name, put = set_##name)) char* name;
-	#else
+	/*#else
 		// Declares an exported function.
 		#define exported extern "C"
 		// Macro to add a listener to an event.
@@ -33,8 +33,10 @@
 		#define ev_XMLHttpRequest(evname) void(*evname)(XMLHttpRequest&);
 		// Macro to declare a property with getter and setter.
 		#define prop(name) __declspec(property(get = get_##name, put = set_##name)) char* name;
-	#endif
-
+	#endif*/
+	#ifdef __INTELLISENSE__
+	#define exported extern "C"
+	#endif // __INTELLISENSE__
 #pragma endregion
 #pragma region MAIN
 
@@ -122,13 +124,6 @@
 	/// <param name="ptr">The pointer (created using <see cref="malloc(unsigned long)"/>)</param>
 	/// <returns></returns>
 	exported void free(void* ptr);
-
-	unsigned long memlen(char* pt);
-
-	void* getpos(unsigned long start, unsigned long size);
-	unsigned long checkmem(unsigned long start, unsigned long size);
-	int isendofmem(char* pt, int n);
-
 #pragma endregion
 #pragma region MEMORY CLASS
 
@@ -301,14 +296,14 @@
 		string Text();
 		void* RAW();
 
-		#ifndef __INTELLISENSE__
+		//#ifndef __INTELLISENSE__
 				void* get_response();
 				Status get_readyState();
 				int get_statusCode();
 				int get_loaded();
 				int get_total();
 				string get_statusText();
-		#endif // __INTELLISENSE__
+		//#endif // __INTELLISENSE__
 
 		ev_XMLHttpRequest(onload);
 		ev_XMLHttpRequest(onprogress);
@@ -340,10 +335,7 @@
 		string Body;
 	} FetchOptions;
 
-	const FetchOptions Fetch_defaults = {
-		.Method = "GET",
-		.Body = "",
-	};
+	const FetchOptions Fetch_defaults = {"GET" , ""};
 
 	class Fetch {
 	public:
@@ -380,9 +372,9 @@
 		HTMLElement querySelector(const char* CSS_QUERY);
 		HTMLElement getElementById(const char* ID);
 
-		#ifndef __INTELLISENSE__
+		//#ifndef __INTELLISENSE__
 				const char* getname() { if ((int)name != -1) return (const char*)name; else return "document"; }
-		#endif
+		//#endif
 
 		HTMLBodyElement getbody();
 		__declspec(property(get = getname)) const char* Name;

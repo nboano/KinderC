@@ -32,13 +32,13 @@ env.__cxa_atexit = function () { };
 //#endregion
 
 onload = async () => {
-    var e = document.querySelector("assembly[src]");
-    if (!e) return;
+    var assemblyel = document.querySelector("assembly[src]");
+    if (!assemblyel) return;
     window.memory = new WebAssembly.Memory({
         initial: 2,
     })
     env.memory = memory;
-    var r = await WebAssembly.instantiateStreaming(fetch(e.getAttribute("src")), { env });
+    var r = await WebAssembly.instantiateStreaming(fetch(assemblyel.getAttribute("src")), { env });
     for (var e in r.instance.exports) {
         if (!window[e]) window[e] = r.instance.exports[e];
     }
