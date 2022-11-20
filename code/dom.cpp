@@ -83,11 +83,10 @@ char* HTMLElement::getStyleProperty(const char* key) {
 	sprintf(s, "style['%s']", key);
 	return getProperty(s);
 }
-void HTMLElement::addEventListener(const char* eventname, EventHandler* handler) {
+void HTMLElement::addEventListener(const char* eventname, void(*h)(HTMLElement&)) {
 	char a[32] = "";
 	sprintf(a, "\"%s\"", eventname);
-
-	runFunction("addEventListener", a, getJSHandler(handler, true));
+	runFunction("addEventListener", a, getJSHandler(new Handler(h), true));
 }
 char* HTMLElement::runFunction(const char* fname, const char* p1, const char* p2) {
 	char s[128] = "";

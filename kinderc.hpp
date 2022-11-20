@@ -31,13 +31,13 @@
 	#else
 		// Declares an exported function.
 		#define exported extern "C"
-		// Macro to add a listener to an event.
+
 		#define ev(evname) void set_##evname(); __declspec(property(put = set_##evname)) EventHandler* evname;
-		// Macro to add a listener to an HTMLElement event.
+
 		#define ev_HTMLElement(evname) void(*evname)(HTMLElement&);
-		// Macro to add a listener to an XMLHttpRequest event.
+
 		#define ev_XMLHttpRequest(evname) void(*evname)(XMLHttpRequest&);
-		// Macro to declare a property with getter and setter.
+
 		#define prop(name) 	void __set(char* val) {}; char* __get() {return 0;}; __declspec(property(get = __get, put = __set)) char* name;
 	#endif
 
@@ -696,17 +696,42 @@
 	/// @brief This class represents an HTML document.
 	class HTMLDocument {
 	public:
+
+		/// @brief Creates a pointer to a document object.
+		/// @param n The document object name.
 		HTMLDocument(const char* n);
+
+		/// @brief Creates a pointer to the current document.
 		HTMLDocument();
+
+		/// @brief Appends an HTMLElement to the document.
+		/// @param element The element to append.
 		void Append(HTMLElement* element);
+
+		/// @brief Appends a text to the document.
+		/// @param text A string literal containing a text.
 		void Append(const char* text);
-		void operator << (const HTMLElement* res) {
-			Append((HTMLElement*)res);
+
+		/// @brief Appends an HTMLElement to the document.
+		/// @param element The element to append.
+		void operator << (HTMLElement* element) {
+			Append(element);
 		}
-		void operator << (const char* res) {
-			Append(res);
+
+		/// @brief Appends a text to the document.
+		/// @param text A string literal containing a text.
+		void operator << (const char* text) {
+			Append(text);
 		}
+
+		/// @brief Performs a node selection using a CSS query.
+		/// @param CSS_QUERY The CSS query.
+		/// @return The first node associated.
 		HTMLElement querySelector(const char* CSS_QUERY);
+
+		/// @brief Select a node by the ID.
+		/// @param ID The ID to look for.
+		/// @return The node with that id, if present.
 		HTMLElement getElementById(const char* ID);
 
 		/// @deprecated Use the Name property instead.
@@ -715,72 +740,154 @@
 		/// @deprecated Use the body property instead.
 		HTMLBodyElement getbody();
 
+		/// @brief The document name.
 		__declspec(property(get = getname)) const char* Name;
+
+		/// @brief The document body element.
 		__declspec(property(get = getbody)) HTMLBodyElement body;
 	private:
 		char* name;
 	};
 
+	/// @brief The current document.
 	HTMLDocument document;
 
 #pragma endregion
 #pragma region HTMLELEMENT CLASS
 
+	/// @brief Use this class to manage DOM elements.
 	class HTMLElement
 	{
 	public:
+
+		/// @brief Given a CSS query, performs a search and makes the object point to the first mathing element.
+		/// @param CSS_QUERY A CSS query, as a string literal.
+		/// @param doc The document where the element is contained. Defaults to the current document.
 		HTMLElement(const char* CSS_QUERY, HTMLDocument doc = document);
+
+		/// @brief Creates a new element.
+		/// @param TAGNAME The new element tag name.
+		/// @param ID The new element ID.
+		/// @param doc The location where the new element will be created. Defaults to the current document.
 		HTMLElement(const char* TAGNAME, const char* ID, HTMLDocument doc = document);
+
+		/// @brief Destroys the pointer to the element
 		~HTMLElement();
-		void Append(const char* text);
+
+		/// @brief Appends an HTMLElement to the element.
+		/// @param element The element to append.
 		void Append(HTMLElement* element);
 
-		void operator << (const HTMLElement* res) {
-			Append((HTMLElement*)res);
-		}
-		void operator << (const char* res) {
-			Append(res);
+		/// @brief Appends a text to the element.
+		/// @param text A string literal containing a text.
+		void Append(const char* text);
+
+		/// @brief Appends an HTMLElement to the element.
+		/// @param element The element to append.
+		void operator << (HTMLElement* element) {
+			Append(element);
 		}
 
+		/// @brief Appends a text to the element.
+		/// @param text A string literal containing a text.
+		void operator << (const char* text) {
+			Append(text);
+		}
+
+		/// @brief Sets a property of the element.
+		/// @param key The property name.
+		/// @param value The property value.
 		void setProperty(const char* key, const char* value);
+
+		/// @brief Gets a property of the element.
+		/// @param key The property name.
+		/// @return The property value.
 		char* getProperty(const char* key);
+
+		/// @brief Sets an attribute of the element.
+		/// @param key The attribute name.
+		/// @param value The attribute value.
 		void setAttribute(const char* key, const char* value);
+
+		/// @brief Gets an attribute of the element.
+		/// @param key The attribute name.
+		/// @return The attribute value.
 		char* getAttribute(const char* key);
+
+		/// @brief Sets a CSS property of the element.
+		/// @param key The property name.
+		/// @param value The property value.
 		void setStyleProperty(const char* key, const char* value);
+
+		/// @brief Gets a CSS property of the element.
+		/// @param key The property name.
+		/// @return The property value.
 		char* getStyleProperty(const char* key);
-		void addEventListener(const char* eventname, EventHandler* handler);
+
+		/// @brief Adds an event listener to the element.
+		/// @param eventname A string containing the event name (es. "click").
+		/// @param handler An handler.
+		void addEventListener(const char* eventname, void(*handler)(HTMLElement&));
+
+
 	#pragma region PROPERTIES 
+
+			/// @brief An associative array to manage the attributes of the element.
 			__declspec(property(get = getAttribute, put = setAttribute)) char* attributes[];
+
+			/// @brief An associative array to manage the CSS properties of the element.
 			__declspec(property(get = getStyleProperty, put = setStyleProperty)) char* style[];
+
+			/// @brief Says if the element pointer must be destroyed or not when out of scope.
 			bool Destroyable = true;
 
+			// The id of the element.
 			prop(id);
+			// The HTML code contained into the element.
 			prop(innerHTML);
+			// The HTML code of the element and its content.
 			prop(outerHTML);
+			// The text contained into the element.
 			prop(innerText);
+			// The text contained into the element.
 			prop(outerText);
+			// The text content of the element.
 			prop(textContent);
+			// The tag name (XML).
 			prop(nodeName);
+			// The node type (XML).
 			prop(nodeType);
+			// The node value (XML).
 			prop(nodeValue);
+			// The lang attribute.
 			prop(lang);
+			// The title attribute. If set, provides a tooltip on hover.
 			prop(title);
+			// The tag name of the element.
 			prop(tagName);
 			prop(scrollHeight);
 			prop(scrollLeft);
 			prop(scrollTop);
 			prop(scrollWidth);
 			prop(dir);
+			// The class name of the element.
 			prop(className);
+			// Sets the access key used to access the element.
 			prop(accessKey);
 
+			/// Event fired at click.
 			ev_HTMLElement(onclick);
+			// Event fired at double click.
 			ev_HTMLElement(ondblclick);
+			// Event fired when the mouse button is pressed on the element.
 			ev_HTMLElement(onmousedown);
+			// Event fired when the mouse moves on the element.
 			ev_HTMLElement(onmousemove);
+			// Event fired when the mouse goes out of the element.
 			ev_HTMLElement(onmouseout);
 			ev_HTMLElement(onmouseover);
 			ev_HTMLElement(onmouseup);
+			// Event fired when the mouse scrolls on the element.
 			ev_HTMLElement(onmousewheel);
 			ev_HTMLElement(onwheel);
 	#pragma endregion
