@@ -201,3 +201,6 @@ String String::ToLower() {
 	strlwr(n);
 	return n;
 }
+unsigned long String::GetLength() {
+	return strlen(CharArray);
+}
