@@ -16,65 +16,53 @@
 
 #pragma region KINDERC MACROS
 
-	//#ifndef __INTELLISENSE__
+	#ifndef __INTELLISENSE__
 		#define exported __attribute__((visibility("default"))) extern "C"
 		#define ev(evname) void set_##evname(EventHandler* e) { setAttribute(#evname, getJSHandler(e)); }; __declspec(property(put = set_##evname)) EventHandler* evname;
 		#define ev_HTMLElement(evname) void set_##evname(void(*e)(HTMLElement&)) { setAttribute(#evname, getJSHandler(new EventHandler(e))); }; __declspec(property(put = set_##evname)) void(*evname)(HTMLElement&);
 		#define ev_XMLHttpRequest(evname) void set_##evname(void(*e)(XMLHttpRequest&)) { setAttribute(#evname, getJSHandler(new EventHandler(e))); }; __declspec(property(put = set_##evname)) void(*evname)(XMLHttpRequest&);
 		#define prop(name) char* get_##name() {return getProperty(#name);}; void set_##name(const char* v) {setProperty(#name, v);}; __declspec(property(get = get_##name, put = set_##name)) char* name;
-	/*#else
+	#else
 		// Declares an exported function.
 		#define exported extern "C"
 		// Macro to add a listener to an event.
-		#define ev(evname) __declspec(property(put = set_##evname)) EventHandler* evname;
+		#define ev(evname) void set_##evname(); __declspec(property(put = set_##evname)) EventHandler* evname;
 		// Macro to add a listener to an HTMLElement event.
 		#define ev_HTMLElement(evname) void(*evname)(HTMLElement&);
 		// Macro to add a listener to an XMLHttpRequest event.
 		#define ev_XMLHttpRequest(evname) void(*evname)(XMLHttpRequest&);
 		// Macro to declare a property with getter and setter.
-		#define prop(name) __declspec(property(get = get_##name, put = set_##name)) char* name;
-	#endif*/
-	#ifdef __INTELLISENSE__
-	#define exported extern "C"
-	#endif // __INTELLISENSE__
+		#define prop(name) 	void __set(char* val) {}; char* __get() {return 0;}; __declspec(property(get = __get, put = __set)) char* name;
+	#endif
+
 #pragma endregion
 #pragma region MAIN
 
 	int main();
 
-	/// <summary>
-	/// Default program enter point.
-	/// </summary>
+	/// @brief Original main function caller.
 	exported int __main() {
 		return main();
 	}
 
 #pragma endregion
 #pragma region JAVASCRIPT CLASS
-	/// <summary>
-	/// This class is used to run JavaScript commands.
-	/// </summary>
+	/// @brief This class is used to run JavaScript commands.
 	class JavaScript {
 	public:
-		/// <summary>
-		/// Makes the JavaScript interpreter evaluates the code <paramref name="fmt"/> and returns the result.
-		/// </summary>
-		/// <param name="fmt">The code to evaluate, optionally formatted using the <see cref="sprintf(const char*, ...)"/> flags.</param>
-		/// <param name="...">[OPTIONAL FORMAT FLAGS]</param>
-		/// <returns>The expression result. If you expect a result type that is not a string, use an explicit cast.</returns>
-		/// <example>
-		/// <code>
-		/// int n = (int)JavaScript::Eval("5 + 10");
-		/// char* s = JavaScript::Eval("location.href");
-		/// </code>
-		/// </example>
+
+		/// @brief Makes the JavaScript interpreter evaluates the code given and returns the result.
+		/// @param fmt The code to evaluate, optionally formatted using the sprintf flags.
+		/// @param flags [OPTIONAL FORMAT FLAGS]
+		/// @return The expression result. If you expect a result type that is not a string, use an explicit cast.
+		/// @code int n = (int)JavaScript::Eval("5 + 10");
+		/// @code char* s = JavaScript::Eval("location.href");
 		static char* Eval(const char* fmt, ...);
-		/// <summary>
-		/// Given a string pointer, returns a JS String reference.
-		/// </summary>
-		/// <param name="str"></param>
-		/// <param name="len">String length. If nothing is specified, the system will automatically calculate it.</param>
-		/// <returns>A string that references the original given string.</returns>
+
+		/// @brief Given a string pointer, returns a JS String reference.
+		/// @param str String to reference.
+		/// @param len String length. If nothing is specified, the system will automatically calculate it.
+		/// @return A string that references the original given string.
 		static char* GetStringFromPointer(const char* str, int len = -1);
 	};
 
