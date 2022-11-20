@@ -16,6 +16,12 @@
 
 #pragma region KINDERC MACROS
 
+	// Declares an imported function.
+	#define imported extern "C"
+
+	// Declares a variable with automatic typisation.
+	#define var auto
+
 	#ifndef __INTELLISENSE__
 		#define exported __attribute__((visibility("default"))) extern "C"
 		#define ev(evname) void set_##evname(EventHandler* e) { setAttribute(#evname, getJSHandler(e)); }; __declspec(property(put = set_##evname)) EventHandler* evname;
@@ -35,12 +41,11 @@
 		#define prop(name) 	void __set(char* val) {}; char* __get() {return 0;}; __declspec(property(get = __get, put = __set)) char* name;
 	#endif
 
-	// Declares an imported function.
-	#define imported extern "C"
-
 #pragma endregion
 #pragma region MAIN
 
+	/// @brief The program entering point.
+	/// @return Eventually, a status code.
 	int main();
 
 	/// @brief Original main function caller.
@@ -293,7 +298,8 @@
 		__declspec(property(get = GetLength)) unsigned long Length;
 	};
 
-	typedef String string;
+	// Represents a string allocated in the heap memory.
+	#define string String
 
 #pragma endregion
 #pragma region CONSOLE CLASS
@@ -324,19 +330,65 @@
 #pragma endregion
 #pragma region I/O METHODS
 
+	/// @brief Displays an alert message. The code is blocked until the user clicks OK.
+	/// @param text The message text.
 	void alert(const char* text);
+
+	/// @brief Asks the user for a confirm (Yes / No, OK / Cancel). The code is blocked until the user closes the confirm box.
+	/// @param text The message text.
+	/// @return true if the user answered yes, false otherwise.
 	bool confirm(const char* text);
+
+	/// @brief Asks the user for a text input. The code is blocked until the user closes the input box.
+	/// @param text The message text.
+	/// @param defaultResponse A default response.
+	/// @return The response gave by the user.
 	char* prompt(const char* text, const char* defaultResponse = "");
+
+	/// @brief Prints a string to the webpage.
+	/// @param text The string to print.
+	/// @param len The string length.
 	void print(const char* text, int len);
+
+	/// @brief Prints a string to the webpage.
+	/// @param text The string to print.
 	void puts(const char* text);
+
+	/// @brief Converts a string into an integer (Base 10). NOTE: If the string is not an integer, an undefined behaviour will occur.
+	/// @param str The string to convert (Base 10).
+	/// @return The integer result.
 	int atoi(char* str);
+
+	/// @brief Converts a string into an integer (Base 16). NOTE: If the string is not an integer, an undefined behaviour will occur.
+	/// @param c The string to convert (Base 16).
+	/// @return The integer result.
 	int htoi(const char* c);
-	int normalize(double* val);
+
+	/// @brief Converts an integer into a string of a given base.
+	/// @param num The number to convert.
+	/// @param str The string buffer. Make sure that is long enough.
+	/// @param base The number base.
+	/// @return A pointer to the string buffer.
 	char* itoa(int num, char* str, int base);
-	void ftoa_fixed(char* buffer, double value);
-	void ftoa_sci(char* buffer, double value);
+
+	/// @brief Writes a formatted string into the webpage.
+	/// @param fmt The base string. You can use flags like %s, %i, %d, %c...
+	/// @param [P] Optional formatter params.
+	/// @return The written string length.
 	int printf(const char* fmt, ...);
+
+	/// @brief Writes a formatted string into another string.
+	/// @param string The string buffer. Make sure that is long enough.
+	/// @param fmt The base string. You can use flags like %s, %i, %d, %c...
+	/// @param [P] Optional formatter params.
+	/// @return The string length.
 	int sprintf(char* string, const char* fmt, ...);
+
+	/// @brief Custom sprintf with variable list arguments.
+	/// @param string The string buffer.
+	/// @param fmt The base string.
+	/// @param arg Argument list <stdarg.h>.
+	/// @return The string length.
 	int _sprintf(char* string, const char* fmt, va_list arg);
 
 #pragma endregion
@@ -344,39 +396,94 @@
 	class HTMLElement;
 	class XMLHttpRequest;
 
+	/// @brief Use this class to handle events and so on.
 	class Handler {
 	public:
+
+		/// @brief Creates an handler given a JS or exported function name.
+		/// @param fnname The function name, as a string literal.
 		Handler(const char* fnname);
+
+		/// @brief Creates an handler given a generic function pointer.
+		/// @param handler The handler.
 		Handler(void(*handler)(void*));
+
+		/// @brief Creates an handler for an HTMLElement event.
+		/// @param handler The handler.
 		Handler(void(*handler)(HTMLElement&));
+
+		/// @brief Creates an handler for an XMLHttpRequest header.
+		/// @param handler The handler.
 		Handler(void(*handler)(XMLHttpRequest&));
+
+		/// @brief Gets the JavaScript code that calls the handler, passing a pointer.
+		/// @param ptr The pointer to pass as parameter.
+		/// @param function Specifies if you want a function [ ()=>...() ] or not [ ...() ]
+		/// @return A JavaScript code.
 		string GetWithPointer(void* ptr, bool function = false);
+
+		/// @brief The handler function name.
 		string HandlerFunctionName;
 	private:
 		int LambdaIndex;
 	};
+
 	typedef Handler EventHandler;
 
 #pragma endregion
 #pragma region DYNAMICOBJECT CLASS
 
+	/// @brief This class handles JavaScript objects.
 	class DynamicObject {
 	public:
-		DynamicObject();
-		DynamicObject(const char* objname, bool forceToString = true);
 
+		/// @brief Creates a new, empty object.
+		DynamicObject();
+
+		/// @brief Points to an existing object.
+		/// @param objname The object name.
+		DynamicObject(const char* objname);
+
+		/// @brief Accesses a field of the object.
+		/// @param key The field name.
+		/// @return Another object pointing to the field.
 		DynamicObject operator[] (const char* key);
+
+		/// @brief Accesses an array element.
+		/// @param key The element index.
+		/// @return Another object pointing to the array element.
 		DynamicObject operator[] (int key);
+
+		/// @brief Sets the object value to a string literal.
+		/// @param value A string literal, a char array, or a string.
 		void operator = (const char* value);
 
+		/// @brief Calls the object as a function.
+		/// @return The response. If it's not a string, use an explicit cast.
 		char* operator () ();
+
+		/// @brief Calls the object as a function.
+		/// @return The response. If it's not a string, use an explicit cast.
 		char* operator () (const char* p1, const char* p2, const char* p3);
+
+		/// @brief Calls the object as a function.
+		/// @return The response. If it's not a string, use an explicit cast.
 		char* operator () (const char* p1, const char* p2);
+
+		/// @brief Calls the object as a function.
+		/// @return The response. If it's not a string, use an explicit cast.
 		char* operator () (const char* p1);
 
+		/// @brief Converts the object to a char array.
 		operator char* ();
+
+		/// @brief Converts the object to a string.
 		operator string();
+
+		/// @brief Convert the object to an integer.
 		operator int();
+
+		/// @brief Converts the object to a boolean.
 		operator bool();
 	private:
 		const char* toString = ".toString()";
@@ -384,62 +491,142 @@
 		char* getValue();
 		void setValue(const char* value);
 	};
-	typedef DynamicObject object;
+	
+	// Represents a JavaScript object.
+	#define object DynamicObject
 
 #pragma endregion
 #pragma region JSON CLASS
 
+	/// @brief Use this class to handle JSON strings.
 	class JSON {
 	public:
-		static DynamicObject Parse(string s);
+
+		/// @brief Parses a JSON string into an object.
+		/// @param s A valid JSON string.
+		/// @return An object pointer.
+		/// @exception JSONNotValid
+		static object Parse(string s);
 	};
 
 #pragma endregion
 #pragma region URI METHODS
 
+	/// @brief Given a clear URI, encodes it.
+	/// @param decodedURI A clear URI.
+	/// @return An encoded URI.
 	string encodeURIComponent(const char* decodedURI);
+
+	/// @brief Given an encoded URI, decodes it.
+	/// @param encodedURI An encoded URI.
+	/// @return A clear URI.
 	string decodeURIComponent(const char* encodedURI);
 
 #pragma endregion
 #pragma region NETREQUEST CLASS
 
+	/// @brief Use this class to handle Network Requests
 	class XMLHttpRequest {
 	public:
-		enum Status { UNSENT, OPENED, HEADERS_RECEIVED, LOADING, DONE };
 
+		/// @brief Enumeration that represents the XHR different status.
+		enum Status {
+			// The request has not yet been opened nor sent. 
+			UNSENT,
+			// The request has been opened. 
+			OPENED, 
+			// The response headers are received and visible.
+			HEADERS_RECEIVED, 
+			// The request is loading body data.
+			LOADING, 
+			// The request has completed successfully.
+			DONE 
+		};
+
+		/// @brief Creates a new request.
 		XMLHttpRequest();
+
 		XMLHttpRequest(int i);
+
+		/// @brief Destroys a request.
 		~XMLHttpRequest();
 
+		/// @brief Opens the communication channel.
+		/// @param method A string literal containing the method (GET, POST, ...).
+		/// @param url A string literal containing the URL to connect to.
+		/// @param async A boolean. If it's true, the request will be async, otherwise it will be sync. In the second case the main thread will be blocked until the request finishes. 
 		void open(const char* method, const char* url, const bool async = true);
+		
+		/// @brief Sends the request.
 		void send();
+
+		/// @brief Sends the request with a body (not available in GET).
+		/// @param body The body text.
 		void send(const char* body);
+
+		/// @brief Sets an header of the request.
+		/// @param headername The header key name.
+		/// @param headervalue The header value.
 		void setRequestHeader(const char* headername, const char* headervalue);
+
+		/// @brief Retreives a response header value.
+		/// @param headername The response header name.
+		/// @return The value, if available.
 		string getResponseHeader(const char* headername);
 
+		/// @brief Parses the response into an object, if possible.
+		/// @return An object pointer.
 		object JSON();
+
+		/// @brief Gets the response text.
+		/// @return A string containing the response text.
 		string Text();
+
+		/// @brief Gets the raw response.
+		/// @return A generic pointer to the response.
 		void* RAW();
 
-		//#ifndef __INTELLISENSE__
-				void* get_response();
-				Status get_readyState();
-				int get_statusCode();
-				int get_loaded();
-				int get_total();
-				string get_statusText();
-		//#endif // __INTELLISENSE__
+		/// @deprecated Use the response property instead.
+		void* get_response();
+		/// @deprecated Use the readyState property instead.
+		Status get_readyState();
+		/// @deprecated Use the status property instead.
+		int get_statusCode();
+		/// @deprecated Use the loaded property instead.
+		int get_loaded();
+		/// @deprecated Use the total property instead.
+		int get_total();
+		/// @deprecated Use the statusText property instead.
+		string get_statusText();
 
+		// This event is triggered at the end of the request.
 		ev_XMLHttpRequest(onload);
+
+		// This event is triggered regularly when the data arrives.
 		ev_XMLHttpRequest(onprogress);
+
+		// This event is triggered when the readyState changes.
 		ev_XMLHttpRequest(onreadystatechange);
+
+		// This event is triggered in case of a network error
 		ev_XMLHttpRequest(onerror);
 
+		/// @brief Raw response pointer.
 		__declspec(property(get = get_response)) void* response;
+
+		/// @brief The ready state of the request.
 		__declspec(property(get = get_readyState)) Status readyState;
+
+		/// @brief The HTTP status code (es. 200)
 		__declspec(property(get = get_statusCode)) int status;
+
+		/// @brief The number of bytes loaded.
 		__declspec(property(get = get_loaded)) int loaded;
+
+		/// @brief The total number of bytes incoming.
 		__declspec(property(get = get_total)) int total;
+
+		/// @brief The HTTP status text (es. OK)
 		__declspec(property(get = get_statusText)) string statusText;
 
 	private:
@@ -455,18 +642,38 @@
 #pragma endregion
 #pragma region FETCH
 
+	/// @brief This struct incapsulates all the possible fetch options.
 	typedef struct s_FetchOptions {
+
+		/// @brief The request method (GET, POST, ...)
 		string Method;
+
+		/// @brief The request body (not available in GET)
 		string Body;
+
 	} FetchOptions;
 
+	/// @brief Default fetch options (GET request with empty body)
 	const FetchOptions Fetch_defaults = {"GET" , ""};
 
+	/// @brief Use the fetch API to perform async network requests.
 	class Fetch {
 	public:
+
+		/// @brief Makes a network request.
+		/// @param _url The request URL.
+		/// @param _options The request options. Defaults to GET with empty body.
 		Fetch(string _url, FetchOptions _options = Fetch_defaults);
+
+		/// @brief Specifies an handler for when the request has completed.
+		/// @param handler The handler.
 		Fetch then(void(*)(Request&));
+
+		/// @brief Specifies an handler for when a network error occurs
+		/// @param handler The handler.
+		/// @return 
 		Fetch error(void(*)(Request&));
+
 	private:
 		Request r;
 	};
@@ -476,12 +683,17 @@
 #pragma endregion
 #pragma region RAPID CSS SELECTORS ($, $$)
 
+	/// @brief Given a CSS query, returns the first HTMLElement that matches it.
+	/// @param CSS_QUERY A valid CSS query.
+	/// @return A corresponding HTMLElement.
 	HTMLElement $(const char* CSS_QUERY);
 
 #pragma endregion
 #pragma region HTMLDOCUMENT CLASS
+
 	class HTMLBodyElement;
 
+	/// @brief This class represents an HTML document.
 	class HTMLDocument {
 	public:
 		HTMLDocument(const char* n);
@@ -497,11 +709,12 @@
 		HTMLElement querySelector(const char* CSS_QUERY);
 		HTMLElement getElementById(const char* ID);
 
-		//#ifndef __INTELLISENSE__
-				const char* getname() { if ((int)name != -1) return (const char*)name; else return "document"; }
-		//#endif
+		/// @deprecated Use the Name property instead.
+		const char* getname() { if ((int)name != -1) return (const char*)name; else return "document"; }
 
+		/// @deprecated Use the body property instead.
 		HTMLBodyElement getbody();
+
 		__declspec(property(get = getname)) const char* Name;
 		__declspec(property(get = getbody)) HTMLBodyElement body;
 	private:
@@ -540,10 +753,7 @@
 			__declspec(property(get = getAttribute, put = setAttribute)) char* attributes[];
 			__declspec(property(get = getStyleProperty, put = setStyleProperty)) char* style[];
 			bool Destroyable = true;
-			/// <summary>
-			/// Sets or returns the value of the id attribute of an element
-			/// </summary>
-			/// <returns></returns>
+
 			prop(id);
 			prop(innerHTML);
 			prop(outerHTML);

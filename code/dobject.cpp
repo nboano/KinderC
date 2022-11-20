@@ -5,7 +5,7 @@ DynamicObject::DynamicObject() {
 	string lol = String::Format("dp[%i]", index);
 	s.Copy(lol);
 }
-DynamicObject::DynamicObject(const char* objname, bool forceToString) {
+DynamicObject::DynamicObject(const char* objname) {
 	s = objname;
 }
 DynamicObject DynamicObject::operator[] (const char* key) {
