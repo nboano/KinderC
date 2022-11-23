@@ -114,6 +114,9 @@ const char* HTMLElement::getJSHandler(EventHandler* handler, bool function) {
 HTMLElement HTMLDocument::querySelector(const char* CSS_QUERY) {
 	return HTMLElement(CSS_QUERY, *this);
 };
+HTMLElementCollection HTMLDocument::querySelectorAll(const char* CSS_QUERY) {
+	return HTMLElementCollection(CSS_QUERY, *this);
+}
 HTMLElement HTMLDocument::getElementById(const char* ID) {
 	char b[64] = "";
 	sprintf(b, "#%s", ID);
@@ -130,7 +133,29 @@ void HTMLDocument::Append(const char* text) {
 HTMLBodyElement HTMLDocument::getbody() {
 	return HTMLBodyElement(*this);
 }
-
+int HTMLElementCollection::get_length() {
+	return len;
+}
+HTMLElementCollection::HTMLElementCollection(string CSS_QUERY, HTMLDocument doc) {
+	object q = object(string::Format("%s.querySelectorAll(\"%s\")", doc.Name, CSS_QUERY.CharArray));
+	len = (int)q["length"];
+	collectionptr = (HTMLElement*)malloc(len * sizeof(HTMLElement));
+	for (int i = 0; i < len; i++)
+	{
+		HTMLElement el = HTMLElement(CSS_QUERY + string::Format(":nth-of-type(%i)", i + 1), doc);
+		el.Destroyable = false;
+		collectionptr[i] = el;
+	}
+}
+HTMLElementCollection::~HTMLElementCollection() {
+	free(collectionptr);
+}
+HTMLElement HTMLElementCollection::operator[](int index) {
+	return collectionptr[index];
+}
 HTMLElement $(const char* CSS_QUERY) {
 	return document.querySelector(CSS_QUERY);
+}
+HTMLElementCollection $$(const char* CSS_QUERY) {
+	return document.querySelectorAll(CSS_QUERY);
 }

@@ -394,6 +394,7 @@
 #pragma endregion
 #pragma region EVENTHANDLER CLASS
 	class HTMLElement;
+	class HTMLElementCollection;
 	class XMLHttpRequest;
 
 	/// @brief Use this class to handle events and so on.
@@ -687,6 +688,11 @@
 	/// @return A corresponding HTMLElement.
 	HTMLElement $(const char* CSS_QUERY);
 
+	/// @brief Given a CSS query, returns a collection of elements that match it.
+	/// @param CSS_QUERY A valid CSS query.
+	/// @return An element collection.
+	HTMLElementCollection $$(const char* CSS_QUERY);
+
 #pragma endregion
 #pragma region HTMLDOCUMENT CLASS
 
@@ -728,11 +734,17 @@
 		/// @return The first node associated.
 		HTMLElement querySelector(const char* CSS_QUERY);
 
+		/// @brief Performs a multiple node selection using a CSS query.
+		/// @param CSS_QUERY The CSS query.
+		/// @return A collection containing all the nodes associated.
+		HTMLElementCollection querySelectorAll(const char* CSS_QUERY);
+
 		/// @brief Select a node by the ID.
 		/// @param ID The ID to look for.
 		/// @return The node with that id, if present.
 		HTMLElement getElementById(const char* ID);
-
+		
+		#ifndef __INTELLISENSE__
 		/// @deprecated Use the Name property instead.
 		const char* getname() { if ((int)name != -1) return (const char*)name; else return "document"; }
 
@@ -744,8 +756,22 @@
 
 		/// @brief The document body element.
 		__declspec(property(get = getbody)) HTMLBodyElement body;
+		#else
+
+		/// @brief The document name.
+		const char* Name;
+
+		/// @brief The document body element.
+		HTMLBodyElement body;
+
+		#endif
 	private:
 		char* name;
+
+		#ifdef __INTELLISENSE__
+		const char* getname();
+		HTMLBodyElement getbody();
+		#endif
 	};
 
 	/// @brief The current document.
@@ -899,6 +925,42 @@
 	};
 
 #pragma endregion
+#pragma region HTMLELEMENTCOLLECTION CLASS
+
+	class HTMLElementCollection {
+		public:
+
+			/// @brief Creates a new HTMLElementCollection of elements that match a valid query.
+			/// @param CSS_QUERY A CSS query.
+			/// @param doc The document where the system must search.
+			HTMLElementCollection(string CSS_QUERY, HTMLDocument doc = document);
+
+			/// @brief Select an element of a given index.
+			/// @param index The index.
+			/// @return The n-HTMLElement of the collection.
+			HTMLElement operator [] (int index);
+
+			~HTMLElementCollection();
+
+			#ifndef __INTELLISENSE__
+			int get_length();
+			__declspec(property(get = get_length)) int length;
+			#else
+
+			/// @brief It's the length of the collection.
+			int length;
+
+			#endif
+		private:
+			#ifdef __INTELLISENSE__
+			int get_length();
+			#endif
+
+			HTMLElement* collectionptr;
+			int len;
+	};
+
+#pragma endregion
 #pragma region HTML MEDIA ELEMENT
 
 	class HTMLMediaElement : public HTMLElement {
@@ -978,11 +1040,17 @@
 			/// @brief Clears the storage.
 			void clear();
 
+			#ifndef __INTELLISENSE__
 			int get_length();
-
-			/// @brief Gets the number of elements into the storage.
 			__declspec(property(get = get_length)) int length;
+			#else
+			/// @brief Gets the number of elements into the storage.
+			int length;
+			#endif
 		private:
+			#ifdef __INTELLISENSE__
+			int get_length();
+			#endif
 			bool ls;
 	};
 
