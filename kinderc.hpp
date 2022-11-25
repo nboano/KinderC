@@ -486,11 +486,13 @@
 
 		/// @brief Converts the object to a boolean.
 		operator bool();
-	private:
+	protected:
 		const char* toString = ".toString()";
 		string s;
 		char* getValue();
 		void setValue(const char* value);
+		void setProperty(string name, string value) {operator[]((char*)name) = value;}
+		string getProperty(string name) {return operator[]((char*)name);}
 	};
 	
 	// Represents a JavaScript object.
@@ -854,7 +856,6 @@
 		/// @param handler An handler.
 		void addEventListener(const char* eventname, void(*handler)(HTMLElement&));
 
-
 	#pragma region PROPERTIES 
 
 			/// @brief An associative array to manage the attributes of the element.
@@ -900,6 +901,8 @@
 			// Sets the access key used to access the element.
 			prop(accessKey);
 
+			prop(contenteditable);
+
 			/// Event fired at click.
 			ev_HTMLElement(onclick);
 			// Event fired at double click.
@@ -919,10 +922,10 @@
 			// Event fired when the mouse wheel is moved on the element.
 			ev_HTMLElement(onwheel);
 	#pragma endregion
+			char* query;
 	protected:
 		char* runFunction(const char* fname, const char* p1, const char* p2 = "null");
 		const char* getJSHandler(EventHandler* handler, bool function = false);
-		char* query;
 		bool inBody;
 		char* docname;
 	};
@@ -1017,10 +1020,70 @@
 	};
 
 #pragma endregion
-#pragma region HTML MEDIA ELEMENT
+#pragma region HTML CONTROLS
+
+	class HTMLButtonElement : public HTMLElement {
+	public:
+		HTMLButtonElement(HTMLElement el) : HTMLElement(el.query) {}
+
+		void click();
+
+		prop(type);
+		prop(disabled);
+	};
+
+	class HTMLInputElement : public HTMLElement {
+	public:
+		HTMLInputElement(HTMLElement el) : HTMLElement(el.query) {}
+
+		prop(type);
+		prop(disabled);
+		prop(value);
+		prop(name);
+
+		ev_HTMLElement(onchange);
+		ev_HTMLElement(oninput);
+		ev_HTMLElement(oninvalid);
+		ev_HTMLElement(onsearch);
+		ev_HTMLElement(onselectionchange);
+	};
+
+
+	typedef HTMLButtonElement Button;
+
+	typedef HTMLInputElement TextBox;
+	typedef HTMLInputElement RadioButton;
+	typedef HTMLInputElement CheckBox;
+	typedef HTMLInputElement FilePicker;
+
+#pragma endregion
+#pragma region HTML DIALOG
+
+	class HTMLDialogElement : public HTMLElement {
+		public:
+		HTMLDialogElement(HTMLElement el) : HTMLElement(el.query) {}
+
+		prop(returnValue);
+
+		void Show();
+		void ShowModal();
+		void Close();
+
+		ev_HTMLElement(oncancel);
+		ev_HTMLElement(onclose);
+	};
+
+	typedef HTMLDialogElement Dialog;
+
+#pragma endregion
+#pragma region HTML MEDIA ELEMENTS
 
 	class HTMLMediaElement : public HTMLElement {
 	public:
+		HTMLMediaElement(HTMLElement el) : HTMLElement(el.query) {}
+
+		prop(src);
+
 		ev(onabort);
 		ev(oncanplay);
 		ev(oncanplaythrough);
@@ -1044,6 +1107,10 @@
 		ev(ontimeupdate);
 		ev(onvolumechange);
 		ev(onwaiting);
+
+		void pause();
+		void play();
+		void load();
 	};
 
 #pragma endregion
@@ -1070,6 +1137,75 @@
 		ev(onstorage);
 		ev(onunload);
 	};
+
+#pragma endregion
+#pragma region BOM OBJECTS
+
+	class Location : public object {
+	public:
+		Location() : object("location") {}
+
+		prop(hash);
+		prop(host);
+		prop(hostname);
+		prop(href);
+		prop(origin);
+		prop(pathname);
+		prop(port);
+		prop(protocol);
+		prop(search);
+
+		void reload() {operator[]("reload")();}
+	};
+
+	class History : public object {
+	public:
+		History() : object("history") {}
+
+		#ifndef __INTELLISENSE__
+		int get_length() { return (int)operator[]("length");}
+		__declspec(property(get=get_length)) int length;
+		#else
+		int length;
+		#endif
+
+		void back() {operator[]("back")();}
+		void forward() {operator[]("forward");}
+	private:
+		#ifdef __INTELLISENSE__
+		int get_length();
+		#endif
+	};
+
+	class Navigator : public object {
+	public:
+		Navigator() : object("navigator") {}
+		prop(appCodeName);
+		prop(appName);
+		prop(appVersion);
+		prop(language);
+		prop(platform);
+		prop(product);
+		prop(productSub);
+		prop(userAgent);
+		prop(vendor);
+		prop(vendorSub);
+	};
+
+	class Window : public object {
+	public:
+		Window() : object("window") {}
+		
+		HTMLDocument document;
+		Location location;
+		History history;
+		Navigator navigator;
+	};
+
+	Window window;
+	Location location;
+	History history;
+	Navigator navigator;
 
 #pragma endregion
 #pragma region LOCALSTORAGE, SESSIONSTORAGE

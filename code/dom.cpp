@@ -165,6 +165,27 @@ void HTMLElementCollection::addEventListener(const char* eventname, void(*handle
 		collectionptr[i].addEventListener(eventname, handler);
 	}
 }
+void HTMLMediaElement::play() {
+	runFunction("play", "null", "null");
+}
+void HTMLMediaElement::pause() {
+	runFunction("pause", "null", "null");
+}
+void HTMLMediaElement::load() {
+	runFunction("load", "null", "null");
+}
+void HTMLButtonElement::click() {
+	runFunction("click", "null", "null");
+}
+void HTMLDialogElement::Show() {
+	runFunction("show", "null", "null");
+}
+void HTMLDialogElement::ShowModal() {
+	runFunction("showModal", "null", "null");
+}
+void HTMLDialogElement::Close() {
+	runFunction("close", "null", "null");
+}
 
 HTMLElement $(const char* CSS_QUERY) {
 	return document.querySelector(CSS_QUERY);
