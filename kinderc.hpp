@@ -27,18 +27,18 @@
 		#define ev(evname) void set_##evname(EventHandler* e) { setAttribute(#evname, getJSHandler(e)); }; __declspec(property(put = set_##evname)) EventHandler* evname;
 		#define ev_HTMLElement(evname) void set_##evname(void(*e)(HTMLElement&)) { setAttribute(#evname, getJSHandler(new EventHandler(e))); }; __declspec(property(put = set_##evname)) void(*evname)(HTMLElement&);
 		#define ev_XMLHttpRequest(evname) void set_##evname(void(*e)(XMLHttpRequest&)) { setAttribute(#evname, getJSHandler(new EventHandler(e))); }; __declspec(property(put = set_##evname)) void(*evname)(XMLHttpRequest&);
-		#define prop(name) char* get_##name() {return getProperty(#name);}; void set_##name(const char* v) {setProperty(#name, v);}; __declspec(property(get = get_##name, put = set_##name)) char* name;
+		#define prop(name) string get_##name() {return getProperty(#name);}; void set_##name(string v) {setProperty(#name, v);}; __declspec(property(get = get_##name, put = set_##name)) string name;
 	#else
 		// Declares an exported function.
 		#define exported extern "C"
 
-		#define ev(evname) void set_##evname(); __declspec(property(put = set_##evname)) EventHandler* evname;
+		#define ev(evname) EventHandler* evname;
 
 		#define ev_HTMLElement(evname) void(*evname)(HTMLElement&);
 
 		#define ev_XMLHttpRequest(evname) void(*evname)(XMLHttpRequest&);
 
-		#define prop(name) 	void __set(char* val) {}; char* __get() {return 0;}; __declspec(property(get = __get, put = __set)) char* name;
+		#define prop(name) string name;
 	#endif
 
 #pragma endregion
@@ -910,10 +910,13 @@
 			ev_HTMLElement(onmousemove);
 			// Event fired when the mouse goes out of the element.
 			ev_HTMLElement(onmouseout);
+			// Event fired when the mouse goes over the element.
 			ev_HTMLElement(onmouseover);
+			// Event fired when the mouse is released over the element.
 			ev_HTMLElement(onmouseup);
 			// Event fired when the mouse scrolls on the element.
 			ev_HTMLElement(onmousewheel);
+			// Event fired when the mouse wheel is moved on the element.
 			ev_HTMLElement(onwheel);
 	#pragma endregion
 	protected:
@@ -951,6 +954,59 @@
 			int length;
 
 			#endif
+
+			/// @brief Sets a property of all the elements of the collection to a certain value.
+			/// @param key The property name.
+			/// @param value The property value.
+			void setProperty(const char* key, const char* value);
+
+			/// @brief Gets a string containing all the properties of the elements concatenated.
+			/// @param key The property name.
+			/// @return The property value.
+			string getProperty(const char* key);
+
+			/// @brief Adds an event listener to the element in the collection.
+			/// @param eventname A string containing the event name (es. "click").
+			/// @param handler An handler.
+			void addEventListener(const char* eventname, void(*handler)(HTMLElement&));
+
+			#pragma region PROPERTIES
+
+			// Sets or gets the ID attribute of the collection elements.
+			prop(id);
+			// The HTML code contained into the element.
+			prop(innerHTML);
+			// The HTML code of the element and its content.
+			prop(outerHTML);
+			// The text contained into the element.
+			prop(innerText);
+			// The text contained into the element.
+			prop(outerText);
+			// The text content.
+			prop(textContent);
+			// The tag name (XML).
+			prop(nodeName);
+			// The node type (XML).
+			prop(nodeType);
+			// The node value (XML).
+			prop(nodeValue);
+			// The lang attribute.
+			prop(lang);
+			// The title attribute. If set, provides a tooltip on hover.
+			prop(title);
+			// The tag name of the element.
+			prop(tagName);
+			prop(scrollHeight);
+			prop(scrollLeft);
+			prop(scrollTop);
+			prop(scrollWidth);
+			prop(dir);
+			// The class name of the element.
+			prop(className);
+			// Sets the access key used to access the element.
+			prop(accessKey);
+
+			#pragma endregion
 		private:
 			#ifdef __INTELLISENSE__
 			int get_length();
@@ -1061,7 +1117,11 @@
 	Storage sessionStorage(false);
 
 #pragma endregion
+#pragma region DATE & TIME
 
+	unsigned long long time();
+
+#pragma endregion
 #pragma region SOURCE REFERRERS
 
 #include "code/string.cpp"
@@ -1073,5 +1133,6 @@
 #include "code/net.cpp"
 #include "code/dom.cpp"
 #include "code/storage.cpp"
+#include "code/datetime.cpp"
 
 #pragma endregion

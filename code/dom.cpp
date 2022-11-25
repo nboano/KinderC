@@ -95,14 +95,6 @@ char* HTMLElement::runFunction(const char* fname, const char* p1, const char* p2
 	return JavaScript::Eval(s);
 }
 const char* HTMLElement::getJSHandler(EventHandler* handler, bool function) {
-	//static char s[64];
-	//strcpy(s, "");
-	//HTMLElement snd = HTMLElement(query);
-	//HTMLElement* sender = (HTMLElement*)malloc(sizeof(HTMLElement));
-	//snd.Destroyable = false;
-	//*sender = snd;
-	//sprintf(s, function ? "()=>%s(%i)" : "%s(%i)", handler->HandlerFunctionName.CharArray, (int)sender);
-	//return s;
 	HTMLElement snd = HTMLElement(query);
 	HTMLElement* sender = (HTMLElement*)malloc(sizeof(HTMLElement));
 	snd.Destroyable = false;
@@ -153,6 +145,27 @@ HTMLElementCollection::~HTMLElementCollection() {
 HTMLElement HTMLElementCollection::operator[](int index) {
 	return collectionptr[index];
 }
+void HTMLElementCollection::setProperty(const char* key, const char* value) {
+	for (int i = 0; i < length; i++)
+	{
+		collectionptr[i].setProperty(key, value);
+	}
+}
+string HTMLElementCollection::getProperty(const char* key) {
+	string s = "";
+	for (int i = 0; i < length; i++)
+	{
+		s += collectionptr[i].getProperty(key);
+	}
+	return s;
+}
+void HTMLElementCollection::addEventListener(const char* eventname, void(*handler)(HTMLElement&)) {
+	for (int i = 0; i < length; i++)
+	{
+		collectionptr[i].addEventListener(eventname, handler);
+	}
+}
+
 HTMLElement $(const char* CSS_QUERY) {
 	return document.querySelector(CSS_QUERY);
 }
