@@ -1,20 +1,10 @@
 #pragma once
-/// <summary>
-/// Returns the length of a given string.
-/// </summary>
-/// <param name="str">String</param>
-/// <returns>String length</returns>
+
 unsigned long strlen(const char* str) {
 	const char* s;
 	for (s = str; *s; ++s) {}
 	return(s - str);
 }
-/// <summary>
-/// Concatenates two strings.
-/// </summary>
-/// <param name="s1">String</param>
-/// <param name="s2">String to concatenate</param>
-/// <returns></returns>
 char* strcat(char* s1, const char* s2)
 {
 	char* start = s1;
@@ -25,10 +15,6 @@ char* strcat(char* s1, const char* s2)
 	*start = '\0';
 	return s1;
 }
-/// <summary>
-/// Reverses a string.
-/// </summary>
-/// <param name="str">String</param>
 void strrev(char* str)
 {
 	int i;
@@ -42,12 +28,6 @@ void strrev(char* str)
 		str[j] = a;
 	}
 }
-/// <summary>
-/// Compares two strings.
-/// </summary>
-/// <param name="X">First String</param>
-/// <param name="Y">Second String</param>
-/// <returns>-1, 0, 1</returns>
 int strcmp(const char* X, const char* Y)
 {
 	while (*X)
@@ -60,12 +40,6 @@ int strcmp(const char* X, const char* Y)
 	}
 	return *(const unsigned char*)X - *(const unsigned char*)Y;
 }
-/// <summary>
-/// Copies one string into another.
-/// </summary>
-/// <param name="destination">Destination String</param>
-/// <param name="source">Source String</param>
-/// <returns>Destination</returns>
 char* strcpy(char* destination, const char* source)
 {
 	char* ptr = destination;
@@ -78,11 +52,6 @@ char* strcpy(char* destination, const char* source)
 	*destination = '\0';
 	return ptr;
 }
-/// <summary>
-/// Concatenates a string and a char.
-/// </summary>
-/// <param name="str">String</param>
-/// <param name="c">Char</param>
 void strcat_c(char* str, char c)
 {
 	//for (; *str; str++);

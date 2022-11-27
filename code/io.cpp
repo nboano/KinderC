@@ -1,11 +1,5 @@
 #pragma once
 #include "../kinderc.hpp"
-
-	/// <summary>
-	/// Converts a string into an integer.
-	/// </summary>
-	/// <param name="str">String</param>
-	/// <returns>Integer</returns>
 	int atoi(char* str)
 	{
 		int res = 0;
@@ -13,13 +7,6 @@
 			res = res * 10 + str[i] - '0';
 		return res;
 	}
-	/// <summary>
-	/// Converts an integer of a given base into a string.
-	/// </summary>
-	/// <param name="num">The int to convert</param>
-	/// <param name="str">String</param>
-	/// <param name="base">Base (2, 10 ecc.)</param>
-	/// <returns>String</returns>
 	char* itoa(int num, char* str, int base)
 	{
 		int i = 0;
@@ -296,42 +283,16 @@ void Console::cmd(const char* prefix, const char* txt) {
 void print(const char* text, int len) {
 	JavaScript::Eval("document.body.innerHTML+=%s", JavaScript::GetStringFromPointer(text));
 }
-/// <summary>
-/// Displays a Message Box.
-/// </summary>
-/// <param name="text">Message Box Text</param>
 void alert(const char* text) {
-	char cmd[64] = "";
-	sprintf(cmd, "alert(%s)", JavaScript::GetStringFromPointer(text));
-	JavaScript::Eval(cmd);
+	window["alert"](string::Format("`%s`", text));
 }
-/// <summary>
-/// Writes a string into the WebPage.
-/// </summary>
-/// <param name="text">String</param>
-/// <returns></returns>
 void puts(const char* text) {
 	print(text, strlen(text));
 }
-/// <summary>
-/// Displays a Message Box where you can choose betweeen YES/NO.
-/// </summary>
-/// <param name="text">Message Box Text</param>
-/// <returns>YES (1) / NO (0)</returns>
 bool confirm(const char* text) {
-	char cmd[64] = "";
-	sprintf(cmd, "confirm(%s)?1:0", JavaScript::GetStringFromPointer(text));
-	return ((int)JavaScript::Eval(cmd) == 1);
+	return (string)window["confirm"](string::Format("`%s`", text)) == "true";
 }
-/// <summary>
-/// Displays an Input Box where you can write a string.
-/// </summary>
-/// <param name="text">Input Box Text</param>
-/// <param name="defaultResponse">Default Response Value</param>
-/// <returns>Written String</returns>
 char* prompt(const char* text, const char* defaultResponse) {
-	char cmd[64] = "";
-	sprintf(cmd, "prompt(%s, %s)", JavaScript::GetStringFromPointer(text), JavaScript::GetStringFromPointer(defaultResponse));
-	return JavaScript::Eval(cmd);
+	return (char*)window["prompt"](string::Format("`%s`", text), string::Format("`%s`", defaultResponse));
 }
 
