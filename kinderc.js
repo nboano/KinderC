@@ -28,7 +28,7 @@ env.get_memory_size = () => memory.buffer.byteLength;
 env.memory_grow = (q) => memory.grow(q);
 //env._Znwm = function () { };
 //env._Znam = function () { };
-env.__cxa_atexit = function () { };
+env.__cxa_atexit = function() {};
 //#endregion
 
 onload = async () => {

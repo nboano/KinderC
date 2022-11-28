@@ -58,12 +58,7 @@ void XMLHttpRequest::send(const char* body) {
 	object("dp")[index]["send"](fmt);
 }
 void XMLHttpRequest::setRequestHeader(const char* headername, const char* headervalue) {
-	object dp("dp");
-	char bf[strlen(headername) + 2];
-	sprintf(bf, "`%s`", headername);
-	char bfv[strlen(headervalue) + 2];
-	sprintf(bfv, "`%s`", headervalue);
-	dp[index]["setRequestHeader"](bf, bfv);
+	object("dp")[index]["setRequestHeader"](string::Format("`%s`", headername), string::Format("`%s`", headervalue));
 }
 string XMLHttpRequest::getResponseHeader(const char* headername) {
 	object dp("dp");
@@ -113,6 +108,12 @@ string XMLHttpRequest::getJSHandler(EventHandler* h) {
 }
 Fetch::Fetch(string URL, FetchOptions options) {
 	r.open(options.Method, URL, true);
+
+	for(int i = 0; i < 16; i++) {
+		if(options.Headers[i][0] == "") break;
+		r.setRequestHeader(options.Headers[i][0], options.Headers[i][1]);
+	}
+
 	r.send(options.Body);
 }
 Fetch Fetch::then(void(*handler)(Request&)) {

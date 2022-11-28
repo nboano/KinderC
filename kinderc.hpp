@@ -251,7 +251,9 @@
 		/// @param str A string literal, a char array or a string.
 		/// @return true if the strings are equal,
 		/// @return false otherwise.
-		bool operator == (const char* str);
+		bool operator==(const char* str);
+
+		bool operator!=(const char* str);
 
 		/// @brief Copies another string into this one.
 		/// @param s A string literal, a char array or a string.
@@ -653,6 +655,8 @@
 
 		/// @brief The request body (not available in GET)
 		string Body;
+
+		string Headers[16][2];
 
 	} FetchOptions;
 

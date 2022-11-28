@@ -118,6 +118,9 @@ int String::CompareTo(const char* str) {
 bool String::operator == (const char* str) {
 	return CompareTo(str) == 0;
 }
+bool String::operator!=(const char* str) {
+	return CompareTo(str) != 0;
+}
 void String::operator = (const char* s) {
 	Copy(s);
 }
