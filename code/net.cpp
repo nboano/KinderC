@@ -54,7 +54,8 @@ void XMLHttpRequest::send() {
 	object("dp")[index]["send"]();
 }
 void XMLHttpRequest::send(const char* body) {
-	object("dp")[index]["send"](String::Format("`%s`", body));
+	string fmt = String::Format("`%s`", body);
+	object("dp")[index]["send"](fmt);
 }
 void XMLHttpRequest::setRequestHeader(const char* headername, const char* headervalue) {
 	object dp("dp");

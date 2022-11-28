@@ -1,66 +1,69 @@
 #pragma once
 
-#define OFFSET_BASE 8192 + (unsigned long)&__heap_base
+#define OFFSET_BASE (8192 + (unsigned long)&__heap_base)
 
-#define EMPTY_CELL 0
-#define ALLOC_CELL 0x11
-#define LAST_CELL 0x12
-#define LAST_CELL_COUNT 4
-#define SPACELEN 1
+#define MALLOC_SPACE 1
 
 unsigned long memsz = 0;
 
-unsigned long checkmem(unsigned long start, unsigned long size) {
-	while ((unsigned long)start + size > Memory::GetSize())
-		Memory::Grow(1);
-	char* s = (char*)start;
-	for (int i = 0; i < size; i++) {
-		if (s[i] != EMPTY_CELL)
-			return (start + i + 1);
-	}
-	return start;
+
+bool malloc_initialized = false;
+void* heap_start;
+void* heap_end;
+
+void malloc_init() {
+	heap_start = (void*)OFFSET_BASE;
+	heap_end = (void*)OFFSET_BASE;
+
+	malloc_initialized = true;
 }
-void* getpos(unsigned long start, unsigned long size) {
-	size += SPACELEN;
-	unsigned long s = start;
-	do
-	{
-		s = checkmem(s, size);
-	} while (s != checkmem(s, size));
-	return (void*)(s + SPACELEN);
-}
-int isendofmem(char* pt, int n) {
-	for (int i = 0; i < LAST_CELL_COUNT - 1; i++)
-	{
-		if (pt[i + n] != LAST_CELL)
-			return 0;
-	}
-	return 1;
-}
-void* malloc(unsigned long size) {
-	char* pt = (char*)getpos(OFFSET_BASE, size + LAST_CELL_COUNT);
-	for (int i = 0; i < size; i++)
-	{
-		pt[i] = ALLOC_CELL;
-	}
-	for (int i = 0; i < LAST_CELL_COUNT; i++)
-	{
-		pt[i + size] = LAST_CELL;
-	}
-	return pt;
-}
+
+typedef struct s_memblock {
+	bool available;
+	unsigned long size;
+} memblock;
+
 void free(void* ptr) {
-	int i = 0;
-	char* p = (char*)ptr;
-	while (isendofmem(p, i) == 0) {
-		p[i] = EMPTY_CELL;
-		i++;
-	}
-	for (int j = i; j < LAST_CELL_COUNT + i; j++)
-	{
-		p[j] = EMPTY_CELL;
-	}
+	memblock* mcb = (memblock*)((unsigned long)ptr - sizeof(memblock));
+	mcb->available = true;
 }
+
+void* malloc(unsigned long size) {
+	while((unsigned long)heap_end + size > Memory::GetSize()) Memory::Grow(1);
+
+	memblock* loc_mcb;
+	void* returned_location = 0;
+
+	if(!malloc_initialized) malloc_init();
+
+	void* loc = heap_start;
+
+	size += sizeof(memblock) + MALLOC_SPACE;
+
+	while(loc != heap_end) {
+		loc_mcb = (memblock*)loc;
+		if(loc_mcb->available && loc_mcb->size >= size) {
+			loc_mcb->available = false;
+			returned_location = loc;
+			break;
+		}
+		loc = (void*)((unsigned long)loc + loc_mcb->size);
+	}
+
+	if(returned_location == 0) {
+		returned_location = heap_end;
+		heap_end = (void*)((unsigned long)heap_end + size);
+		loc_mcb = (memblock*)returned_location;
+		loc_mcb->available = false;
+		loc_mcb->size = size;
+	}
+
+	returned_location = (void*)((unsigned long)returned_location + sizeof(memblock));
+
+	return returned_location;
+}
+
+
 void* memset(void* s, int c, unsigned long len)
 {
 	unsigned char* p = (unsigned char*)s;
@@ -78,11 +81,20 @@ void* memcpy(void* dest, const void* src, unsigned long n)
 		cdest[i] = csrc[i];
 	return 0;
 }
-unsigned long memlen(char* pt) {
-	char* s;
-	for (s = pt; isendofmem(s, 0) == 0; s++);
-	return(s - pt);
+
+void* operator new(unsigned long size) {
+	return malloc(size);
 }
+void* operator new[](unsigned long size){
+	return malloc(size);
+}
+void operator delete(void* ptr) noexcept {
+	free(ptr);
+}
+void operator delete[](void* ptr) noexcept {
+	free(ptr);
+}
+
 void* Memory::Allocate(unsigned long size) {
 	return malloc(size);
 }
