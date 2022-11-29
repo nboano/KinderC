@@ -1262,6 +1262,18 @@
 	unsigned long long time();
 
 #pragma endregion
+#pragma region PROPERTIES MACROS
+
+#ifndef __INTELLISENSE__
+#define property(PROPERTY_NAME, TYPE, GETSET) GETSET __declspec(property(get = get_##PROPERTY_NAME, put = set_##PROPERTY_NAME)) TYPE PROPERTY_NAME;
+#else
+#define property(PROPERTY_NAME, TYPE, GETSET) TYPE PROPERTY_NAME;
+#define value v
+#endif
+#define get(PROPERTY_NAME, TYPE) TYPE get_##PROPERTY_NAME()
+#define set(PROPERTY_NAME, TYPE) void set_##PROPERTY_NAME(TYPE value)
+
+#pragma endregion
 #pragma region SOURCE REFERRERS
 
 #include "code/string.cpp"
