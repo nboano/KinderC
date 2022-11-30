@@ -124,6 +124,9 @@ bool String::operator!=(const char* str) {
 void String::operator = (const char* s) {
 	Copy(s);
 }
+void String::operator=(String s) {
+	Copy(s.CharArray);
+}
 String::operator char* () {
 	return CharArray;
 }

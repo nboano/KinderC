@@ -258,6 +258,7 @@
 		/// @brief Copies another string into this one.
 		/// @param s A string literal, a char array or a string.
 		void operator = (const char* s);
+		void operator = (String s);
 
 		/// @brief Converts a string into a char array.
 		operator char* ();
@@ -302,6 +303,30 @@
 
 	// Represents a string allocated in the heap memory.
 	#define string String
+
+#pragma endregion
+#pragma region EXCEPTION HANDLING
+
+class Exception {
+	public:
+
+	/// @brief Creates a new Exception object.
+	/// @param message The exception message.
+	Exception(string message);
+
+	/// @brief Returns the exception message.
+	/// @return The exception message.
+	string what();
+
+	protected:
+	string msg;
+};
+
+extern "C" void __cxa_throw(void* ptr, void*, void(*)(void*));
+
+extern "C" void* __cxa_allocate_exception(unsigned long thrown_size);
+
+extern "C" void __cxa_free_exception(void* ptr);
 
 #pragma endregion
 #pragma region CONSOLE CLASS
@@ -1259,7 +1284,29 @@
 #pragma endregion
 #pragma region DATE & TIME
 
+	/// @brief Returns the current UNIX timestamp.
+	/// @return The timestamp in seconds.
 	unsigned long long time();
+
+	/// @brief Waits for a certain number of milliseconds, and then calls the handler.
+	/// @param handler The timeout handler.
+	/// @param milliseconds The number of milliseconds to wait.
+	/// @return The timeout identifier.
+	int setTimeout(void(*handler)(void*), int milliseconds);
+
+	/// @brief Calls the handler every N milliseconds.
+	/// @param handler The handler.
+	/// @param milliseconds The number of milliseconds.
+	/// @return The interval identifier.
+	int setInterval(void(*handler)(void*), int milliseconds);
+
+	/// @brief Deletes a given timeout.
+	/// @param timeoutID The timeout identifier.
+	void clearTimeout(int timeoutID);
+
+	/// @brief Deletes a given interval.
+	/// @param intervalID The interval identifier.
+	void clearInterval(int intervalID);
 
 #pragma endregion
 #pragma region PROPERTIES MACROS
@@ -1268,7 +1315,7 @@
 #define property(PROPERTY_NAME, TYPE, GETSET) GETSET __declspec(property(get = get_##PROPERTY_NAME, put = set_##PROPERTY_NAME)) TYPE PROPERTY_NAME;
 #else
 #define property(PROPERTY_NAME, TYPE, GETSET) TYPE PROPERTY_NAME;
-#define value v
+#define value value
 #endif
 #define get(PROPERTY_NAME, TYPE) TYPE get_##PROPERTY_NAME()
 #define set(PROPERTY_NAME, TYPE) void set_##PROPERTY_NAME(TYPE value)
@@ -1286,5 +1333,6 @@
 #include "code/dom.cpp"
 #include "code/storage.cpp"
 #include "code/datetime.cpp"
+#include "code/exceptions.cpp"
 
 #pragma endregion
