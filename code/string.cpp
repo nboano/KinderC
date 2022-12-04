@@ -176,6 +176,21 @@ String String::ToLower() {
 	strlwr(n);
 	return n;
 }
+bool String::StartsWith(String s) {
+	int l = s.Length;
+	for(int i = 0; i < l; i++)
+		if(CharArray[i] != s[i])
+			return false;
+	return true;
+}
+bool String::EndsWith(String s) {
+	int sl = strlen(CharArray);
+	int l = s.Length;
+	for(int i = 0; i < l; i++)
+		if(CharArray[sl - l + i] != s[i])
+			return false;
+	return true;
+}
 unsigned long String::GetLength() {
 	return strlen(CharArray);
 }

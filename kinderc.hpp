@@ -39,6 +39,7 @@
 		#define ev_XMLHttpRequest(evname) void(*evname)(XMLHttpRequest&);
 
 		#define prop(name) string name;
+
 	#endif
 
 #pragma endregion
@@ -246,6 +247,16 @@
 		/// @brief Creates a new lowerized string.
 		/// @return Lowerized string.
 		String ToLower();
+
+		/// @brief Check if a string starts with another string.
+		/// @param s The other string.
+		/// @return A boolean value (true / false)
+		bool StartsWith(String s);
+
+		/// @brief Check if a string ends with another string.
+		/// @param s The other string.
+		/// @return A boolean value (true / false)
+		bool EndsWith(String s);
 
 		/// @brief Check if two string are equal.
 		/// @param str A string literal, a char array or a string.
@@ -518,7 +529,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 		string s;
 		char* getValue();
 		void setValue(const char* value);
-		void setProperty(string name, string value) {operator[]((char*)name) = value;}
+		void setProperty(string name, string value) { operator[]((char*)name) = string::Format("`%s`", (char*)value);}
 		string getProperty(string name) {return operator[]((char*)name);}
 	};
 	
@@ -1199,7 +1210,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 		#endif
 
 		void back() {operator[]("back")();}
-		void forward() {operator[]("forward");}
+		void forward() {operator[]("forward")();}
 	private:
 		#ifdef __INTELLISENSE__
 		int get_length();
