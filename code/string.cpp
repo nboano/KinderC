@@ -79,6 +79,24 @@ char* strlwr(char* string)
 	}
 	return string;
 }
+char* strtok(char* s, char d)
+{
+    static char* input = s;
+    char* result = (char*)malloc(strlen(input) + 1);
+    int i = 0;
+    for (; input[i] != '\0'; i++) {
+        if (input[i] != d)
+            result[i] = input[i];
+        else {
+            result[i] = '\0';
+            input = input + i + 1;
+            return result;
+        }
+    }
+    result[i] = '\0';
+    return result;
+}
+
 String::String(const char* s) {
 	CharArray = (char*)malloc(strlen(s));
 	strcpy(CharArray, "");
@@ -190,6 +208,29 @@ bool String::EndsWith(String s) {
 		if(CharArray[sl - l + i] != s[i])
 			return false;
 	return true;
+}
+String* String::Split(char separator) {
+	String tmp = CharArray;
+	if(tmp[tmp.Length - 1] != separator) tmp += separator;
+
+	int al = 0;
+	int l = strlen(tmp);
+
+	for(int i = 0; i < l; i++)
+		if(tmp[i] == separator) al++;
+	
+	auto result = new String[al + 1];
+
+	char* tk;
+	int cnt = 0;
+
+	do
+	{
+		tk = strtok(tmp, separator);
+		result[cnt++] = tk;
+	} while (tk[0] != 0);
+
+	return result;
 }
 unsigned long String::GetLength() {
 	return strlen(CharArray);

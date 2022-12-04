@@ -194,6 +194,12 @@
 	/// @return A pointer to the string.
 	char* strlwr(char* string);
 
+	/// @brief 
+	/// @param string 
+	/// @param separator 
+	/// @return 
+	char* strtok(char* string, char separator);
+
 #pragma endregion
 #pragma region STRING CLASS
 
@@ -257,6 +263,11 @@
 		/// @param s The other string.
 		/// @return A boolean value (true / false)
 		bool EndsWith(String s);
+
+		/// @brief Splits a string.
+		/// @param s The splitting character.
+		/// @return An array of strings.
+		String* Split(char separator);
 
 		/// @brief Check if two string are equal.
 		/// @param str A string literal, a char array or a string.
@@ -1008,6 +1019,22 @@ extern "C" void __cxa_free_exception(void* ptr);
 			/// @return The property value.
 			string getProperty(const char* key);
 
+			/// @brief Sets an attribute to all the elements of the collection.
+			/// @param key The attribute name.
+			/// @param value The attribute value.
+			void setAttribute(string key, string value);
+
+			/// @brief Sets a CSS property of all the elements in the collection.
+			/// @param key The property name.
+			/// @param value The property value.
+			void setStyleProperty(string key, string value);
+
+			/// @brief An associative, writeonly array to manage the attributes of the element collection.
+			__declspec(property(put = setAttribute)) string attributes[];
+
+			/// @brief An associative, writeonly array to manage the CSS properties of the element.
+			__declspec(property(put = setStyleProperty)) string style[];
+
 			/// @brief Adds an event listener to the element in the collection.
 			/// @param eventname A string containing the event name (es. "click").
 			/// @param handler An handler.
@@ -1080,6 +1107,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 		prop(disabled);
 		prop(value);
 		prop(name);
+		prop(pattern);
 
 		ev_HTMLElement(onchange);
 		ev_HTMLElement(oninput);

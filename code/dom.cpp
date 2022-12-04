@@ -151,6 +151,18 @@ void HTMLElementCollection::setProperty(const char* key, const char* value) {
 		collectionptr[i].setProperty(key, value);
 	}
 }
+void HTMLElementCollection::setAttribute(string key, string value) {
+	for (int i = 0; i < length; i++)
+	{
+		collectionptr[i].setAttribute(key, value);
+	}
+}
+void HTMLElementCollection::setStyleProperty(string key, string value) {
+	for (int i = 0; i < length; i++)
+	{
+		collectionptr[i].setStyleProperty(key, value);
+	}
+}
 string HTMLElementCollection::getProperty(const char* key) {
 	string s = "";
 	for (int i = 0; i < length; i++)
