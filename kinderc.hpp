@@ -746,6 +746,11 @@ extern "C" void __cxa_free_exception(void* ptr);
 	/// @return An element collection.
 	HTMLElementCollection $$(const char* CSS_QUERY);
 
+	/// @brief Checks if a certain element exists or not.
+	/// @param CSS_QUERY The element query selector.
+	/// @return A boolean that indicates if the element exists or not.
+	bool $has(const char* CSS_QUERY);
+
 #pragma endregion
 #pragma region HTMLDOCUMENT CLASS
 
@@ -1205,6 +1210,13 @@ extern "C" void __cxa_free_exception(void* ptr);
 		ev(onstorage);
 		ev(onunload);
 	};
+
+#pragma endregion
+#pragma region SCREENS
+
+	void handle_screen_change(void*);
+
+	void use_screens();
 
 #pragma endregion
 #pragma region BOM OBJECTS

@@ -205,3 +205,6 @@ HTMLElement $(const char* CSS_QUERY) {
 HTMLElementCollection $$(const char* CSS_QUERY) {
 	return document.querySelectorAll(CSS_QUERY);
 }
+bool $has(const char* CSS_QUERY) {
+	return (int)JavaScript::Eval("document.querySelector(`%s`)==null?0:1", CSS_QUERY) != 0;
+}

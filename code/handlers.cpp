@@ -1,6 +1,7 @@
 #pragma once
 
 #define LAMBDA_MAX_LEN 128
+
 static void(*__lambda_list[LAMBDA_MAX_LEN])(void*);
 
 int __lambda_add(void(*lb)(void*)) {
@@ -32,4 +33,18 @@ string Handler::GetWithPointer(void* ptr, bool function) {
 	if (LambdaIndex < 0)
 		return String::Format(function ? "()=>%s(%i)" : "%s(%i)", HandlerFunctionName.CharArray, (int)ptr);
 	else return String::Format(function ? "()=>__lambda_call(%i,%i)" : "__lambda_call(%i,%i)", LambdaIndex, ptr);
+}
+void screen_handle_change(void* = 0) {
+	$$("screen").style["display"] = "none";
+    if(location.hash != "" && $has((string)"screen" + location.hash)) {
+        $((string)"screen" + location.hash).style["display"] = "block";
+    }
+    else {
+        $("screen[main]").style["display"] = "block";
+        location.hash = "#";
+    }
+}
+void use_screens() {
+	screen_handle_change();
+    document.body.onhashchange = new EventHandler(screen_handle_change);
 }
