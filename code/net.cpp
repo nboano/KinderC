@@ -124,3 +124,13 @@ Fetch Fetch::error(void(*handler)(Request&)) {
 	r.onerror = handler;
 	return *this;
 }
+Request Fetch::sync(string URL, FetchOptions options) {
+    Request r = XMLHttpRequest();
+    r.open(options.Method, URL, false);
+    for(int i = 0; i < 16; i++) {
+        if(options.Headers[i][0] == "") break;
+        r.setRequestHeader(options.Headers[i][0], options.Headers[i][1]);
+    }
+    r.send(options.Body);
+    return r;
+}  

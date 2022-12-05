@@ -550,6 +550,11 @@ extern "C" void __cxa_free_exception(void* ptr);
 #pragma endregion
 #pragma region JSON CLASS
 
+	/// @brief This struct contains the key/value pairs of a future JSON.
+	typedef struct t_JSONBuilder {
+		string matrix[32][2];
+	} JSONBuilder;
+
 	/// @brief Use this class to handle JSON strings.
 	class JSON {
 	public:
@@ -559,6 +564,12 @@ extern "C" void __cxa_free_exception(void* ptr);
 		/// @return An object pointer.
 		/// @exception JSONNotValid
 		static object Parse(string s);
+
+		/// @brief Builds a JSON string.
+		/// @param bldr The builder, containing all the fields.
+		/// @param pretty Specifies if the JSON string must be prettified.
+		/// @return A JSON string.
+		static string Build(JSONBuilder bldr, bool pretty = false);
 	};
 
 #pragma endregion
@@ -703,6 +714,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 		/// @brief The request body (not available in GET)
 		string Body;
 
+		/// @brief The request headers (key/value pairs)
 		string Headers[16][2];
 
 	} FetchOptions;
@@ -718,6 +730,12 @@ extern "C" void __cxa_free_exception(void* ptr);
 		/// @param _url The request URL.
 		/// @param _options The request options. Defaults to GET with empty body.
 		Fetch(string _url, FetchOptions _options = Fetch_defaults);
+
+		/// @brief Makes a sync network request. NOTE: This request will block the main thread until it's completed.
+		/// @param URL The request URL.
+		/// @param options The request options. Defaults to GET with empty body.
+		/// @return The request object.
+		static Request sync(string URL, FetchOptions options = {"GET", ""});
 
 		/// @brief Specifies an handler for when the request has completed.
 		/// @param handler The handler.
