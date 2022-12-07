@@ -1,5 +1,5 @@
 # KinderC
-### *Sviluppa moderne e veloci applicazioni Web, utilizzando C++ combinato alla tecnologia WebAssemblu.* 
+### *Sviluppa moderne e veloci applicazioni Web, utilizzando C++ combinato alla tecnologia WebAssembly.* 
 
 ## Table of contents
  1. [Introduzione](#introduzione)
@@ -10,8 +10,9 @@
     - [Compilatore CLANG](#compilatore-clang)
  3. [Impostazione dell'ambiente di lavoro](#impostazione-dellambiente-di-lavoro)
  4. [Struttura di un'applicazione KinderC](#struttura-di-unapplicazione-kinderc)
- 5. [Hello World](#hello-world)
- 6. [Strutturazione del file sorgente](#strutturazione-del-file-sorgente)
+ 5. [Esempi](#esempi)
+ 6. [Hello World](#hello-world)
+ 7. [Strutturazione del file sorgente](#strutturazione-del-file-sorgente)
 
 ## Introduzione
 
@@ -62,6 +63,10 @@ La cosa più comoda per includere il kinderc.js è utilizzare la CDN:
 **https://cdn.jsdelivr.net/gh/nboano/kinderc/kinderc.js**  
 - **UN FILE SORGENTE `main.cpp`**, che verrà compilato in un file binario `main.wasm`, che contiene effettivamente il codice.
 
+## Esempi
+
+Tutti gli esempi che vi vengono presentati sono contenuti nella cartella `examples\` del repo.
+
 ## Hello World
 
 Cominciamo quindi con un primo esempio, un classico Hello World.  
@@ -73,7 +78,7 @@ All’interno della cartella, creiamo un nuovo file `index.html`, insieme ad un 
 
 ![](guides/images/02-hello-world-folder.png)&nbsp;&nbsp;&nbsp;*Ecco i file che devono essere presenti nella nostra cartella.*
 
-#### **`index.html`**
+#### **`index.html`** [Visualizza](examples/01-hello-world/index.html)
 
 ```html
 <!DOCTYPE html>
@@ -95,7 +100,7 @@ All’interno della cartella, creiamo un nuovo file `index.html`, insieme ad un 
 
 Creiamo quindi anche il file sorgente, `main.cpp`, su cui andremo a codificare il nostro primo esempio.
 
-#### **`main.cpp`**
+#### **`main.cpp`** [Visualizza](examples/01-hello-world/main.cpp)
 ```cpp
 #include "D:\kinderc\kinderc.hpp"
 
@@ -112,11 +117,14 @@ Ora è il momento di compilare. Apriamo un terminale (anche quello interno di VS
 D:\kinderc\kccompile main.cpp main.wasm
 ```
 
-Ovviamente il comando va adattato a seconda di dove avete deciso di collocare il file kccompile.bat.  
+Ovviamente il comando va adattato a seconda di dove avete deciso di collocare il file `kccompile`.  
 Se non ci sono errori, il tutto dovrebbe funzionare.
 
 ![](guides/images/03-hello-world.png)
 
 ## Strutturazione del file sorgente
+
+Il file sorgente, ovvero quello che viene compilato da terminale, deve includere obbligatoriamente la libreria all’inizio per poter funzionare. È possibile includere file e librerie esterne, come in un ambiente C standard, utilizzando una `#include`.  
+Apppena l’albero DOM viene caricato in memoria (cioè, appena la pagina viene caricata) il metodo `int main()` viene mandato in esecuzione. Proprio come in un’applicazione console, quindi, è necessario inserire tutto il codice che vogliamo venga eseguito all’interno del metodo principale.
 
 
