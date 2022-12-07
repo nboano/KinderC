@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KinderC - Importing functions</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/nboano/kinderc/kinderc.js"></script>
+    <assembly src="main.wasm"></assembly>
+
+    <script>
+        env.ottieniTempo = function() {
+            return Date.now() / 1000;
+        }
+    </script>
+</head>
+<body>

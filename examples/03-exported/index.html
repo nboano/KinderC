@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KinderC - Exporting functions</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/nboano/kinderc/kinderc.js"></script>
+    <assembly src="main.wasm"></assembly>
+
+</head>
+<body>
+    <input type="number" placeholder="Base" id="txtBase">
+    <br>
+    <input type="number" placeholder="Esponente" id="txtEsponente">
+    <br><br>
+    <button onclick="esponenziale(document.querySelector('#txtBase').valueAsNumber, document.querySelector('#txtEsponente').valueAsNumber)">Calcola</button>
+    <br><br>
+    Il risultato &egrave;: <b id="lblRisultato"></b>
+</body>
+</html>

@@ -2,17 +2,28 @@
 ### *Sviluppa moderne e veloci applicazioni Web, utilizzando C++ combinato alla tecnologia WebAssembly.* 
 
 ## Table of contents
- 1. [Introduzione](#introduzione)
-    - [Che cos'è KinderC](#che-cosè-kinderc)
-    - [Premesse per il programmatore](#premesse-per-il-programmatore)
- 2. [Link Utili](#link-utili)
-    - [Repository GitHub del progetto](#repository-github-del-progetto)
-    - [Compilatore CLANG](#compilatore-clang)
- 3. [Impostazione dell'ambiente di lavoro](#impostazione-dellambiente-di-lavoro)
- 4. [Struttura di un'applicazione KinderC](#struttura-di-unapplicazione-kinderc)
- 5. [Esempi](#esempi)
- 6. [Hello World](#hello-world)
- 7. [Strutturazione del file sorgente](#strutturazione-del-file-sorgente)
+1. [Introduzione](#introduzione)
+   - [Che cos'è KinderC](#che-cosè-kinderc)
+   - [Premesse per il programmatore](#premesse-per-il-programmatore)
+2. [Link Utili](#link-utili)
+   - [Repository GitHub del progetto](#repository-github-del-progetto)
+   - [Compilatore CLANG](#compilatore-clang)
+3. [Impostazione dell'ambiente di lavoro](#impostazione-dellambiente-di-lavoro)
+4. [Struttura di un'applicazione KinderC](#struttura-di-unapplicazione-kinderc)
+5. [Esempi](#esempi)
+6. [Hello World](#hello-world)
+7. [Strutturazione del file sorgente](#strutturazione-del-file-sorgente)
+8. [Tipi di dato](#tipi-di-dato)
+   - [Tipi di dato fondamentali](#tipi-di-dato-fondamentali)
+   - [Tipi di dato aggiuntivi](#tipi-di-dato-aggiuntivi)
+9. [Importazione ed esportazione di metodi](#importazione-ed-esportazione-di-metodi)
+   - [Importazione dei metodi (`imported`)](#importazione-dei-metodi-imported)
+   - [Esportazione dei metodi (`exported`)](#esportazione-dei-metodi-exported)
+10. [Gestione base dell'I/O](#gestione-base-dellio)
+      - [La funzione `printf`](#la-funzione-printf)
+      - [La finestra `alert`](#la-finestra-alert)
+      - [La finestra `confirm`](#la-finestra-confirm)
+      - [La finestra `prompt`](#la-finestra-prompt)
 
 ## Introduzione
 
@@ -127,4 +138,150 @@ Se non ci sono errori, il tutto dovrebbe funzionare.
 Il file sorgente, ovvero quello che viene compilato da terminale, deve includere obbligatoriamente la libreria all’inizio per poter funzionare. È possibile includere file e librerie esterne, come in un ambiente C standard, utilizzando una `#include`.  
 Apppena l’albero DOM viene caricato in memoria (cioè, appena la pagina viene caricata) il metodo `int main()` viene mandato in esecuzione. Proprio come in un’applicazione console, quindi, è necessario inserire tutto il codice che vogliamo venga eseguito all’interno del metodo principale.
 
+## Tipi di dato
+
+Come in ogni linguaggio a tipizzazione forte, anche in C e C++ abbiamo una serie di tipi dato diversi. Oltre ai tipi dato di sistema, utilizzando KinderC ne vengono aggiunti altri due.
+
+### Tipi di dato fondamentali
+
+| Nome del tipo | Dimensione (Byte) | Descrizione                        | Flag |
+|---------------|-------------------|------------------------------------|------|
+| `char`        | 1                 | Rappresenta un carattere ASCII.    | %c   |
+| `bool`        | 1                 | Rappresenta un valore booleano.    | -    |
+| `wchar_t`     | 2                 | Rappresenta un carattere Unicode.  | -    |
+| `short`       | 2                 | Rappresenta un intero su 16bit.    | %i   |
+| `int`         | 4                 | Rappresenta un intero su 32bit.    | %i   |
+| `long`        | 8                 | Rappresenta un intero su 64bit.    | %i   |
+| `float`       | 4                 | Rappresenta un decimale su 32bit.  | %f   |
+| `double`      | 8                 | Rappresenta un decimale su 64bit.  | %f   |
+
+### Tipi di dato aggiuntivi
+
+| Nome del tipo | Dimensione (Byte) | Descrizione                                    |
+|---------------|-------------------|------------------------------------------------|
+| `string`      | 4 + n.di caratteri| Rappresenta una serie di char allocata in heap.|
+| `object`      | 8                 | Punta a un qualunque oggetto JavaScript.       |
+
+Generalmente, quando dichiariamo una variabile, è necessario specificare il suo tipo.
+
+```cpp
+int n = 15;
+const double PI = 3.14159;
+```
+
+Tuttavia, a seconda delle nostre preferenze, è anche possibile ometterlo, lasciando tipizzare il sistema. 
+
+Le due scritture presentate sotto sono assolutamente equivalenti. Lo standard C++ prevede l'utilizzo di `auto`, ma includendo KinderC è anche possibile utilizzare `var`.
+
+```cpp
+var mStr = "Ciao a tutti";
+auto str2 = "Seconda stringa";
+```
+
+## Importazione ed esportazione di metodi
+
+Le due macro che vi vengono illustrate (`imported` ed `exported`), se scritte prima del prototipo di una funzione qualsiasi, permettono ad essa di essere esportata oppure importata dall'ambiente JavaScript.
+
+### Importazione dei metodi (`imported`)
+
+Utilizzando la parola chiave `imported` è possibile rendere accessibile un qualsiasi metodo JavaScript dal nostro programma C++.
+
+Segue un esempio dove viene importato un metodo che ritorna il timestamp UNIX corrente.
+
+#### **`index.html`** [Visualizza](examples/02-imported/index.html)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KinderC - Importing functions</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/nboano/kinderc/kinderc.js"></script>
+    <assembly src="main.wasm"></assembly>
+
+    <script>
+        env.ottieniTempo = function() {
+            return Date.now() / 1000;
+        }
+    </script>
+</head>
+<body>
+```
+> Per scrivere una funzione JavaScript che sia visibile dal programma compilato, è necessario farla figliare all'oggetto `env`. In caso contrario, un errore verrà generato.
+
+#### **`main.cpp`** [Visualizza](examples/02-imported/main.cpp)
+```cpp
+#include "D:\kinderc\kinderc.hpp"
+
+imported unsigned long ottieniTempo();
+
+int main() {
+    printf("Secondi passati dal 1 GEN 1970: %i", ottieniTempo());
+}
+```
+
+> Nell'esempio, la funzione importata viene richiamata, e il suo risultato stampato a schermo.
+
+![](guides/images/04-imported-ex.png)
+
+**N.B.** Con una `imported` è possibile importare solo funzioni che hanno parametri numerici e che restituiscono valori numerici. Non è possibile passare direttamente le stringhe a una funzione JS, in quanto la stringa, in un linguaggio come il C++, è un puntatore.
+
+### Esportazione dei metodi (`exported`)
+
+Al contrario, la macro `exported` rende una funzione o una procedura del compilato globalmente accessibile dalla pagina. 
+
+Di seguito viene riportato lo snippet di una funzione che calcola il valore della potenza dati base ed esponente e lo scrive in un elemento del DOM.
+
+#### **`index.html`** [Visualizza](examples/03-exported/index.html)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KinderC - Exporting functions</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/nboano/kinderc/kinderc.js"></script>
+    <assembly src="main.wasm"></assembly>
+
+</head>
+<body>
+    <input type="number" placeholder="Base" id="txtBase">
+    <br>
+    <input type="number" placeholder="Esponente" id="txtEsponente">
+    <br><br>
+    <button onclick="esponenziale(document.querySelector('#txtBase').valueAsNumber, document.querySelector('#txtEsponente').valueAsNumber)">Calcola</button>
+    <br><br>
+    Il risultato &egrave;: <b id="lblRisultato"></b>
+</body>
+</html>
+```
+
+#### **`main.cpp`** [Visualizza](examples/03-exported/main.cpp)
+
+```cpp
+#include "D:\kinderc\kinderc.hpp"
+
+exported void esponenziale(int base, int esponente) {
+    long risultato = base;
+    for (int i = 0; i < esponente - 1; i++) risultato *= base;
+
+    $("#lblRisultato").innerText = String::Format("%i", risultato);
+}
+
+int main() {}
+```
+
+![](guides/images/05-exported-ex.png)
+
+## Gestione base dell'I/O
+
+### La funzione `printf`
+
+### La finestra `alert`
+
+### La finestra `confirm`
+
+### La finestra `prompt`
 
