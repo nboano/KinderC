@@ -28,7 +28,9 @@
       - [La finestra `confirm`](#la-finestra-confirm)
       - [La finestra `prompt`](#la-finestra-prompt)
       - [Esempio di utilizzo delle finestre bloccanti](#esempio-di-utilizzo-delle-finestre-bloccanti)
-11. [Gestione della memoria](#gestione-della-memoria)
+11. [La classe `Console`](#la-classe-console)
+      - [`Console::Write`](#consolewrite)
+12. [Gestione della memoria](#gestione-della-memoria)
       - [La memoria in KinderC](#la-memoria-in-kinderc)
       - [Allocazione statica](#allocazione-statica)
       - [Allocazione dinamica](#allocazione-dinamica)
@@ -36,6 +38,13 @@
         - [La funzione `free`](#la-funzione-free)
         - [Gli operatori `new` e `delete` di C++](#gli-operatori-new-e-delete-di-c)
         - [Esempio di utilizzo](#esempio-di-utilizzo-dellallocazione-dinamica)
+13. [Le stringhe C ANSI](#le-stringhe-c-ansi)
+14. [Le stringhe come oggetti: il tipo `string`](#le-stringhe-come-oggetti-il-tipo-string)
+15. [Manipolazione del DOM](#manipolazione-del-dom)
+    - [L'oggetto `document`](#loggetto-document)
+    - [Classe `HTMLElement`](#classe-htmlelement)
+    - [Classe `HTMLElementCollection`](#classe-htmlelementcollection)
+    - [Selettori rapidi (`$`, `$$`)](#selettori-rapidi)
 
 ## Introduzione
 
@@ -413,6 +422,20 @@ exported void askName() {
 }
 ```
 
+## La classe `Console`
+
+Utilizzando la classe `Console` è possibile scrivere variabili di ogni tipo all'interno della console per sviluppatori del browser.
+
+### `Console::Write`
+
+Il metodo `Console::Write` permette di scrivere in console una stringa qualsiasi, e, utilizzando gli stessi flag della [`printf`](#la-funzione-printf), anche altre variabili.
+
+```cpp
+Console::Write("Messaggio di esempio");
+Console::Write("Messaggio formattato\n\n%i____%i", 23, 27);
+```
+
+![](guides/images/10-console-write.png)
 
 ## Gestione della memoria
 
@@ -536,3 +559,17 @@ exported void allocate_and_print(int n) {
 
 int main() {}
 ```
+
+## Le stringhe C ANSI
+
+## Le stringhe come oggetti: il tipo `string`
+
+## Manipolazione del DOM
+
+### L'oggetto `document`
+
+### Classe `HTMLElement`
+
+### Classe `HTMLElementCollection`
+
+### Selettori rapidi (`$`, `$$`)
