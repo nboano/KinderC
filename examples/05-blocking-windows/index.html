@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KinderC - Finestre bloccanti</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/nboano/kinderc/kinderc.js"></script>
+    <assembly src="main.wasm"></assembly>
+</head>
+<body>
+    <button onclick="showAlert()">Mostra un'alert</button>
+    <br><br>
+    <button onclick="askPermission()">Mostra una confirm</button> Hai risposto: <span id="lblPermesso"></span>
+    <br><br>
+    <button onclick="askName()">Mostra un prompt</button> Hai risposto: <span id="lblNome"></span>
+</body>
+</html>
