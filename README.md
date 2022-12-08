@@ -35,6 +35,7 @@
         - [La funzione `malloc`](#la-funzione-malloc)
         - [La funzione `free`](#la-funzione-free)
         - [Gli operatori `new` e `delete` di C++](#gli-operatori-new-e-delete-di-c)
+        - [Esempio di utilizzo](#esempio-di-utilizzo-dellallocazione-dinamica)
 
 ## Introduzione
 
@@ -473,7 +474,7 @@ Vi sono due operatori appositi in C++ che svolgono le stesse operazioni di `mall
     ```cpp
     auto el = new HTMLElement(...);
     ```
-- `delete` elimina un oggetto allocato con `new`
+- `delete` elimina un oggetto allocato con `new`.
     ```cpp
     delete el;
     ```
@@ -481,7 +482,57 @@ Vi sono due operatori appositi in C++ che svolgono le stesse operazioni di `mall
     ```cpp
     int* arrayptr = new int[5];
     ```
-- `delete[]` elimina un array allocato con `new[]`
+- `delete[]` elimina un array allocato con `new[]`.
     ```cpp
     delete[] arrayptr;
     ```
+
+### Esempio di utilizzo dell'allocazione dinamica
+
+#### **`index.html`** [Visualizza](examples/06-malloc-new/index.html)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KinderC - Malloc</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/nboano/kinderc/kinderc.js"></script>
+    <assembly src="main.wasm"></assembly>
+</head>
+<body>
+    <button onclick="allocate_and_print(10);">Alloca 10 elementi</button>
+    <button onclick="allocate_and_print(50);">Alloca 50 elementi</button>
+    <button onclick="allocate_and_print(100);">Alloca 100 elementi</button>
+    <div id="results"></div>
+</body>
+</html>
+```
+
+#### **`main.cpp`** [Visualizza](examples/06-malloc-new/main.cpp)
+```cpp
+#include "D:\kinderc\kinderc.hpp"
+
+exported void allocate_and_print(int n) {
+    int* array = new int[n];
+    // Same as int* array = (int*)malloc(n*sizeof(int));
+
+    $("#results").innerHTML = "";
+    string rs = "";
+
+    for (int i = 0; i < n; i++)
+    {
+        array[i] = i + 1;
+        rs += (char*)string::Format("<b>array[%i]</b>: %i<br>", i, array[i]);
+    } 
+
+    $("#results").innerHTML = rs;
+
+    delete[] array;
+    // Same as free(array);
+}
+
+int main() {}
+```

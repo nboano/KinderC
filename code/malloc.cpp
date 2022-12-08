@@ -30,8 +30,6 @@ void free(void* ptr) {
 }
 
 void* malloc(unsigned long size) {
-	while((unsigned long)heap_end + size > Memory::GetSize()) Memory::Grow(1);
-
 	memblock* loc_mcb;
 	void* returned_location = 0;
 
@@ -42,6 +40,8 @@ void* malloc(unsigned long size) {
 	size += sizeof(memblock) + MALLOC_SPACE;
 
 	while(loc != heap_end) {
+		while((unsigned long)heap_end + size > Memory::GetSize()) Memory::Grow(1);
+
 		loc_mcb = (memblock*)loc;
 		if(loc_mcb->available && loc_mcb->size >= size) {
 			loc_mcb->available = false;
