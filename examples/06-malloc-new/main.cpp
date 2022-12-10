@@ -1,4 +1,4 @@
-#include "D:\kinderc\kinderc.hpp"
+#include "../../kinderc.hpp"
 
 exported void allocate_and_print(int n) {
     int* array = new int[n];

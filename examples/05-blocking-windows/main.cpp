@@ -1,4 +1,4 @@
-#include "D:\kinderc\kinderc.hpp"
+#include "../../kinderc.hpp"
 
 int main() {}
 

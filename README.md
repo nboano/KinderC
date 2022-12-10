@@ -137,7 +137,7 @@ Creiamo quindi anche il file sorgente, `main.cpp`, su cui andremo a codificare i
 
 #### **`main.cpp`** [Visualizza](examples/01-hello-world/main.cpp)
 ```cpp
-#include "D:\kinderc\kinderc.hpp"
+#include "../../kinderc.hpp"
 
 int main() {
     	printf("<h1>Hello World!</h1>");
@@ -236,7 +236,7 @@ Segue un esempio dove viene importato un metodo che ritorna il timestamp UNIX co
 
 #### **`main.cpp`** [Visualizza](examples/02-imported/main.cpp)
 ```cpp
-#include "D:\kinderc\kinderc.hpp"
+#include "../../kinderc.hpp"
 
 imported unsigned long ottieniTempo();
 
@@ -285,7 +285,7 @@ Di seguito viene riportato lo snippet di una funzione che calcola il valore dell
 #### **`main.cpp`** [Visualizza](examples/03-exported/main.cpp)
 
 ```cpp
-#include "D:\kinderc\kinderc.hpp"
+#include "../../kinderc.hpp"
 
 exported void esponenziale(int base, int esponente) {
     long risultato = base;
@@ -332,7 +332,7 @@ Di seguito un esempio di utilizzo della funzione `printf`:
 #### **`main.cpp`** [Visualizza](examples/04-printf/main.cpp)
 
 ```cpp
-#include "D:\kinderc\kinderc.hpp"
+#include "../../kinderc.hpp"
 
 int main() {
     string s = "CIAO!";
@@ -408,7 +408,7 @@ char* risposta = prompt("Inserisci il tuo nome", "Mario");
 
 #### **`main.cpp`** [Visualizza](examples/05-blocking-windows/main.cpp)
 ```cpp
-#include "D:\kinderc\kinderc.hpp"
+#include "../../kinderc.hpp"
 
 int main() {}
 
@@ -539,7 +539,7 @@ Vi sono due operatori appositi in C++ che svolgono le stesse operazioni di `mall
 
 #### **`main.cpp`** [Visualizza](examples/06-malloc-new/main.cpp)
 ```cpp
-#include "D:\kinderc\kinderc.hpp"
+#include "../../kinderc.hpp"
 
 exported void allocate_and_print(int n) {
     int* array = new int[n];

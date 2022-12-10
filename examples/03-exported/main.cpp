@@ -1,4 +1,4 @@
-#include "D:\kinderc\kinderc.hpp"
+#include "../../kinderc.hpp"
 
 exported void esponenziale(int base, int esponente) {
     long risultato = base;
