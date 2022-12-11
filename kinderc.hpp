@@ -220,6 +220,10 @@
 		/// @param s A char array, or a string literal.
 		String(const char* s = "");
 
+		/// @brief Creates a string object from an integer.
+		/// @param n An integer that will be converted to a string.
+		String(int n);
+
 		/// @brief Destroys a string, deallocating the memory associated.
 		~String();
 
@@ -313,6 +317,8 @@
 		/// @brief Appends a character to the string.
 		/// @param c A char.
 		void operator += (char c);
+
+		void operator += (String s);
 
 		/// @brief Returns the character of a given index.
 		/// @param index The index.

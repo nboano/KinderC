@@ -102,6 +102,11 @@ String::String(const char* s) {
 	strcpy(CharArray, "");
 	strcpy(CharArray, s);
 }
+String::String(int n) {
+	CharArray = (char*)malloc(16);
+	strcpy(CharArray, "");
+	itoa(n, CharArray, 10);
+}
 String::~String() {
 	free(CharArray);
 }
@@ -170,6 +175,7 @@ String String::operator + (String s) {
 }
 void String::operator += (const char* s) { Concat(s); }
 void String::operator += (char c) { Concat(c); }
+void String::operator += (String s) {Concat((char*)s);}
 char String::operator[] (int index) {
 	return CharArray[index];
 }
