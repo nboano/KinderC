@@ -50,6 +50,7 @@
     - [Costruttori e distruttore](#costruttori-e-distruttore-di-htmlelement)
     - [Metodi e operatori](#metodi-e-operatori-di-htmlelement)
     - [Proprietà](#proprietà-di-htmlelement)
+    - [Eventi](#eventi-dellhtmlelement)
 17. [La classe `HTMLElementCollection`](#la-classe-htmlelementcollection)
 18. [Manipolazione del DOM](#manipolazione-del-dom)
     - [L'oggetto `document`](#loggetto-document)
@@ -863,6 +864,68 @@ Di seguito vengono elencate e descritte tutte le proprietà e i metodi della cla
   ```cpp
   el.style["display"] = "none";
   ```
+
+- `Destroyable` (`bool`)  
+  Specifica se l'elemento dovrà essere deallocato dal distruttore quando non più necessario. Di default è impostato a `true`.
+
+- `id`  
+  Rappresenta l'attributo *id* dell'elemento, cioè un identificatore univoco all'interno dell'albero DOM.
+
+- `innerHTML`  
+  Rappresenta la stringa HTML contenuta all'interno dell'elemento.
+
+- `outerHTML`  
+  Stringa HTML rappresentante l'elemento e il suo contenuto.
+
+- `innerText`  
+  Rappresenta il testo contenuto all'interno dell'elemento.
+
+- `outerText`  
+  Rappresenta il testo contenuto all'interno dell'elemento. La differenza rispetto a innerText è che, quando usata come setter, rimpiazza l'elemento.
+
+- `textContent`  
+  Stringa che rappresenta il testo contenuto nell'elemento.
+
+- `nodeName`  
+  Corrisponde al tipo di tag dell'elemento, oppure a `#text` o `#comment` se il nodo è un nodo di testo o un commento.
+
+- `nodeType`  
+  Corrisponde al tipo di nodo. Utile nella gestione dell'XML.
+
+- `nodeName`  
+  Se il nodo è un nodo di testo o un commento, ne restituisce il valore. Utile nella gestione dell'XML.
+
+- `lang`  
+  Specifica il linguaggio in cui il testo dell'elemento è scritto.
+
+- `title`  
+  Specifica il testo del tooltip visualizzato di default quando ci si porta con il mouse sull'elemento.
+
+- `scrollTop`  
+  Specifica la distanza a cui l'utente è arrivato a scorrere da cima elemento.
+
+- `scrollLeft`  
+  Specifica la distanza a cui l'utente è arrivato a scorrere dalla destra dell'elemento.
+
+- `scrollWidth`  
+  Specifica la larghezza dell'elemento che si può scorrere.
+
+- `scrollHeight`  
+  Specifica l'altezza dell'elemento che si può scorrere.
+
+- `dir`  
+  Specifica la direzione del testo (`rtl`, `ltr`).
+
+- `className`  
+  Specifica il nome della classe CSS associata all'elemento.
+
+- `contentEditable`  
+  Specifica se il contenuto dell'elemento è modificabile.
+
+- `accessKey`  
+  Specifica il tasto che, premuto in combinazione con **`ALT`**, attiva l'elemento.
+
+### Eventi dell'`HTMLElement`
 
 ## La classe `HTMLElementCollection`
 
