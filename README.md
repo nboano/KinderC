@@ -842,6 +842,28 @@ Di seguito vengono elencate e descritte tutte le proprietà e i metodi della cla
 
 ### Proprietà di `HTMLElement`
 
+- **Array associativo `attributes[]`**
+  ```cpp
+  char* attributes[const char* key];
+  ```
+  Permette l'accesso agli attributi dell'elemento. Equivale all'utilizzo di `setAttribute` e `getAttribute`.
+
+  *Esempio:*
+  ```cpp
+  el.attributes["src"] = "https://example.com/my_img.jpg";
+  ```
+
+- **Array associativo `style[]`**
+  ```cpp
+  char* style[const char* key];
+  ```
+  Permette l'accesso alle proprietà CSS dell'elemento. Equivale all'utilizzo di `setStyleProperty` e `getStyleProperty`.
+
+  *Esempio:*
+  ```cpp
+  el.style["display"] = "none";
+  ```
+
 ## La classe `HTMLElementCollection`
 
 ## Manipolazione del DOM
