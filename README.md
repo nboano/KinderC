@@ -13,24 +13,25 @@
 3. [Impostazione dell'ambiente di lavoro](#impostazione-dellambiente-di-lavoro)
 4. [Struttura di un'applicazione KinderC](#struttura-di-unapplicazione-kinderc)
 5. [Esempi](#esempi)
-6. [Hello World](#hello-world)
-7. [Strutturazione del file sorgente](#strutturazione-del-file-sorgente)
-8. [Tipi di dato](#tipi-di-dato)
+6. [Compilazione](#compilazione)
+7. [Hello World](#hello-world)
+8. [Strutturazione del file sorgente](#strutturazione-del-file-sorgente)
+9. [Tipi di dato](#tipi-di-dato)
    - [Tipi di dato fondamentali](#tipi-di-dato-fondamentali)
    - [Tipi di dato aggiuntivi](#tipi-di-dato-aggiuntivi)
-9. [Importazione ed esportazione di metodi](#importazione-ed-esportazione-di-metodi)
+10. [Importazione ed esportazione di metodi](#importazione-ed-esportazione-di-metodi)
    - [Importazione dei metodi (`imported`)](#importazione-dei-metodi-imported)
    - [Esportazione dei metodi (`exported`)](#esportazione-dei-metodi-exported)
-10. [Gestione base dell'I/O](#gestione-base-dellio)
+11. [Gestione base dell'I/O](#gestione-base-dellio)
       - [La funzione `puts`](#la-funzione-puts)
       - [La funzione `printf`](#la-funzione-printf)
       - [La finestra `alert`](#la-finestra-alert)
       - [La finestra `confirm`](#la-finestra-confirm)
       - [La finestra `prompt`](#la-finestra-prompt)
       - [Esempio di utilizzo delle finestre bloccanti](#esempio-di-utilizzo-delle-finestre-bloccanti)
-11. [La classe `Console`](#la-classe-console)
+12. [La classe `Console`](#la-classe-console)
       - [`Console::Write`](#consolewrite)
-12. [Gestione della memoria](#gestione-della-memoria)
+13. [Gestione della memoria](#gestione-della-memoria)
       - [La memoria in KinderC](#la-memoria-in-kinderc)
       - [Allocazione statica](#allocazione-statica)
       - [Allocazione dinamica](#allocazione-dinamica)
@@ -38,14 +39,14 @@
         - [La funzione `free`](#la-funzione-free)
         - [Gli operatori `new` e `delete` di C++](#gli-operatori-new-e-delete-di-c)
         - [Esempio di utilizzo](#esempio-di-utilizzo-dellallocazione-dinamica)
-13. [Le stringhe C ANSI](#le-stringhe-c-ansi)
+14. [Le stringhe C ANSI](#le-stringhe-c-ansi)
     - [Caratteristiche delle stringhe C](#caratteristiche-delle-stringhe-c)
     - [Metodi per manipolare le stringhe C](#metodi-per-manipolare-le-stringhe-c)
     - [Esempio di utilizzo](#esempio-di-utilizzo-dei-metodi-delle-stringhe-c)
-14. [Le stringhe come oggetti: il tipo `string`](#le-stringhe-come-oggetti-il-tipo-string)
+15. [Le stringhe come oggetti: il tipo `string`](#le-stringhe-come-oggetti-il-tipo-string)
     - [Metodi e proprietà](#metodi-e-proprietà-delloggetto-string)
     - [Esempio di utilizzo](#esempio-di-utilizzo-delloggetto-string)
-15. [Manipolazione del DOM](#manipolazione-del-dom)
+16. [Manipolazione del DOM](#manipolazione-del-dom)
     - [L'oggetto `document`](#loggetto-document)
     - [Classe `HTMLElement`](#classe-htmlelement)
     - [Classe `HTMLElementCollection`](#classe-htmlelementcollection)
@@ -103,6 +104,21 @@ La cosa più comoda per includere il kinderc.js è utilizzare la CDN:
 ## Esempi
 
 Tutti gli esempi che vi vengono presentati sono contenuti nella cartella `examples\` del repo.
+
+## Compilazione
+
+Per i sistemi Windows, è possibile compilare facilmente il proprio file `.cpp` eseguendo lo script `kccompile` (che si trova nella root del repository).
+
+```bat
+kccompile main.cpp main.wasm
+```
+
+Per i sistemi UNIX, è necessario utilizzare il comando completo, richiamando il compilatore `clang`.
+
+```bash
+clang --target=wasm32 -Wl,--no-entry -Wl,--export-dynamic -Wl,--allow-undefined -Wl,--lto-O3 -Wl,--import-memory -O3 -flto -nostdlib -fdeclspec -o main.wasm main.cpp
+```
+
 
 ## Hello World
 
