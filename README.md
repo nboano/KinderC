@@ -352,6 +352,8 @@ Nel caso di un'applicazione KinderC, la stringa viene stampata in coda alla pagi
 
 Di seguito un esempio di utilizzo della funzione `printf`:
 
+#### **`index.html`** [Visualizza](examples/04-printf/index.html) *(Il file è stato omesso in quanto senza un body)*
+
 #### **`main.cpp`** [Visualizza](examples/04-printf/main.cpp)
 
 ```cpp
