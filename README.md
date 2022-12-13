@@ -46,7 +46,12 @@
 15. [Le stringhe come oggetti: il tipo `string`](#le-stringhe-come-oggetti-il-tipo-string)
     - [Metodi e proprietà](#metodi-e-proprietà-delloggetto-string)
     - [Esempio di utilizzo](#esempio-di-utilizzo-delloggetto-string)
-16. [Manipolazione del DOM](#manipolazione-del-dom)
+16. [La classe `HTMLElement` e le sue derivate](#la-classe-htmlelement-e-le-sue-derivate)
+    - [Costruttori e distruttore](#costruttori-e-distruttore-di-htmlelement)
+    - [Metodi e operatori](#metodi-e-operatori-di-htmlelement)
+    - [Proprietà](#proprietà-di-htmlelement)
+17. [La classe `HTMLElementCollection`](#la-classe-htmlelementcollection)
+18. [Manipolazione del DOM](#manipolazione-del-dom)
     - [L'oggetto `document`](#loggetto-document)
     - [Classe `HTMLElement`](#classe-htmlelement)
     - [Classe `HTMLElementCollection`](#classe-htmlelementcollection)
@@ -737,6 +742,105 @@ int main() {
     puts(spl[2] + "<br>");
 }
 ```
+
+## La classe `HTMLElement` e le sue derivate
+
+La classe `HTMLElement` è alla base di ogni metodo della libreria che manipola il *DOM*. Un'istanza di questa classe rappresenta un puntatore a un oggetto grafico del documento, come può essere un paragrafo, un div, eccetera. La classe fornisce metodi e proprietà che permettono di modificare dinamicamente l'oggetto puntato. Da `HTMLElement` derivano altre classi che rappresentano elementi DOM più specifici (ad esempio `HTMLButtonElement`) e che dispongono di proprietà e metodi aggiuntivi e specifici.
+
+Di seguito vengono elencate e descritte tutte le proprietà e i metodi della classe, insieme con i suoi costruttori e il suo distruttore.
+
+### Costruttori e distruttore di `HTMLElement`
+
+-   **Costruttore** (data una query CSS e un documento padre)
+    ```cpp
+    HTMLElement(const char* CSS_QUERY, HTMLDocument doc = document);
+    ```
+    L'utilizzo di questo costruttore crea una nuova istanza di classe che punta al primo elemento selezionato dalla query CSS passata come primo parametro. &Egrave; inoltre possibile specificare il documento dove la ricerca dell'elemento va effettuata. Di default, fa riferimento al documento corrente (`document`). 
+
+    > **N.B.** Nel caso in cui l'elemento selezionato non esistesse, l'interprete JavaScript mostrerà un errore in console del tipo:  
+`Cannot read properties of undefined.`
+
+- **Costruttore** (dato il tipo di elemento da creare, il suo ID e il documento di destinazione)
+  ```cpp
+  HTMLElement(const char* TAGNAME, const char* ID, HTMLDocument doc = document);
+  ```
+  Al contrario del costruttore precedente, questo permette di creare un nuovo elemento. &Egrave; necessario specificare il tipo di elemento (es. `"table"`, `"button"`) ed un suo ID univoco.
+
+    > **N.B.** Una volta richiamato questo costruttore, l'elemento verrà solo creato come oggetto in memoria, ma NON ancora accodato alla pagina. Per aggiungere l'elemento alla pagina, sarà necessaria una chiamata a `document.Append`.
+
+- **Distruttore**
+  ```cpp
+  ~HTMLElement();
+  ```
+  Il distruttore di classe viene automaticamente richiamato quando l'oggetto non è più necessario. &Egrave; anche possibile richiamare manualmente il distruttore.
+
+    > **N.B.** Il distruttore distrugge l'oggetto che punta all'elemento. Non rimuove l'elemento dalla pagina.
+
+    > Per evitare che il puntatore venga distrutto automaticamente, settare la proprietà `Destroyable` a `false`.
+
+### Metodi e operatori di `HTMLElement`
+
+- **Metodo `Append()`**
+  ```cpp
+  el.Append("TESTO");
+  el.Append(&ALTRO_ELEMENTO);
+  ```
+  Permette di aggiungere in coda all'elemento o un testo o un altro `HTMLElement`.
+
+- **Operatore `<<`**
+  ```cpp
+  el << "TESTO";
+  el << &ALTRO_ELEMENTO;
+  ```
+  Equivale al `.Append()`.
+
+    > **N.B.** Quando si aggiunge un'elemento ad un altro, esso va sempre passato per referenza utilizzando l'operatore di *referenziazione* (`&`)
+
+- **Metodi `setProperty()` e `getProperty()`**
+  ```cpp
+  void setProperty(const char* key, const char* value);
+  char* getProperty(const char* key);
+  ```
+  Impostano o restituiscono il valore di una proprietà dell'oggetto puntato.
+
+- **Metodi `setAttribute()` e `getAttribute()`**
+  ```cpp
+  void setAttribute(const char* key, const char* value);
+  char* getAttribute(const char* key);
+  ```
+  Impostano o restituiscono il valore di un attributo HTML dell'oggetto puntato.
+
+- **Metodi `setStyleProperty()` e `getStyleProperty()`**
+  ```cpp
+  void setStyleProperty(const char* key, const char* value);
+  char* getStyleProperty(const char* key);
+  ```
+  Impostano o restituiscono il valore di una proprietà CSS dell'oggetto puntato.
+
+- **Metodo `addEventListener()`**
+  ```cpp
+  void addEventListener(const char* eventname, void(*handler)(HTMLElement&));
+  ```
+  Associa un'handler a un evento (come `click`, `load` eccetera). L'handler può essere una *lambda* oppure una funzione classica. Il primo parametro dell'handler, di tipo `HTMLElement&`, rappresenta il sender. 
+
+  *Esempio con lambda:*
+  ```cpp
+  el.addEventListener("click", [](HTMLElement& sender) {
+    // Codice eseguito al click
+  });
+  ```
+  *Esempio con funzione classica:*
+  ```cpp
+  void btnProva_Click(HTMLElement& sender) {
+    // Codice eseguito al click
+  }
+
+  el.addEventListener("click", btnProva_Click);
+  ```
+
+### Proprietà di `HTMLElement`
+
+## La classe `HTMLElementCollection`
 
 ## Manipolazione del DOM
 
