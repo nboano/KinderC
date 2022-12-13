@@ -981,7 +981,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 			// Sets the access key used to access the element.
 			prop(accessKey);
 
-			prop(contenteditable);
+			prop(contentEditable);
 
 			/// Event fired at click.
 			ev_HTMLElement(onclick);
