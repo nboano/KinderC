@@ -1248,11 +1248,19 @@ extern "C" void __cxa_free_exception(void* ptr);
 	};
 
 #pragma endregion
-#pragma region SCREENS
+#pragma region APPLICATION CLASS
 
 	void handle_screen_change(void*);
 
 	void use_screens();
+
+	class Application {
+		public:
+		static struct Title {
+			void operator = (string v);
+			operator char*();
+		} Title;
+	};
 
 #pragma endregion
 #pragma region BOM OBJECTS
@@ -1421,5 +1429,6 @@ extern "C" void __cxa_free_exception(void* ptr);
 #include "code/storage.cpp"
 #include "code/datetime.cpp"
 #include "code/exceptions.cpp"
+#include "code/application.cpp"
 
 #pragma endregion
