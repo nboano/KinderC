@@ -451,6 +451,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 	class HTMLElement;
 	class HTMLElementCollection;
 	class XMLHttpRequest;
+	class Response;
 
 	/// @brief Use this class to handle events and so on.
 	class Handler {
@@ -468,9 +469,13 @@ extern "C" void __cxa_free_exception(void* ptr);
 		/// @param handler The handler.
 		Handler(void(*handler)(HTMLElement&));
 
-		/// @brief Creates an handler for an XMLHttpRequest header.
+		/// @brief Creates an handler for an XMLHttpRequest event.
 		/// @param handler The handler.
 		Handler(void(*handler)(XMLHttpRequest&));
+
+		/// @brief Creates an handler for a fetch event.
+		/// @param handler The handler.
+		Handler(void(*handler)(Response&));
 
 		/// @brief Gets the JavaScript code that calls the handler, passing a pointer.
 		/// @param ptr The pointer to pass as parameter.
@@ -655,19 +660,6 @@ extern "C" void __cxa_free_exception(void* ptr);
 		/// @return A generic pointer to the response.
 		void* RAW();
 
-		/// @deprecated Use the response property instead.
-		void* get_response();
-		/// @deprecated Use the readyState property instead.
-		Status get_readyState();
-		/// @deprecated Use the status property instead.
-		int get_statusCode();
-		/// @deprecated Use the loaded property instead.
-		int get_loaded();
-		/// @deprecated Use the total property instead.
-		int get_total();
-		/// @deprecated Use the statusText property instead.
-		string get_statusText();
-
 		// This event is triggered at the end of the request.
 		ev_XMLHttpRequest(onload);
 
@@ -680,23 +672,38 @@ extern "C" void __cxa_free_exception(void* ptr);
 		// This event is triggered in case of a network error
 		ev_XMLHttpRequest(onerror);
 
-		/// @brief Raw response pointer.
+		#ifndef __INTELLISENSE__
+		void* get_response();
+		Status get_readyState();
+		int get_statusCode();
+		int get_loaded();
+		int get_total();
+		string get_statusText();
 		__declspec(property(get = get_response)) void* response;
+		__declspec(property(get = get_readyState)) Status readyState;
+		__declspec(property(get = get_statusCode)) int status;
+		__declspec(property(get = get_loaded)) int loaded;
+		__declspec(property(get = get_total)) int total;
+		__declspec(property(get = get_statusText)) string statusText;
+		#else
+		/// @brief Raw response pointer.
+		void* response;
 
 		/// @brief The ready state of the request.
-		__declspec(property(get = get_readyState)) Status readyState;
+		Status readyState;
 
 		/// @brief The HTTP status code (es. 200)
-		__declspec(property(get = get_statusCode)) int status;
+		int status;
 
 		/// @brief The number of bytes loaded.
-		__declspec(property(get = get_loaded)) int loaded;
+		int loaded;
 
 		/// @brief The total number of bytes incoming.
-		__declspec(property(get = get_total)) int total;
+		int total;
 
 		/// @brief The HTTP status text (es. OK)
-		__declspec(property(get = get_statusText)) string statusText;
+		string statusText;
+		#endif
 
 	private:
 		int index;
@@ -725,6 +732,11 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 	} FetchOptions;
 
+	/// @brief Class used to handle the fetch network responses.
+	class Response : public Request {
+
+	};
+
 	/// @brief Default fetch options (GET request with empty body)
 	const FetchOptions Fetch_defaults = {"GET" , ""};
 
@@ -741,18 +753,18 @@ extern "C" void __cxa_free_exception(void* ptr);
 		/// @param URL The request URL.
 		/// @param options The request options. Defaults to GET with empty body.
 		/// @return The request object.
-		static Request sync(string URL, FetchOptions options = {"GET", ""});
+		static Response sync(string URL, FetchOptions options = {"GET", ""});
 
 		/// @brief Specifies an handler for when the request has completed.
 		/// @param handler The handler.
-		Fetch then(void(*)(Request&));
+		Fetch then(void(*)(Response&));
 
 		/// @brief Specifies an handler for when a network error occurs
 		/// @param handler The handler.
-		Fetch error(void(*)(Request&));
+		Fetch error(void(*)(Response&));
 
 	private:
-		Request r;
+		Response r;
 	};
 
 	typedef Fetch fetch;

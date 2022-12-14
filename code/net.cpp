@@ -66,6 +66,7 @@ string XMLHttpRequest::getResponseHeader(const char* headername) {
 	sprintf(bf, "`%s`", headername);
 	return string(dp[index]["getResponseHeader"](bf));
 }
+#ifndef __INTELLISENSE__
 void* XMLHttpRequest::get_response() {
 	return JavaScript::Eval("dp[%i].responseText", index);
 }
@@ -85,17 +86,18 @@ int XMLHttpRequest::get_total() {
 string XMLHttpRequest::get_statusText() {
 	return object("dp")[index]["statusText"];
 }
+#endif
 string XMLHttpRequest::getAttribute(const char* name) {
 	return object("dp")[index][name];
 }
 object XMLHttpRequest::JSON() {
-	return JSON::Parse((char*)get_response());
+	return JSON::Parse((char*)response);
 }
 string XMLHttpRequest::Text() {
-	return String((char*)get_response());
+	return String((char*)response);
 }
 void* XMLHttpRequest::RAW() {
-	return get_response();
+	return response;
 }
 void XMLHttpRequest::setAttribute(const char* name, const char* value) {
 	object("dp")[index][name] = value;
@@ -116,16 +118,16 @@ Fetch::Fetch(string URL, FetchOptions options) {
 
 	r.send(options.Body);
 }
-Fetch Fetch::then(void(*handler)(Request&)) {
-	r.onload = handler;
+Fetch Fetch::then(void(*handler)(Response&)) {
+	r.onload = (void(*)(XMLHttpRequest&))handler;
 	return *this;
 }
-Fetch Fetch::error(void(*handler)(Request&)) {
-	r.onerror = handler;
+Fetch Fetch::error(void(*handler)(Response&)) {
+	r.onerror = (void(*)(XMLHttpRequest&))handler;
 	return *this;
 }
-Request Fetch::sync(string URL, FetchOptions options) {
-    Request r = XMLHttpRequest();
+Response Fetch::sync(string URL, FetchOptions options) {
+    Response r;
     r.open(options.Method, URL, false);
     for(int i = 0; i < 16; i++) {
         if(options.Headers[i][0] == "") break;
