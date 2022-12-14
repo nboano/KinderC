@@ -40,10 +40,6 @@
 
 		#define prop(name) string name;
 
-		#define set operator=
-
-		#define get operator
-
 	#endif
 
 #pragma endregion
@@ -1260,9 +1256,10 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 	class Application {
 		public:
+
 		static struct Title {
-			void set (string v);
-			get char*();
+			void operator=(string v);
+			operator char*();
 		} Title;
 	};
 
