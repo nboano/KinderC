@@ -1,9 +1,9 @@
 #pragma once
 #include "../kinderc.hpp"
 
-Application::Title::operator char *() {
+Application::Title::get char*() {
     return object("document")["title"];
 }
-void Application::Title::operator=(string v) {
+void Application::Title::set(string v) {
     object("document")["title"] = (string)"\"" + v + "\"";
 }
