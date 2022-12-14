@@ -29,11 +29,15 @@ Handler::Handler(void(*handler)(HTMLElement&)) {
 Handler::Handler(void(*handler)(XMLHttpRequest&)) {
 	LambdaIndex = __lambda_add((void(*)(void*))handler);
 }
+Handler::Handler(void(*handler)(Response&)) {
+	LambdaIndex = __lambda_add((void(*)(void*))handler);
+}
 string Handler::GetWithPointer(void* ptr, bool function) {
 	if (LambdaIndex < 0)
 		return String::Format(function ? "()=>%s(%i)" : "%s(%i)", HandlerFunctionName.CharArray, (int)ptr);
 	else return String::Format(function ? "()=>__lambda_call(%i,%i)" : "__lambda_call(%i,%i)", LambdaIndex, ptr);
 }
+
 void screen_handle_change(void* = 0) {
 	$$("screen").style["display"] = "none";
     if(location.hash != "" && $has((string)"screen" + location.hash)) {
