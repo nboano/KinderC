@@ -1,9 +1,17 @@
 #pragma once
 #include "../kinderc.hpp"
 
-Application::Title::operator char*() {
-    return object("document")["title"];
-}
-void Application::Title::operator=(string v) {
-    object("document")["title"] = (string)"\"" + v + "\"";
-}
+Property<const char*> Application::Title = Property<const char*>(
+    []() {
+        return (const char*)object("document")["title"];
+    },
+    [](const char* value) {
+        object("document")["title"] = (string)"\"" + value + "\"";
+    }
+);
+
+Property<const char*> Application::UserLanguage = Property<const char*>(
+    []() {
+        return (const char*)navigator.language;
+    }
+);
