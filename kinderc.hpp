@@ -43,6 +43,33 @@
 	#endif
 
 #pragma endregion
+#pragma region PROPERTY CLASS
+
+	template <class T>
+	class Property {
+		public:
+		Property(T(*get)(), void(*set)(T)) {
+			getter = get;
+			setter = set;
+		}
+		Property(T(*get)()) {
+			getter = get;
+		}
+		Property(void(*set)(T)) {
+			setter = set;
+		}
+		void operator = (T value) {
+			setter(value);
+		}
+		operator T() {
+			return getter();
+		}
+		private:
+		void(*setter)(T) = [](T){};
+		T(*getter)() = [](){return (T)nullptr;};
+	};
+
+#pragma endregion
 #pragma region MAIN
 
 	/// @brief The program entering point.
@@ -1256,13 +1283,9 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 	class Application {
 		public:
-
-		static struct Title {
-			void operator=(string v);
-			operator char*();
-		} Title;
+		static Property<const char*> Title;
+		static Property<const char*> UserLanguage;
 	};
-
 #pragma endregion
 #pragma region BOM OBJECTS
 
