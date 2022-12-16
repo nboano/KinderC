@@ -1283,8 +1283,26 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 	class Application {
 		public:
+
 		static Property<const char*> Title;
+
 		static Property<const char*> UserLanguage;
+
+		static void OpenWindow(string url = "about:blank", int width = 0, int height = 0, int left = 0, int top = 0);
+
+		static void Restart();
+
+		static void Print();
+
+		static void GoToURL(string URL);
+
+		static Property<void(*)(void*)> OnBlur;
+
+		static Property<void(*)(void*)> OnFocus;
+
+		static Property<void(*)(void*)> OnOnline;
+
+		static Property<void(*)(void*)> OnOffline;
 	};
 #pragma endregion
 #pragma region BOM OBJECTS

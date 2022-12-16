@@ -15,3 +15,45 @@ Property<const char*> Application::UserLanguage = Property<const char*>(
         return (const char*)navigator.language;
     }
 );
+
+Property<void(*)(void*)> Application::OnBlur = Property<void(*)(void*)>([](void(*h)(void*)) {
+    string cmd = Handler(h).GetWithPointer(nullptr , true);
+    window["onblur"] = cmd;
+});
+
+Property<void(*)(void*)> Application::OnFocus = Property<void(*)(void*)>([](void(*h)(void*)) {
+    string cmd = Handler(h).GetWithPointer(nullptr , true);
+    window["onfocus"] = cmd;
+});
+
+Property<void(*)(void*)> Application::OnOnline = Property<void(*)(void*)>([](void(*h)(void*)) {
+    string cmd = Handler(h).GetWithPointer(nullptr , true);
+    window["ononline"] = cmd;
+});
+
+Property<void(*)(void*)> Application::OnOffline = Property<void(*)(void*)>([](void(*h)(void*)) {
+    string cmd = Handler(h).GetWithPointer(nullptr , true);
+    window["onoffline"] = cmd;
+});
+
+void Application::OpenWindow(string url, int width, int height, int left, int top) {
+    string windowcmd = "\"popup";
+    if(width != 0) windowcmd += (string)",width=" + (string)width;
+    if(height != 0) windowcmd += (string)",height=" + (string)height;
+    if(left != 0) windowcmd += (string)",left=" + (string)left;
+    if(top != 0) windowcmd += (string)",top=" + (string)top;
+    windowcmd += "\"";
+    window["open"]((string)"\"" + url + "\"", "'_blank'", windowcmd);
+}
+
+void Application::Restart() {
+    location.reload();
+}
+
+void Application::Print() {
+    window["print"]();
+}
+
+void Application::GoToURL(string URL) {
+    location.href = URL;
+}
