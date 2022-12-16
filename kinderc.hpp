@@ -1275,6 +1275,17 @@ extern "C" void __cxa_free_exception(void* ptr);
 	};
 
 #pragma endregion
+#pragma region FILE MANAGEMENT
+
+	class OpenFileDialog : public object {
+		public:
+		void ShowDialog() {
+			(object)*this = "document.createElement('input')";
+			((object)*this)["type"] = "\"file\"";
+		}
+	};
+
+#pragma endregion
 #pragma region APPLICATION CLASS
 
 	void handle_screen_change(void*);
