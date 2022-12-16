@@ -1277,12 +1277,17 @@ extern "C" void __cxa_free_exception(void* ptr);
 #pragma endregion
 #pragma region FILE MANAGEMENT
 
-	class OpenFileDialog : public object {
+	class OpenFileDialog {
 		public:
-		void ShowDialog() {
-			(object)*this = "document.createElement('input')";
-			((object)*this)["type"] = "\"file\"";
-		}
+
+		static void Show();
+
+		static void Reset();
+
+		private:
+
+		static void assert_ofd();
+		static const char* ID;
 	};
 
 #pragma endregion
@@ -1471,5 +1476,6 @@ extern "C" void __cxa_free_exception(void* ptr);
 #include "code/datetime.cpp"
 #include "code/exceptions.cpp"
 #include "code/application.cpp"
+#include "code/files.cpp"
 
 #pragma endregion
