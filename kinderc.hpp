@@ -986,6 +986,16 @@ extern "C" void __cxa_free_exception(void* ptr);
 			/// @brief Says if the element pointer must be destroyed or not when out of scope.
 			bool Destroyable = true;
 
+			#ifdef __INTELLISENSE__
+
+			/// @brief A property that tells if the HTMLElement exists.
+			bool Exists;
+
+			#else
+			bool checkExistance();
+			__declspec(property(get=checkExistance)) bool Exists;
+			#endif
+
 			// The id of the element.
 			prop(id);
 			// The HTML code contained into the element.
