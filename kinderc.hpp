@@ -1326,6 +1326,12 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 		static void GoToURL(string URL);
 
+		static void UseScreens();
+
+		static void IncludeScript(string URL);
+
+		static void IncludeStyleSheet(string URL);
+
 		static Property<void(*)(void*)> OnBlur;
 
 		static Property<void(*)(void*)> OnFocus;

@@ -57,3 +57,16 @@ void Application::Print() {
 void Application::GoToURL(string URL) {
     location.href = URL;
 }
+
+void Application::UseScreens() {
+    screen_handle_change();
+    document.body.onhashchange = new EventHandler(screen_handle_change);
+}
+
+void Application::IncludeScript(string URL) {
+    $("head") << (string)"<script src='" + URL + "'></script>";
+}
+
+void Application::IncludeStyleSheet(string URL) {
+    $("head") << (string)"<link rel='stylesheet' href='" + URL + "'/>";
+}
