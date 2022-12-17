@@ -73,6 +73,11 @@ char* HTMLElement::getAttribute(const char* key) {
 	sprintf(k, "\"%s\"", key);
 	return runFunction("getAttribute", k);
 }
+void HTMLElement::removeAttribute(const char* key) {
+	string s = (string)"\"" + (string)key + "\"";
+	Console::Write(s);
+	runFunction("removeAttribute", s);
+}
 void HTMLElement::setStyleProperty(const char* key, const char* value) {
 	char s[64] = "";
 	sprintf(s, "style['%s']", key);
@@ -210,7 +215,4 @@ HTMLElement $(const char* CSS_QUERY) {
 }
 HTMLElementCollection $$(const char* CSS_QUERY) {
 	return document.querySelectorAll(CSS_QUERY);
-}
-bool $has(const char* CSS_QUERY) {
-	return (int)JavaScript::Eval("document.querySelector(`%s`)==null?0:1", CSS_QUERY) != 0;
 }
