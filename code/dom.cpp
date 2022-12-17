@@ -103,7 +103,7 @@ const char* HTMLElement::getJSHandler(EventHandler* handler, bool function) {
 	HTMLElement* sender = (HTMLElement*)malloc(sizeof(HTMLElement));
 	snd.Destroyable = false;
 	*sender = snd;
-	static string s = handler->GetWithPointer(sender, function).CharArray;
+	string s = handler->GetWithPointer(sender, function).CharArray;
 	return s;
 }
 
