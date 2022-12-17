@@ -52,21 +52,50 @@
 			getter = get;
 			setter = set;
 		}
-		Property(T(*get)()) {
+		Property(T(*get)(), void* sender = nullptr) {
 			getter = get;
+			
+			ptr = sender;
 		}
-		Property(void(*set)(T)) {
+		Property(void(*set)(T), void* sender = nullptr) {
 			setter = set;
+
+			ptr = sender;
 		}
+
+		Property(T(*get)(void*), void(*set)(void*,T), void* sender) {
+			dgetter = get;
+			dsetter = set;
+
+			ptr = sender;
+		}
+		Property(T(*get)(void*), void* sender) {
+			dgetter = get;
+
+			ptr = sender;
+		}
+		Property(void(*set)(void*,T), void* sender) {
+			dsetter = set;
+
+			ptr = sender;
+		}
+
 		void operator = (T value) {
-			setter(value);
+			if(ptr) dsetter(ptr, value);
+			else setter(value);
 		}
 		operator T() {
-			return getter();
+			if(ptr) return dgetter(ptr);
+			else return getter();
 		}
 		private:
 		void(*setter)(T) = [](T){};
 		T(*getter)() = [](){return (T)nullptr;};
+
+		void(*dsetter)(void*, T) = [](void*, T){};
+		T(*dgetter)(void*) = [](void*){return (T)nullptr;};
+
+		void* ptr = nullptr;
 	};
 
 #pragma endregion
@@ -517,7 +546,8 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 		/// @brief The handler function name.
 		string HandlerFunctionName;
-	private:
+
+		/// @brief The index in the array of lambdas.
 		int LambdaIndex;
 	};
 
@@ -1291,6 +1321,31 @@ extern "C" void __cxa_free_exception(void* ptr);
 #pragma endregion
 #pragma region FILE MANAGEMENT
 
+	class File : public object {
+		public:
+		File() {};
+		File(string fname) : object(fname) {}
+
+		#ifndef __INTELLISENSE__
+		unsigned long get_LastModified();
+		unsigned long get_Size();
+		string get_Name();
+		string get_MimeType();
+
+		__declspec(property(get=get_LastModified)) unsigned long LastModified;
+		__declspec(property(get=get_Size)) unsigned long Size;
+		__declspec(property(get=get_Name)) string Name;
+		__declspec(property(get=get_MimeType)) string MimeType;
+		#else
+		unsigned long LastModified;
+		unsigned long Size;
+		string Name;
+		string MimeType;	
+		#endif
+
+		void ReadAsTextAsync(void(*callback)(const char* data));
+	};
+
 	class OpenFileDialog {
 		public:
 
@@ -1301,6 +1356,10 @@ extern "C" void __cxa_free_exception(void* ptr);
 		static Property<const char*> Filter;
 
 		static Property<bool> Multiple;
+
+		static Property<File*> Files;
+
+		static Property<int> FilesNumber;
 
 		private:
 
