@@ -70,3 +70,7 @@ void Application::IncludeScript(string URL) {
 void Application::IncludeStyleSheet(string URL) {
     $("head") << (string)"<link rel='stylesheet' href='" + URL + "'/>";
 }
+
+void Application::EnableResponsiveView() {
+    $("head") << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
+}

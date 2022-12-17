@@ -1332,6 +1332,8 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 		static void UseScreens();
 
+		static void EnableResponsiveView();
+
 		static void IncludeScript(string URL);
 
 		static void IncludeStyleSheet(string URL);

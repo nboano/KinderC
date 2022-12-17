@@ -75,7 +75,6 @@ char* HTMLElement::getAttribute(const char* key) {
 }
 void HTMLElement::removeAttribute(const char* key) {
 	string s = (string)"\"" + (string)key + "\"";
-	Console::Write(s);
 	runFunction("removeAttribute", s);
 }
 void HTMLElement::setStyleProperty(const char* key, const char* value) {
