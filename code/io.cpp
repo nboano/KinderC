@@ -7,6 +7,32 @@
 			res = res * 10 + str[i] - '0';
 		return res;
 	}
+	float atof(char *arr)
+	{
+		float val = 0;
+		int afterdot=0;
+		float scale=1;
+		int neg = 0; 
+
+		if (*arr == '-') {
+			arr++;
+			neg = 1;
+		}
+		while (*arr) {
+			if (afterdot) {
+			scale = scale/10;
+			val = val + (*arr-'0')*scale;
+			} else {
+			if (*arr == '.') 
+			afterdot++;
+			else
+			val = val * 10.0 + (*arr - '0');
+			}
+			arr++;
+		}
+		if(neg) return -val;
+		else    return  val;
+	}
 	char* itoa(int num, char* str, int base)
 	{
 		int i = 0;
@@ -141,7 +167,7 @@
 	void ftoa_fixed(char* buffer, double value) {
 		int exponent = 0;
 		int places = 0;
-		static const int width = 4;
+		static const int width = 12;
 		if (value == 0.0) {
 			buffer[0] = '0';
 			buffer[1] = '\0';
@@ -179,7 +205,7 @@
 	void ftoa_sci(char* buffer, double value) {
 		int exponent = 0;
 		int places = 0;
-		static const int width = 4;
+		static const int width = 12;
 
 		if (value == 0.0) {
 			buffer[0] = '0';
@@ -208,13 +234,6 @@
 		*buffer++ = 'e';
 		itoa(exponent, buffer, 10);
 	}
-	/// <summary>
-	/// Writes a formatted string.
-	/// </summary>
-	/// <param name="string">String to write</param>
-	/// <param name="fmt">Format string</param>
-	/// <param name="">Format params</param>
-	/// <returns>String length</returns>
 	int sprintf(char* string, const char* fmt, ...) {
 		va_list arg;
 		int length;
@@ -223,12 +242,6 @@
 		va_end(arg);
 		return length;
 	}
-	/// <summary>
-	/// Prints a formatted string.
-	/// </summary>
-	/// <param name="fmt">Format string to print</param>
-	/// <param name="">Format params</param>
-	/// <returns>Printed string length</returns>
 	int printf(const char* fmt, ...) {
 		char buffer[8192];
 		strcpy(buffer, "");
