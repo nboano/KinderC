@@ -54,8 +54,6 @@
 17. [La classe `HTMLElementCollection`](#la-classe-htmlelementcollection)
 18. [Manipolazione del DOM](#manipolazione-del-dom)
     - [L'oggetto `document`](#loggetto-document)
-    - [Classe `HTMLElement`](#classe-htmlelement)
-    - [Classe `HTMLElementCollection`](#classe-htmlelementcollection)
     - [Selettori rapidi (`$`, `$$`)](#selettori-rapidi)
 
 ## Introduzione
@@ -868,6 +866,9 @@ Di seguito vengono elencate e descritte tutte le proprietà e i metodi della cla
 - `Destroyable` (`bool`)  
   Specifica se l'elemento dovrà essere deallocato dal distruttore quando non più necessario. Di default è impostato a `true`.
 
+- `Exists` (`bool`)  
+  Indica se l'elemento specificato effettivamente esiste nel DOM.
+
 - `id`  
   Rappresenta l'attributo *id* dell'elemento, cioè un identificatore univoco all'interno dell'albero DOM.
 
@@ -932,9 +933,5 @@ Di seguito vengono elencate e descritte tutte le proprietà e i metodi della cla
 ## Manipolazione del DOM
 
 ### L'oggetto `document`
-
-### Classe `HTMLElement`
-
-### Classe `HTMLElementCollection`
 
 ### Selettori rapidi (`$`, `$$`)
