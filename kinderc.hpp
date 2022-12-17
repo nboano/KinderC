@@ -1298,6 +1298,10 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 		static void Reset();
 
+		static Property<const char*> Filter;
+
+		static Property<bool> Multiple;
+
 		private:
 
 		static void assert_ofd();
