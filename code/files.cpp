@@ -4,7 +4,7 @@
 const char* OpenFileDialog::ID = "__kc_ofd";
 
 void OpenFileDialog::assert_ofd() {
-    if(!$has((string)"#" + ID)) {
+    if(!$((string)"#" + ID).Exists) {
         document << (string)"<input type='file' id='" + ID + "' style='display:none;'/>";
     }
 }
@@ -13,5 +13,6 @@ void OpenFileDialog::Show() {
 	((HTMLButtonElement)$((string)"#" + ID)).click();
 }
 void OpenFileDialog::Reset() {
-
+    $((string)"#" + ID).removeAttribute("accept");
+    $((string)"#" + ID).removeAttribute("multiple");
 }
