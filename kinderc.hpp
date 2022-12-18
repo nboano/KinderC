@@ -90,10 +90,10 @@
 		}
 		private:
 		void(*setter)(T) = [](T){};
-		T(*getter)() = [](){return (T)nullptr;};
+		T(*getter)() = [](){T r; return r;};
 
 		void(*dsetter)(void*, T) = [](void*, T){};
-		T(*dgetter)(void*) = [](void*){return (T)nullptr;};
+		T(*dgetter)(void*) = [](void*){T r; return r;};
 
 		void* ptr = nullptr;
 	};
@@ -1361,14 +1361,18 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 		static Property<int> FilesNumber;
 
-		private:
+		protected:
 
 		static void assert_ofd();
 		static const char* ID;
 	};
 
+	class OpenFolderDialog : public OpenFileDialog {
+
+	};
+
 #pragma endregion
-#pragma region APPLICATION CLASS
+#pragma region APPLICATION AND ENVIROMENT CLASSES
 
 	void handle_screen_change(void*);
 
@@ -1404,6 +1408,11 @@ extern "C" void __cxa_free_exception(void* ptr);
 		static Property<void(*)(void*)> OnOffline;
 	};
 
+	struct ScreenInformations {
+		int Width;
+		int Height;
+	};
+
 	class Enviroment {
 		public:
 
@@ -1414,7 +1423,20 @@ extern "C" void __cxa_free_exception(void* ptr);
 		static Property<const char*> UserAgent;
 
 		static Property<int> ThreadsNumber;
+
+		static Property<bool> IsOnline;
+
+		static Property<ScreenInformations> Screen;
 	};
+#pragma endregion
+#pragma region APIs
+
+	class Geolocation {
+		public:
+
+		static Property<bool> IsSupported;
+	};
+
 #pragma endregion
 #pragma region BOM OBJECTS
 
@@ -1572,5 +1594,6 @@ extern "C" void __cxa_free_exception(void* ptr);
 #include "code/exceptions.cpp"
 #include "code/application.cpp"
 #include "code/files.cpp"
+#include "code/apis.cpp"
 
 #pragma endregion

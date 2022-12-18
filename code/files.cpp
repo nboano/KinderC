@@ -3,7 +3,6 @@
 
 const char* OpenFileDialog::ID = "__kc_ofd";
 
-
 void OpenFileDialog::assert_ofd() {
     if(!$((string)"#" + ID).Exists) {
         document << (string)"<input type='file' id='" + ID + "' style='display:none;'/>";

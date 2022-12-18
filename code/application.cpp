@@ -86,3 +86,18 @@ Property<int> Enviroment::ThreadsNumber = Property<int>(
         return (int)navigator["hardwareConcurrency"];
     }
 );
+
+Property<bool> Enviroment::IsOnline = Property<bool>(
+    []() {
+        return (bool)navigator["onLine"]["toString"]();
+    }
+);
+
+Property<ScreenInformations> Enviroment::Screen = Property<ScreenInformations> (
+    []() {
+        ScreenInformations s;
+        s.Width = (int)window["screen"]["width"];
+        s.Height = (int)window["screen"]["height"];
+        return s;
+    }
+);
