@@ -1379,8 +1379,6 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 		static Property<const char*> Title;
 
-		static Property<const char*> UserLanguage;
-
 		static void OpenWindow(string url = "about:blank", int width = 0, int height = 0, int left = 0, int top = 0);
 
 		static void Restart();
@@ -1404,6 +1402,18 @@ extern "C" void __cxa_free_exception(void* ptr);
 		static Property<void(*)(void*)> OnOnline;
 
 		static Property<void(*)(void*)> OnOffline;
+	};
+
+	class Enviroment {
+		public:
+
+		static Property<const char*> Language;
+
+		static Property<const char*> Platform;
+
+		static Property<const char*> UserAgent;
+
+		static Property<int> ThreadsNumber;
 	};
 #pragma endregion
 #pragma region BOM OBJECTS

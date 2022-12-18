@@ -10,12 +10,6 @@ Property<const char*> Application::Title = Property<const char*>(
     }
 );
 
-Property<const char*> Application::UserLanguage = Property<const char*>(
-    []() {
-        return (const char*)navigator.language;
-    }
-);
-
 Property<void(*)(void*)> Application::OnBlur = Property<void(*)(void*)>([](void(*h)(void*)) {
     string cmd = Handler(h).GetWithPointer(nullptr , true);
     window["onblur"] = cmd;
@@ -74,3 +68,21 @@ void Application::IncludeStyleSheet(string URL) {
 void Application::EnableResponsiveView() {
     $("head") << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
 }
+
+Property<const char*> Enviroment::Platform = Property<const char*>(
+    []() {
+        return (const char*)navigator.platform;
+    }
+);
+
+Property<const char*> Enviroment::UserAgent = Property<const char*>(
+    []() {
+        return (const char*)navigator.userAgent;
+    }
+);
+
+Property<int> Enviroment::ThreadsNumber = Property<int>(
+    []() {
+        return (int)navigator["hardwareConcurrency"];
+    }
+);
