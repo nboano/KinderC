@@ -16,6 +16,7 @@ void OpenFileDialog::Reset() {
     assert_ofd();
     $((string)"#" + ID).removeAttribute("accept");
     $((string)"#" + ID).removeAttribute("multiple");
+    $((string)"#" + ID).removeAttribute("webkitdirectory");
 }
 
 Property<const char*> OpenFileDialog::Filter = Property<const char*>([](const char* filter) {
@@ -27,6 +28,12 @@ Property<bool> OpenFileDialog::Multiple = Property<bool>([](bool multiple) {
     assert_ofd();
     if(multiple) $((string)"#" + ID).setAttribute("multiple", "");
     else $((string)"#" + ID).removeAttribute("multiple");
+});
+
+Property<bool> OpenFileDialog::PickDirectory = Property<bool>([](bool pick) {
+    assert_ofd();
+    if(pick) $((string)"#" + ID).setAttribute("webkitdirectory", "");
+    else $((string)"#" + ID).removeAttribute("webkitdirectory");
 });
 
 Property<File*> OpenFileDialog::Files = Property<File*>([](){
@@ -44,6 +51,10 @@ Property<File*> OpenFileDialog::Files = Property<File*>([](){
 
 Property<int> OpenFileDialog::FilesNumber = Property<int>([]() {
     return (int)JavaScript::Eval((string)"document.querySelector('#" + (string)ID + "').files.length");
+});
+
+Property<void(*)(void*)> OpenFileDialog::OnChange = Property<void(*)(void*)>([](void(*handler)(void*)) {
+    ((HTMLInputElement)$((string)"#" + ID)).onchange = (void(*)(HTMLElement&))handler;
 });
 
 void File::ReadAsTextAsync(void(*callback)(const char* data)) {

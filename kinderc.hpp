@@ -1357,18 +1357,18 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 		static Property<bool> Multiple;
 
+		static Property<bool> PickDirectory;
+
 		static Property<File*> Files;
 
 		static Property<int> FilesNumber;
 
-		protected:
+		static Property<void(*)(void*)> OnChange;
+
+		private:
 
 		static void assert_ofd();
 		static const char* ID;
-	};
-
-	class OpenFolderDialog : public OpenFileDialog {
-
 	};
 
 #pragma endregion
