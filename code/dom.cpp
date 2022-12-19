@@ -34,11 +34,18 @@ HTMLElement::~HTMLElement() {
 	}
 }
 void HTMLElement::Append(const char* text) {
+	/*
 	char* s = (char*)malloc(strlen(innerHTML) + strlen(text));
 	strcpy(s, innerHTML);
 	strcat(s, text);
 	innerHTML = s;
 	free(s);
+	*/
+	const char* key = "innerHTML";
+	char s[64] = "";
+	if (inBody) sprintf(s, "%s.querySelector('%s').%s+=%s", docname, query, key, JavaScript::GetStringFromPointer(text));
+	else sprintf(s, "window['%s'].%s=%s", query, key, JavaScript::GetStringFromPointer(text));
+	free(JavaScript::Eval(s));
 }
 void HTMLElement::Append(HTMLElement* element) {
 	char b[64] = "";

@@ -431,8 +431,6 @@ extern "C" void __cxa_free_exception(void* ptr);
 		/// @brief Writes an information in the console.
 		/// @param info A message.
 		static void Info(const char* info);
-	private:
-		static void cmd(const char* prefix, const char* txt);
 	};
 
 	/// @brief Call to the JavaScript interpreter.
@@ -455,11 +453,6 @@ extern "C" void __cxa_free_exception(void* ptr);
 	/// @param defaultResponse A default response.
 	/// @return The response gave by the user.
 	char* prompt(const char* text, const char* defaultResponse = "");
-
-	/// @brief Prints a string to the webpage.
-	/// @param text The string to print.
-	/// @param len The string length.
-	void print(const char* text, int len);
 
 	/// @brief Prints a string to the webpage.
 	/// @param text The string to print.
