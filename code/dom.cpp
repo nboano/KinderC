@@ -126,11 +126,9 @@ HTMLElement HTMLDocument::getElementById(const char* ID) {
 	return HTMLElement(b, *this);
 };
 void HTMLDocument::Append(HTMLElement* element) {
-	//HTMLElement body("body");
 	body.Append(element);
 }
 void HTMLDocument::Append(const char* text) {
-	//HTMLElement body("body");
 	body.Append(text);
 }
 HTMLBodyElement HTMLDocument::getbody() {

@@ -280,30 +280,28 @@ void Console::Write(const char* fmt, ...) {
 	va_list arg;
 
 	va_start(arg, fmt);
-	strcat(buffer, "`");
 	_sprintf(buffer, fmt, arg);
-	strcat(buffer, "`");
 	va_end(arg);
 
-	object("console")["log"](buffer);
+	object("console")["log"](JavaScript::GetStringFromPointer(buffer));
 }
 void Console::Error(const char* error) {
-	object("console")["error"]((string)"`" + (string)error + "`");
+	object("console")["error"](JavaScript::GetStringFromPointer(error));
 }
 void Console::Info(const char* info) {
-	object("console")["info"]((string)"`" + (string)info + "`");
+	object("console")["info"](JavaScript::GetStringFromPointer(info));
 }
 void alert(const char* text) {
-	window["alert"](string::Format("`%s`", text));
+	window["alert"](JavaScript::GetStringFromPointer(text));
 }
 void puts(const char* text) {
-	string s = (string)"document.body.innerHTML+=`" + text + "`";
+	string s = (string)"document.body.innerHTML+=" + JavaScript::GetStringFromPointer(text);
 	_eval(s, s.Length);
 }
 bool confirm(const char* text) {
-	return (string)window["confirm"]((string)"`" + text + "`") == "true";
+	return (string)window["confirm"](JavaScript::GetStringFromPointer(text)) == "true";
 }
 char* prompt(const char* text, const char* defaultResponse) {
-	return (char*)window["prompt"]((string)"`" + text + "`", (string)"`" + defaultResponse + "`");
+	return (char*)window["prompt"](JavaScript::GetStringFromPointer(text), JavaScript::GetStringFromPointer(defaultResponse));
 }
 
