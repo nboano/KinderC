@@ -38,9 +38,10 @@ Property<bool> OpenFileDialog::PickDirectory = Property<bool>([](bool pick) {
 
 Property<File*> OpenFileDialog::Files = Property<File*>([](){
     int len = FilesNumber;
-    Console::Write("numero file: %i", len);
-    File* arr = new File[len];
 
+    File* arr = new File[len];
+    Console::Write("              ");
+    
     for (int i = 0; i < len; i++)
     {
         arr[i] = File((string)"document.querySelector('#" + (string)ID + "').files[" + (string)i + "]");

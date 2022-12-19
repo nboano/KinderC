@@ -129,6 +129,9 @@
 		/// @param len String length. If nothing is specified, the system will automatically calculate it.
 		/// @return A string that references the original given string.
 		static char* GetStringFromPointer(const char* str, int len = -1);
+
+		/// @brief Enable the logging of the JavaScript evaluated commands.
+		static void LogCommands();
 	};
 
 #pragma endregion

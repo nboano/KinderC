@@ -270,6 +270,9 @@ char* JavaScript::GetStringFromPointer(const char* str, int len) {
 	sprintf(m, "IO.decode(%i,%i)", (int)str, (len == -1) ? (int)strlen(str) : len);
 	return m;
 }
+void JavaScript::LogCommands() {
+	JavaScript::Eval("__debug=true");
+}
 
 void Console::Write(const char* fmt, ...) {
 	char buffer[8192];

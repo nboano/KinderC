@@ -1,5 +1,7 @@
-var env = {};
-var dp = [null];
+const env = {};
+const dp = [null];
+
+let __debug = false;
 
 class IO {
     static decode(pt, len) {
@@ -18,7 +20,12 @@ class IO {
         return pos;
     }
     static ceval(pt, len) {
-        return IO.encode(eval(IO.decode(pt, len)));
+        const command = IO.decode(pt , len);
+        var result = eval(command);
+        if(__debug) {
+            console.log("%c" + command + "\n%c> %c" + result, "color: red; font-style: italic;", "color: green;", "color: lightblue;");
+        }
+        return IO.encode(result);
     }
 }
 
@@ -26,8 +33,6 @@ class IO {
 env._eval = IO.ceval;
 env.get_memory_size = () => memory.buffer.byteLength;
 env.memory_grow = (q) => memory.grow(q);
-//env._Znwm = function () { };
-//env._Znam = function () { };
 env.__cxa_atexit = function() {};
 //#endregion
 
