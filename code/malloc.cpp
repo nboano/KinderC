@@ -1,7 +1,7 @@
 #include "../kinderc.hpp"
 #pragma once
 
-#define OFFSET_BASE ((unsigned long)&__data_end)
+#define OFFSET_BASE ((unsigned long)&__heap_base)
 
 #define MALLOC_SPACE 1
 
