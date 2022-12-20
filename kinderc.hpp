@@ -1427,10 +1427,24 @@ extern "C" void __cxa_free_exception(void* ptr);
 #pragma endregion
 #pragma region APIs
 
+	struct GeolocationData {
+		//GeolocationData(int dp_index) : object((string)"dp[" + (string)dp_index + "]") {}
+
+		double Latitude;
+		double Longitude;
+		double Altitude;
+		double Accuracy;
+		double AltitudeAccuracy;
+		double Heading;
+		double Speed;
+	};
+
 	class Geolocation {
 		public:
 
 		static Property<bool> IsSupported;
+
+		static void GetPosition(void(*successhandler)(GeolocationData));
 	};
 
 #pragma endregion

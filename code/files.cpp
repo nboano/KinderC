@@ -40,8 +40,7 @@ Property<File*> OpenFileDialog::Files = Property<File*>([](){
     int len = FilesNumber;
 
     File* arr = new File[len];
-    Console::Write("              ");
-    
+
     for (int i = 0; i < len; i++)
     {
         arr[i] = File((string)"document.querySelector('#" + (string)ID + "').files[" + (string)i + "]");
