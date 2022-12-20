@@ -12,7 +12,6 @@ void Geolocation::GetPosition(void(*sh)(GeolocationData)) {
     onsuccess = sh;
 
     void(*hndl)(const char*) = [](const char* s) {
-        //gd.Latitude = atof((char*)object((string)"dp[" + (string)i + "]")["coords"]["latitude"]["toString"]());
         string* spl = string(s).Split(';');
         GeolocationData gd = {
             atof(spl[0]),

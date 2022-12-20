@@ -237,7 +237,7 @@ String* String::Split(char separator) {
 		tk = strtok(tmp, separator);
 		result[cnt++] = tk;
 		free(tk);
-	} while (cnt < al/*tk[0] != 0*/);
+	} while (cnt < al);
 
 	return result;
 }
