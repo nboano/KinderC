@@ -79,9 +79,11 @@ char* strlwr(char* string)
 	}
 	return string;
 }
+
 char* strtok(char* s, char d)
 {
     static char* input = s;
+	if(!*input) input = s;
     char* result = (char*)malloc(strlen(input) + 1);
     int i = 0;
     for (; input[i] != '\0'; i++) {
@@ -234,7 +236,8 @@ String* String::Split(char separator) {
 	{
 		tk = strtok(tmp, separator);
 		result[cnt++] = tk;
-	} while (tk[0] != 0);
+		free(tk);
+	} while (cnt < al/*tk[0] != 0*/);
 
 	return result;
 }
