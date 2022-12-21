@@ -7,7 +7,7 @@ Property<bool> Geolocation::IsSupported = Property<bool>(
     }
 );
 
-void Geolocation::GetPosition(void(*sh)(GeolocationData)) {
+int Geolocation::Request(void(*sh)(GeolocationData), bool watch) {
     static void(*onsuccess)(GeolocationData);
     onsuccess = sh;
 
@@ -29,5 +29,17 @@ void Geolocation::GetPosition(void(*sh)(GeolocationData)) {
 
     Handler successhandler = EventHandler((void(*)(void*))hndl);
 
-    navigator["geolocation"]["getCurrentPosition"]((string)"(e)=>__lambda_call(" + (string)successhandler.LambdaIndex +  ",IO.encode([e.coords.latitude,e.coords.longitude,e.coords.altitude,e.coords.accuracy,e.coords.altitudeAccuracy,e.coords.heading,e.coords.speed].join(';')))");
+    return (int)navigator["geolocation"][watch ? "watchPosition" : "getCurrentPosition"]((string)"(e)=>__lambda_call(" + (string)successhandler.LambdaIndex +  ",IO.encode([e.coords.latitude,e.coords.longitude,e.coords.altitude,e.coords.accuracy,e.coords.altitudeAccuracy,e.coords.heading,e.coords.speed].join(';')))");
+}
+
+void Geolocation::GetPosition(void(*sh)(GeolocationData)) {
+    Geolocation::Request(sh, false);
+}
+
+int Geolocation::WatchPosition(void(*sh)(GeolocationData)) {
+    return Geolocation::Request(sh, true);
+}
+
+void Geolocation::ClearWatch(int watch_number) {
+    navigator["geolocation"]["clearWatch"]((string)watch_number);
 }
