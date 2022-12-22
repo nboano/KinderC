@@ -7,8 +7,11 @@ Property<bool> Geolocation::IsSupported = Property<bool>(
     }
 );
 
-int Geolocation::Request(void(*sh)(GeolocationData), bool watch) {
+bool Geolocation::HighAccuracy = false;
+
+int Geolocation::Request(void(*sh)(GeolocationData), void(*eh)(GeolocationError), bool watch) {
     static void(*onsuccess)(GeolocationData);
+
     onsuccess = sh;
 
     void(*hndl)(const char*) = [](const char* s) {
@@ -28,16 +31,17 @@ int Geolocation::Request(void(*sh)(GeolocationData), bool watch) {
     };
 
     Handler successhandler = EventHandler((void(*)(void*))hndl);
+    Handler errorhandler = EventHandler((void(*)(void*))eh);
 
-    return (int)navigator["geolocation"][watch ? "watchPosition" : "getCurrentPosition"]((string)"(e)=>__lambda_call(" + (string)successhandler.LambdaIndex +  ",IO.encode([e.coords.latitude,e.coords.longitude,e.coords.altitude,e.coords.accuracy,e.coords.altitudeAccuracy,e.coords.heading,e.coords.speed].join(';')))");
+    return (int)navigator["geolocation"][watch ? "watchPosition" : "getCurrentPosition"]((string)"(e)=>__lambda_call(" + (string)successhandler.LambdaIndex +  ",IO.encode([e.coords.latitude,e.coords.longitude,e.coords.altitude,e.coords.accuracy,e.coords.altitudeAccuracy,e.coords.heading,e.coords.speed].join(';')))", (string)"(e)=>__lambda_call(" + (string)errorhandler.LambdaIndex + ",e.code)", (string)"{enableHighAccuracy:" + (HighAccuracy ? "true" : "false") + "}");
 }
 
-void Geolocation::GetPosition(void(*sh)(GeolocationData)) {
-    Geolocation::Request(sh, false);
+void Geolocation::GetPosition(void(*sh)(GeolocationData), void(*eh)(GeolocationError)) {
+    Geolocation::Request(sh, eh, false);
 }
 
-int Geolocation::WatchPosition(void(*sh)(GeolocationData)) {
-    return Geolocation::Request(sh, true);
+int Geolocation::WatchPosition(void(*sh)(GeolocationData), void(*eh)(GeolocationError)) {
+    return Geolocation::Request(sh, eh, true);
 }
 
 void Geolocation::ClearWatch(int watch_number) {
