@@ -678,7 +678,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 			DONE 
 		};
 
-		/// @brief Creates a new request.
+		/// @brief Creates a new request. Equal to the JS new XMLHttpREquest().
 		XMLHttpRequest();
 
 		XMLHttpRequest(int i);
