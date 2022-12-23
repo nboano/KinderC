@@ -29,12 +29,10 @@ class IO {
     }
 }
 
-//#region EXPORTS
 env._eval = IO.ceval;
 env.get_memory_size = () => memory.buffer.byteLength;
 env.memory_grow = (q) => memory.grow(q);
 env.__cxa_atexit = function() {};
-//#endregion
 
 onload = async () => {
     var assemblyel = document.querySelector("assembly[src]");
