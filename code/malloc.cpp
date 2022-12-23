@@ -104,7 +104,7 @@ void Memory::Free(void* ptr) {
 }
 void Memory::Grow(int blocks) {
 	memory_grow(blocks);
-	memsz += 65536;
+	memsz += 65536*blocks;
 }
 unsigned long Memory::GetSize() {
 	if (memsz == 0) memsz = get_memory_size();

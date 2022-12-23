@@ -8,6 +8,9 @@ DynamicObject::DynamicObject() {
 DynamicObject::DynamicObject(const char* objname) {
 	s = objname;
 }
+DynamicObject::~DynamicObject() {
+	s.~String();
+}
 DynamicObject DynamicObject::operator[] (const char* key) {
 	return DynamicObject(s + "[\"" + key + "\"]");
 }

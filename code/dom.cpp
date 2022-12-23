@@ -45,6 +45,7 @@ void HTMLElement::Append(const char* text) {
 	char s[64] = "";
 	if (inBody) sprintf(s, "%s.querySelector('%s').%s+=%s", docname, query, key, JavaScript::GetStringFromPointer(text));
 	else sprintf(s, "window['%s'].%s=%s", query, key, JavaScript::GetStringFromPointer(text));
+	if(text >= heap_start) free((void*)text);
 	free(JavaScript::Eval(s));
 }
 void HTMLElement::Append(HTMLElement* element) {

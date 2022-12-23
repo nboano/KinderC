@@ -1,39 +1,39 @@
 #pragma once
 #include "../kinderc.hpp"
 
-const char* OpenFileDialog::ID = "__kc_ofd";
+const char* OpenFileDialog::ID = "#__kc_ofd";
 
 void OpenFileDialog::assert_ofd() {
-    if(!$((string)"#" + ID).Exists) {
-        document << (string)"<input type='file' id='" + ID + "' style='display:none;'/>";
+    if(!$(ID).Exists) {
+        document << "<input type='file' id='__kc_ofd' style='display:none;'/>";
     }
 }
 void OpenFileDialog::Show() {
     assert_ofd();
-	((HTMLButtonElement)$((string)"#" + ID)).click();
+	((HTMLButtonElement)$(ID)).click();
 }
 void OpenFileDialog::Reset() {
     assert_ofd();
-    $((string)"#" + ID).removeAttribute("accept");
-    $((string)"#" + ID).removeAttribute("multiple");
-    $((string)"#" + ID).removeAttribute("webkitdirectory");
+    $(ID).removeAttribute("accept");
+    $(ID).removeAttribute("multiple");
+    $(ID).removeAttribute("webkitdirectory");
 }
 
 Property<const char*> OpenFileDialog::Filter = Property<const char*>([](const char* filter) {
     assert_ofd();
-    $((string)"#" + ID).setAttribute("accept", filter);
+    $(ID).setAttribute("accept", filter);
 });
 
 Property<bool> OpenFileDialog::Multiple = Property<bool>([](bool multiple) {
     assert_ofd();
-    if(multiple) $((string)"#" + ID).setAttribute("multiple", "");
-    else $((string)"#" + ID).removeAttribute("multiple");
+    if(multiple) $(ID).setAttribute("multiple", "");
+    else $(ID).removeAttribute("multiple");
 });
 
 Property<bool> OpenFileDialog::PickDirectory = Property<bool>([](bool pick) {
     assert_ofd();
-    if(pick) $((string)"#" + ID).setAttribute("webkitdirectory", "");
-    else $((string)"#" + ID).removeAttribute("webkitdirectory");
+    if(pick) $(ID).setAttribute("webkitdirectory", "");
+    else $(ID).removeAttribute("webkitdirectory");
 });
 
 Property<File*> OpenFileDialog::Files = Property<File*>([](){
@@ -50,11 +50,11 @@ Property<File*> OpenFileDialog::Files = Property<File*>([](){
 });
 
 Property<int> OpenFileDialog::FilesNumber = Property<int>([]() {
-    return (int)JavaScript::Eval((string)"document.querySelector('#" + (string)ID + "').files.length");
+    return (int)JavaScript::Eval((string)"document.querySelector('" + (string)ID + "').files.length");
 });
 
 Property<void(*)(void*)> OpenFileDialog::OnChange = Property<void(*)(void*)>([](void(*handler)(void*)) {
-    ((HTMLInputElement)$((string)"#" + ID)).onchange = (void(*)(HTMLElement&))handler;
+    ((HTMLInputElement)$(ID)).onchange = (void(*)(HTMLElement&))handler;
 });
 
 void File::ReadAsTextAsync(void(*callback)(const char* data)) {

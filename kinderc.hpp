@@ -38,7 +38,7 @@
 
 		#define ev_XMLHttpRequest(evname) void(*evname)(XMLHttpRequest&);
 
-		#define prop(name) string name;
+		#define prop(name) char* name;
 
 	#endif
 
@@ -562,6 +562,9 @@ extern "C" void __cxa_free_exception(void* ptr);
 		/// @brief Points to an existing object.
 		/// @param objname The object name.
 		DynamicObject(const char* objname);
+
+		/// Deletes the pointer to the object.
+		~DynamicObject();
 
 		/// @brief Accesses a field of the object.
 		/// @param key The field name.
