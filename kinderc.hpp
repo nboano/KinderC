@@ -1025,6 +1025,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 			bool Exists;
 
 			#else
+			//CLANG
 			bool checkExistance();
 			__declspec(property(get=checkExistance)) bool Exists;
 			#endif
