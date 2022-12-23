@@ -1110,6 +1110,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 			/// @return The n-HTMLElement of the collection.
 			HTMLElement operator [] (int index);
 
+			/// @brief Destructor of the HTMLElementCollection class.
 			~HTMLElementCollection();
 
 			#ifndef __INTELLISENSE__
