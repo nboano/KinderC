@@ -23,7 +23,6 @@
 	#define var auto
 
 	#ifndef __INTELLISENSE__
-		//CLANG
 		#define exported __attribute__((visibility("default"))) extern "C"
 		#define ev(evname) void set_##evname(EventHandler* e) { setAttribute(#evname, getJSHandler(e)); }; __declspec(property(put = set_##evname)) EventHandler* evname;
 		#define ev_HTMLElement(evname) void set_##evname(void(*e)(HTMLElement&)) { setAttribute(#evname, getJSHandler(new EventHandler(e))); }; __declspec(property(put = set_##evname)) void(*evname)(HTMLElement&);
