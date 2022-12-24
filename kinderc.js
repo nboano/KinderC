@@ -38,7 +38,7 @@ onload = async () => {
     var assemblyel = document.querySelector("assembly[src]");
     if (!assemblyel) return;
     window.memory = new WebAssembly.Memory({
-        initial: 2,
+        initial: 16,
     })
     env.memory = memory;
     var r = await WebAssembly.instantiateStreaming(fetch(assemblyel.getAttribute("src")), { env });
