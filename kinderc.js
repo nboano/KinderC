@@ -23,7 +23,7 @@ class IO {
         const command = IO.decode(pt , len);
         var result = eval(command);
         if(__debug) {
-            console.log("%c" + command + "\n%c> %c" + result, "color: red; font-style: italic;", "color: green;", "color: lightblue;");
+            console.log("[" + pt + "," + len + "]\n%c" + command + "\n%c> %c" + result, "color: red; font-style: italic;", "color: green;", "color: lightblue;");
         }
         return IO.encode(result);
     }

@@ -74,10 +74,8 @@ int htoi(const char* c) {
 	}
 	return numero;
 }
-
 void ftoa_fixed(char* buffer, double value);
 void ftoa_sci(char* buffer, double value);
-
 int _sprintf(char* string, const char* fmt, va_list arg) {
 	int int_temp;
 	char char_temp;
@@ -146,7 +144,6 @@ int _sprintf(char* string, const char* fmt, va_list arg) {
 	}
 	return length;
 }
-
 int normalize(double* val) {
 	int exponent = 0;
 	double value = *val;
@@ -163,7 +160,6 @@ int normalize(double* val) {
 	*val = value;
 	return exponent;
 }
-
 void ftoa_fixed(char* buffer, double value) {
 	int exponent = 0;
 	int places = 0;
@@ -201,7 +197,6 @@ void ftoa_fixed(char* buffer, double value) {
 	}
 	*buffer = '\0';
 }
-
 void ftoa_sci(char* buffer, double value) {
 	int exponent = 0;
 	int places = 0;
@@ -242,8 +237,9 @@ int sprintf(char* string, const char* fmt, ...) {
 	va_end(arg);
 	return length;
 }
+
 int printf(const char* fmt, ...) {
-	char buffer[8192];
+	static char buffer[8192];
 	strcpy(buffer, "");
 	va_list arg;
 	int length;
@@ -254,13 +250,13 @@ int printf(const char* fmt, ...) {
 	return length;
 }
 
-
 char* JavaScript::Eval(const char* fmt, ...) {
-	char buffer[8192];
+	static char buffer[512];
 	strcpy(buffer, "");
 	va_list arg;
 	va_start(arg, fmt);
 	_sprintf(buffer, fmt, arg);
+	if(fmt > (const char*)&__heap_base) free((void*)fmt);
 	va_end(arg);
 	return _eval(buffer, strlen(buffer));
 }
@@ -275,7 +271,7 @@ void JavaScript::LogCommands() {
 }
 
 void Console::Write(const char* fmt, ...) {
-	char buffer[8192];
+	static char buffer[8192];
 	strcpy(buffer, "");
 	va_list arg;
 
@@ -283,25 +279,31 @@ void Console::Write(const char* fmt, ...) {
 	_sprintf(buffer, fmt, arg);
 	va_end(arg);
 
-	object("console")["log"](JavaScript::GetStringFromPointer(buffer));
+	JavaScript::Eval("console.log(%s)", JavaScript::GetStringFromPointer(buffer));
 }
 void Console::Error(const char* error) {
-	object("console")["error"](JavaScript::GetStringFromPointer(error));
+	JavaScript::Eval("console.error(%s)", JavaScript::GetStringFromPointer(error));
 }
 void Console::Info(const char* info) {
-	object("console")["info"](JavaScript::GetStringFromPointer(info));
+	JavaScript::Eval("console.info(%s)", JavaScript::GetStringFromPointer(info));
 }
 void alert(const char* text) {
-	window["alert"](JavaScript::GetStringFromPointer(text));
+	JavaScript::Eval("alert(%s)", JavaScript::GetStringFromPointer(text));
 }
 void puts(const char* text) {
-	string s = (string)"document.body.innerHTML+=" + JavaScript::GetStringFromPointer(text);
-	_eval(s, s.Length);
+	$("body").Append(text);
 }
 bool confirm(const char* text) {
-	return (string)window["confirm"](JavaScript::GetStringFromPointer(text)) == "true";
+	return strcmp(JavaScript::Eval("confirm(%s)", JavaScript::GetStringFromPointer(text)), "true") == 0;
 }
 char* prompt(const char* text, const char* defaultResponse) {
-	return (char*)window["prompt"](JavaScript::GetStringFromPointer(text), JavaScript::GetStringFromPointer(defaultResponse));
+	char cmd[64];
+	strcpy(cmd, "");
+	strcat(cmd, "prompt(");
+	strcat(cmd, JavaScript::GetStringFromPointer(text));
+	strcat(cmd, ",");
+	strcat(cmd, JavaScript::GetStringFromPointer(defaultResponse));
+	strcat(cmd, ")");
+	return JavaScript::Eval(cmd);
 }
 
