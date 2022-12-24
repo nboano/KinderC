@@ -1,11 +1,6 @@
 #pragma once
 #include "../kinderc.hpp"
 
-unsigned long long time() {
-    return (unsigned long long)JavaScript::Eval("Date.now()/1000");
-}
-
-
 int setTimeout(void(*handler)(void*), int milliseconds) {
     Handler h = Handler(handler);
     return (int)JavaScript::Eval("setTimeout(%s,%i)", (char*)h.GetWithPointer(nullptr, true), milliseconds);

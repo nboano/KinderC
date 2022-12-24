@@ -1671,8 +1671,12 @@ extern "C" void __cxa_free_exception(void* ptr);
 #pragma region DATE & TIME
 
 	/// @brief Returns the current UNIX timestamp.
-	/// @return The timestamp in seconds.
-	unsigned long long time();
+	/// @return The timestamp in seconds as a double.
+	imported double time();
+
+	/// @brief Returns the current high-precision time since the application started.
+	/// @return The timestamp in milliseconds, as a double.
+	imported double microtime();
 
 	/// @brief Waits for a certain number of milliseconds, and then calls the handler.
 	/// @param handler The timeout handler.

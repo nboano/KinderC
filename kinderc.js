@@ -32,6 +32,8 @@ class IO {
 env._eval = IO.ceval;
 env.get_memory_size = () => memory.buffer.byteLength;
 env.memory_grow = (q) => memory.grow(q);
+env.time = () => Date.now() / 1000;
+env.microtime = () => performance.now();
 env.__cxa_atexit = function() {};
 
 onload = async () => {
