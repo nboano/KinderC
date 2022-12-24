@@ -14,8 +14,10 @@ int Geolocation::Request(void(*sh)(GeolocationData), void(*eh)(GeolocationError)
 
     onsuccess = sh;
 
-    void(*hndl)(const char*) = [](const char* s) {
-        string* spl = string(s).Split(';');
+    void(*hndl)(char*) = [](char* s) {
+        static string tmp;
+        tmp = s;
+        string* spl = tmp.Split(';');
         GeolocationData gd = {
             atof(spl[0]),
             atof(spl[1]),
