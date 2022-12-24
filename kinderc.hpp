@@ -260,6 +260,15 @@
 	char* strtok(char* string, char separator);
 
 #pragma endregion
+#pragma region C MATH METHODS
+
+	int floor(double number);
+
+	int ceil(double number);
+
+	int round(double number);
+
+#pragma endregion
 #pragma region STRING CLASS
 
 	/// @brief Use this class to manage strings.
@@ -1702,5 +1711,6 @@ extern "C" void __cxa_free_exception(void* ptr);
 #include "code/application.cpp"
 #include "code/files.cpp"
 #include "code/apis.cpp"
+#include "code/math.cpp"
 
 #pragma endregion
