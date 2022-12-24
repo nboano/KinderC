@@ -41,6 +41,7 @@ void HTMLElement::Append(const char* text) {
 	free(JavaScript::Eval(s));
 }
 void HTMLElement::Append(HTMLElement* element) {
+	if(element->inBody) return;
 	char b[64] = "";
 	sprintf(b, "window['%s']", element->query);
 	runFunction("appendChild", b);

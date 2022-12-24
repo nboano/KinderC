@@ -1235,8 +1235,6 @@ extern "C" void __cxa_free_exception(void* ptr);
 	typedef HTMLInputElement TextBox;
 	typedef HTMLInputElement RadioButton;
 	typedef HTMLInputElement CheckBox;
-	typedef HTMLInputElement FilePicker;
-
 #pragma endregion
 #pragma region HTML DIALOG
 
@@ -1358,7 +1356,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 		void ReadAsTextAsync(void(*callback)(const char* data));
 	};
 
-	class OpenFileDialog {
+	class FilePicker {
 		public:
 
 		/// @brief Shows a dialog where the user can select one or more files. This method will work only if called by an action of the user.
