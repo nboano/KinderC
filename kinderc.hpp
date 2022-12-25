@@ -1557,6 +1557,29 @@ extern "C" void __cxa_free_exception(void* ptr);
 		static int Request(void(*sh)(GeolocationData), void(*eh)(GeolocationError), bool watch);
 	};
 
+	struct MotionAccelerationData {
+
+		double x;
+
+		double y;
+
+		double z;
+
+	};
+
+	struct MotionData {
+
+		MotionAccelerationData Acceleration;
+	};
+
+	class Motion {
+		public:
+
+		static void Watch(void(*sh)(MotionData&));
+
+		static void Stop();
+	};
+
 #pragma endregion
 #pragma region BOM OBJECTS
 
