@@ -40,7 +40,7 @@ string Handler::GetWithPointer(void* ptr, bool function) {
 
 void screen_handle_change(void* = 0) {
 	$$("screen").style["display"] = "none";
-    if(location.hash != "" && $((string)"screen" + location.hash).Exists) {
+    if((string)location.hash != "" && $((string)"screen" + location.hash).Exists) {
         $((string)"screen" + location.hash).style["display"] = "block";
     }
     else {
