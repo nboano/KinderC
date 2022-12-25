@@ -38,7 +38,7 @@ void HTMLElement::Append(const char* text) {
 	char s[64] = "";
 	if (inBody) sprintf(s, "%s.querySelector('%s').%s+=%s", docname, query, key, JavaScript::GetStringFromPointer(text));
 	else sprintf(s, "window['%s'].%s=%s", query, key, JavaScript::GetStringFromPointer(text));
-	free(JavaScript::Eval(s));
+	JavaScript::VoidEval(s);
 }
 void HTMLElement::Append(HTMLElement* element) {
 	if(element->inBody) return;
@@ -51,7 +51,7 @@ void HTMLElement::setProperty(const char* key, const char* value) {
 	char s[64] = "";
 	if (inBody) sprintf(s, "%s.querySelector('%s').%s=%s", docname, query, key, JavaScript::GetStringFromPointer(value));
 	else sprintf(s, "window['%s'].%s=%s", query, key, JavaScript::GetStringFromPointer(value));
-	JavaScript::Eval(s);
+	JavaScript::VoidEval(s);
 }
 char* HTMLElement::getProperty(const char* key) {
 	char s[64] = "";

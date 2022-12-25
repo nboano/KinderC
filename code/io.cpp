@@ -258,7 +258,10 @@ char* JavaScript::Eval(const char* fmt, ...) {
 	_sprintf(buffer, fmt, arg);
 	if(fmt > (const char*)&__heap_base) free((void*)fmt);
 	va_end(arg);
-	return _eval(buffer, strlen(buffer));
+	return _eval(buffer, strlen(buffer), 1);
+}
+void JavaScript::VoidEval(const char* command) {
+	_eval(command, strlen(command), 0);
 }
 char* JavaScript::GetStringFromPointer(const char* str, int len) {
 	static char m[64];

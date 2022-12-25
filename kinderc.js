@@ -19,13 +19,14 @@ class IO {
         bf.set(encoded, pos);
         return pos;
     }
-    static ceval(pt, len) {
+    static ceval(pt, len, allocate_response) {
         const command = IO.decode(pt , len);
         var result = eval(command);
+        const encoded = allocate_response == 1 ? IO.encode(result) : 0;
         if(__debug) {
-            console.log("[" + pt + "," + len + "]\n%c" + command + "\n%c> %c" + result, "color: red; font-style: italic;", "color: green;", "color: lightblue;");
+            console.log("[" + pt + "," + len + "] RETURNED " + encoded + "\n%c" + command + "\n%c> %c" + result, "color: red; font-style: italic;", "color: green;", "color: lightblue;");
         }
-        return IO.encode(result);
+        return encoded;
     }
 }
 
