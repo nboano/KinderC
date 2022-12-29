@@ -35,7 +35,7 @@ HTMLElement::~HTMLElement() {
 }
 void HTMLElement::Append(const char* text) {
 	const char* key = "innerHTML";
-	static char s[64];
+	char s[64 + strlen(query)];
 	strcpy(s, "");
 	if (inBody) sprintf(s, "%s.querySelector('%s').%s+=%s", docname, query, key, JavaScript::GetStringFromPointer(text));
 	else sprintf(s, "window['%s'].%s=%s", query, key, JavaScript::GetStringFromPointer(text));
@@ -43,19 +43,22 @@ void HTMLElement::Append(const char* text) {
 }
 void HTMLElement::Append(HTMLElement* element) {
 	if(element->inBody) return;
-	char b[64] = "";
+	char b[64 + strlen(query)];
+	strcpy(b, "");
 	sprintf(b, "window['%s']", element->query);
 	runFunction("appendChild", b);
 	element->inBody = true;
 }
 void HTMLElement::setProperty(const char* key, const char* value) {
-	char s[64] = "";
+	char s[64 + strlen(query)];
+	strcpy(s, "");
 	if (inBody) sprintf(s, "%s.querySelector('%s').%s=%s", docname, query, key, JavaScript::GetStringFromPointer(value));
 	else sprintf(s, "window['%s'].%s=%s", query, key, JavaScript::GetStringFromPointer(value));
 	JavaScript::VoidEval(s);
 }
 char* HTMLElement::getProperty(const char* key) {
-	char s[64] = "";
+	char s[64 + strlen(query)];
+	strcpy(s, "");
 	if (inBody) sprintf(s, "%s.querySelector('%s').%s", docname, query, key);
 	else sprintf(s, "window['%s'].%s", query, key);
 	return JavaScript::Eval(s);
@@ -92,7 +95,8 @@ void HTMLElement::addEventListener(const char* eventname, void(*h)(HTMLElement&)
 	runFunction("addEventListener", a, getJSHandler(new Handler(h), true));
 }
 char* HTMLElement::runFunction(const char* fname, const char* p1, const char* p2) {
-	char s[128] = "";
+	char s[128 + strlen(query)];
+	strcpy(s, "");
 	if (inBody) sprintf(s, "%s.querySelector('%s')['%s'](%s, %s)", docname, query, fname, p1, p2);
 	else sprintf(s, "window['%s']['%s'](%s, %s)", query, fname, p1, p2);
 	return JavaScript::Eval(s);
