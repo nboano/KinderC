@@ -35,7 +35,8 @@ HTMLElement::~HTMLElement() {
 }
 void HTMLElement::Append(const char* text) {
 	const char* key = "innerHTML";
-	char s[64] = "";
+	static char s[64];
+	strcpy(s, "");
 	if (inBody) sprintf(s, "%s.querySelector('%s').%s+=%s", docname, query, key, JavaScript::GetStringFromPointer(text));
 	else sprintf(s, "window['%s'].%s=%s", query, key, JavaScript::GetStringFromPointer(text));
 	JavaScript::VoidEval(s);
