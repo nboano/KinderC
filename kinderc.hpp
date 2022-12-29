@@ -26,6 +26,7 @@
 		#define exported __attribute__((visibility("default"))) extern "C"
 		#define ev(evname) void set_##evname(EventHandler* e) { setAttribute(#evname, getJSHandler(e)); }; __declspec(property(put = set_##evname)) EventHandler* evname;
 		#define ev_HTMLElement(evname) void set_##evname(void(*e)(HTMLElement&)) { setAttribute(#evname, getJSHandler(new EventHandler(e))); }; __declspec(property(put = set_##evname)) void(*evname)(HTMLElement&);
+		#define ev_HTMLElementColl(evname) void set_##evname(void(*e)(HTMLElement&)) {for(int i = 0; i < length; i++) collectionptr[i].evname = e;}; __declspec(property(put = set_##evname)) void(*evname)(HTMLElement&);
 		#define ev_XMLHttpRequest(evname) void set_##evname(void(*e)(XMLHttpRequest&)) { setAttribute(#evname, getJSHandler(new EventHandler(e))); }; __declspec(property(put = set_##evname)) void(*evname)(XMLHttpRequest&);
 		#define prop(name) char* get_##name() {return getProperty(#name);}; void set_##name(const char* v) {setProperty(#name, v);}; __declspec(property(get = get_##name, put = set_##name)) char* name;
 	#else
@@ -36,12 +37,13 @@
 
 		#define ev_HTMLElement(evname) void(*evname)(HTMLElement&);
 
+		#define ev_HTMLElementColl(evname) void(*evname)(HTMLElement&);
+
 		#define ev_XMLHttpRequest(evname) void(*evname)(XMLHttpRequest&);
 
 		#define prop(name) char* name;
 
 	#endif
-
 #pragma endregion
 #pragma region PROPERTY CLASS
 
@@ -1201,6 +1203,25 @@ extern "C" void __cxa_free_exception(void* ptr);
 			prop(className);
 			// Sets the access key used to access the element.
 			prop(accessKey);
+
+			/// Event fired at click.
+			ev_HTMLElementColl(onclick);
+			// Event fired at double click.
+			ev_HTMLElementColl(ondblclick);
+			// Event fired when the mouse button is pressed on the element.
+			ev_HTMLElementColl(onmousedown);
+			// Event fired when the mouse moves on the element.
+			ev_HTMLElementColl(onmousemove);
+			// Event fired when the mouse goes out of the element.
+			ev_HTMLElementColl(onmouseout);
+			// Event fired when the mouse goes over the element.
+			ev_HTMLElementColl(onmouseover);
+			// Event fired when the mouse is released over the element.
+			ev_HTMLElementColl(onmouseup);
+			// Event fired when the mouse scrolls on the element.
+			ev_HTMLElementColl(onmousewheel);
+			// Event fired when the mouse wheel is moved on the element.
+			ev_HTMLElementColl(onwheel);
 
 			#pragma endregion
 		private:
