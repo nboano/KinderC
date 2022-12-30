@@ -274,6 +274,12 @@
 
 	int round(double number);
 
+	void srand(unsigned int seed);
+
+	unsigned int rand();
+
+	unsigned int rand(int min, int max);
+
 #pragma endregion
 #pragma region STRING CLASS
 
