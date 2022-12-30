@@ -204,12 +204,6 @@ void HTMLDialogElement::Close() {
 	runFunction("close", "null", "null");
 }
 
-#ifndef __INTELLISENSE__
-bool HTMLElement::checkExistance() {
-	return (int)JavaScript::Eval("%s.querySelector(`%s`)==null?0:1", docname, query) != 0;
-}
-#endif
-
 HTMLElement $(const char* CSS_QUERY) {
 	return document.querySelector(CSS_QUERY);
 }

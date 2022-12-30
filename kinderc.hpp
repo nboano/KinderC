@@ -1039,16 +1039,12 @@ extern "C" void __cxa_free_exception(void* ptr);
 			/// @brief Says if the element pointer must be destroyed or not when out of scope.
 			bool Destroyable = true;
 
-			#ifdef __INTELLISENSE__
-
 			/// @brief A property that tells if the HTMLElement exists.
-			bool Exists;
-
-			#else
-			//CLANG
-			bool checkExistance();
-			__declspec(property(get=checkExistance)) bool Exists;
-			#endif
+			Property<bool> Exists {
+				[](void* el) {
+					return (int)JavaScript::Eval("%s.querySelector(`%s`)==null?0:1", ((HTMLElement*)el)->docname, ((HTMLElement*)el)->query) != 0;
+				}, this
+			};
 
 			// The id of the element.
 			prop(id);
