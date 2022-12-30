@@ -35,14 +35,13 @@
 
 		#define ev(evname) EventHandler* evname;
 
-		#define ev_HTMLElement(evname) void(*evname)(HTMLElement&);
+		#define ev_HTMLElement(evname) Property<void(*)(HTMLElement&)> evname;
 
-		#define ev_HTMLElementColl(evname) void(*evname)(HTMLElement&);
+		#define ev_HTMLElementColl(evname) Property<void(*)(HTMLElement&)> evname;
 
-		#define ev_XMLHttpRequest(evname) void(*evname)(XMLHttpRequest&);
+		#define ev_XMLHttpRequest(evname) Property<void(*)(XMLHttpRequest&)> evname;
 
-		#define prop(name) char* name;
-
+		#define prop(name) Property<const char*> name;
 	#endif
 #pragma endregion
 #pragma region PROPERTY CLASS
@@ -1087,7 +1086,7 @@ extern "C" void __cxa_free_exception(void* ptr);
 
 			prop(contentEditable);
 
-			/// Event fired at click.
+			// Event fired at click.
 			ev_HTMLElement(onclick);
 			// Event fired at double click.
 			ev_HTMLElement(ondblclick);
