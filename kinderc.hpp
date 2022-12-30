@@ -1023,6 +1023,20 @@ extern "C" void __cxa_free_exception(void* ptr);
 		/// @return The property value.
 		char* getStyleProperty(const char* key);
 
+		/// @brief Sets a CSS property of the element.
+		/// @param property_name The property name.
+		/// @param value The property value.
+		void CSS(const char* property_name, const char* value) {
+			setStyleProperty(property_name, value);
+		}
+
+		/// @brief Gets a CSS property of the element.
+		/// @param property_name The property name.
+		/// @return The property value.
+		char* CSS(const char* property_name) {
+			return getStyleProperty(property_name);
+		}
+
 		/// @brief Adds an event listener to the element.
 		/// @param eventname A string containing the event name (es. "click").
 		/// @param handler An handler.
