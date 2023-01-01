@@ -23,7 +23,6 @@ void List<T>::Add(T element) {
 
 template<typename T>
 void List<T>::doublesize() {
-    Console::Write("RADDOPPIO DIMENSIONE");
     _size *= 2; 
     T* old_array = arrptr;
     arrptr = (T*)malloc(_size * sizeof(T));
@@ -32,4 +31,9 @@ void List<T>::doublesize() {
         arrptr[i] = old_array[i];
     }
     free(old_array);
+}
+
+template<typename T>
+List<T>::~List() {
+    free(arrptr);
 }
