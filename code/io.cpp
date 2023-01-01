@@ -294,7 +294,10 @@ void alert(const char* text) {
 	JavaScript::Eval("alert(%s)", JavaScript::GetStringFromPointer(text));
 }
 void puts(const char* text) {
-	$("body").Append(text);
+	//$("body").Append(text);
+	char bf[64] = "";
+	sprintf(bf, "document.body.innerHTML+=%s", JavaScript::GetStringFromPointer(text));
+	JavaScript::VoidEval(bf);
 }
 bool confirm(const char* text) {
 	return strcmp(JavaScript::Eval("confirm(%s)", JavaScript::GetStringFromPointer(text)), "true") == 0;
