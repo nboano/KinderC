@@ -57,3 +57,8 @@ double cos(double angle);
 /// @param angle The angle in radians.
 /// @return The tangent of the angle.
 double tan(double angle);
+
+/// @brief Computes the square root of a given number.
+/// @param number The input number.
+/// @return The approximated square root.
+float sqrt(float number);

@@ -52,3 +52,22 @@ double tan(double x) {
     x = reduce_angle(x);
     return sin(x) / cos(x);
 }
+
+float rsqrt(float number) {
+    long i;
+    float x2, y;
+    const float threehalfs = 1.5F;
+
+    x2 = number * 0.5F;
+    y  = number;
+    i  = *(long*) &y;
+    i  = 0x5f3759df - (i >> 1);
+    y  = *(float*)&i;
+
+    for (int j = 0; j < 3; j++) 
+        y *= ( threehalfs - ( x2 * y * y ) ); 
+
+    return y;
+}
+
+float sqrt(float n) { return 1 / rsqrt(n);}
