@@ -16,6 +16,9 @@ HTMLElement::HTMLElement(const char* CSS_QUERY, HTMLDocument doc) {
 	strcpy(query, CSS_QUERY);
 	inBody = true;
 }
+HTMLElement::HTMLElement(const char* CSS_QUERY, int CollectionIndex, HTMLDocument doc) : HTMLElement(CSS_QUERY, doc) {
+	cindex = CollectionIndex;
+}
 HTMLElement::HTMLElement(const char* TAGNAME, const char* ID, HTMLDocument doc) {
 	docname = (char*)malloc(strlen(doc.Name));
 	strcpy(docname, doc.Name);
@@ -37,7 +40,7 @@ void HTMLElement::Append(const char* text) {
 	const char* key = "innerHTML";
 	char s[64 + strlen(query)];
 	strcpy(s, "");
-	if (inBody) sprintf(s, "%s.querySelector('%s').%s+=%s", docname, query, key, JavaScript::GetStringFromPointer(text));
+	if (inBody) sprintf(s, "%s.querySelectorAll('%s')[%i].%s+=%s", docname, query, cindex, key, JavaScript::GetStringFromPointer(text));
 	else sprintf(s, "window['%s'].%s=%s", query, key, JavaScript::GetStringFromPointer(text));
 	JavaScript::VoidEval(s);
 }
@@ -52,14 +55,14 @@ void HTMLElement::Append(HTMLElement* element) {
 void HTMLElement::setProperty(const char* key, const char* value) {
 	char s[64 + strlen(query)];
 	strcpy(s, "");
-	if (inBody) sprintf(s, "%s.querySelector('%s').%s=%s", docname, query, key, JavaScript::GetStringFromPointer(value));
+	if (inBody) sprintf(s, "%s.querySelectorAll('%s')[%i].%s=%s", docname, query, cindex, key, JavaScript::GetStringFromPointer(value));
 	else sprintf(s, "window['%s'].%s=%s", query, key, JavaScript::GetStringFromPointer(value));
 	JavaScript::VoidEval(s);
 }
 char* HTMLElement::getProperty(const char* key) {
 	char s[64 + strlen(query)];
 	strcpy(s, "");
-	if (inBody) sprintf(s, "%s.querySelector('%s').%s", docname, query, key);
+	if (inBody) sprintf(s, "%s.querySelectorAll('%s')[%i].%s", docname, query, cindex, key);
 	else sprintf(s, "window['%s'].%s", query, key);
 	return JavaScript::Eval(s);
 }
@@ -97,7 +100,7 @@ void HTMLElement::addEventListener(const char* eventname, void(*h)(HTMLElement&)
 char* HTMLElement::runFunction(const char* fname, const char* p1, const char* p2) {
 	char s[128 + strlen(query)];
 	strcpy(s, "");
-	if (inBody) sprintf(s, "%s.querySelector('%s')['%s'](%s, %s)", docname, query, fname, p1, p2);
+	if (inBody) sprintf(s, "%s.querySelectorAll('%s')[%i]['%s'](%s, %s)", docname, query, cindex, fname, p1, p2);
 	else sprintf(s, "window['%s']['%s'](%s, %s)", query, fname, p1, p2);
 	return JavaScript::Eval(s);
 }
@@ -139,7 +142,7 @@ HTMLElementCollection::HTMLElementCollection(string CSS_QUERY, HTMLDocument doc)
 	collectionptr = (HTMLElement*)malloc(len * sizeof(HTMLElement));
 	for (int i = 0; i < len; i++)
 	{
-		HTMLElement el = HTMLElement(CSS_QUERY + string::Format(":nth-of-type(%i)", i + 1), doc);
+		HTMLElement el = HTMLElement(CSS_QUERY, i, doc);
 		el.Destroyable = false;
 		collectionptr[i] = el;
 	}
@@ -202,6 +205,24 @@ void HTMLDialogElement::ShowModal() {
 }
 void HTMLDialogElement::Close() {
 	runFunction("close", "null", "null");
+}
+template<class T>
+void Control<T>::Use() {
+    ChangeHandler(nullptr);
+    Handler hndl { ChangeHandler };
+    JavaScript::Eval("new MutationObserver(%s).observe(document.body,{childList:true})", (char*)hndl.GetWithPointer(0, true));
+}
+
+template<class T>
+void Control<T>::ChangeHandler(void*) {
+    HTMLElementCollection coll = $$(T::TagName);
+
+    for(int i = 0; i < coll.length; i++) {
+        if(coll[i].getProperty("kc_rendered") == 0) {
+            coll[i].innerHTML = T(coll[i]).Render();
+            coll[i].setProperty("kc_rendered", "1");
+        }
+    }
 }
 
 HTMLElement $(const char* CSS_QUERY) {
