@@ -50,6 +50,7 @@
 #include "headers/storage.hpp"
 #include "headers/datetime.hpp"
 #include "headers/list.hpp"
+#include "headers/control.hpp"
 
 
 #include "code/string.cpp"
