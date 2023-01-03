@@ -3,7 +3,7 @@
 
 class HTMLInputElement : public HTMLElement {
 public:
-    HTMLInputElement(HTMLElement el) : HTMLElement(el.query) {}
+    HTMLInputElement(HTMLElement el) : HTMLElement(el) {}
 
     prop(type);
     prop(disabled);

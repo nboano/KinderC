@@ -11,6 +11,12 @@ public:
 	/// @param doc The document where the element is contained. Defaults to the current document.
 	HTMLElement(const char* CSS_QUERY, HTMLDocument doc = document);
 
+	/// @brief Given a CSS query and a number, performs a search and makes the object point to the n matching element.
+	/// @param CSS_QUERY A CSS query, as a string literal.
+	/// @param CollectionIndex The index of the element to take in the collection.
+	/// @param doc The document where the element is contained. Defaults to the current document.
+	HTMLElement(const char* CSS_QUERY, int CollectionIndex, HTMLDocument doc = document);
+
 	/// @brief Creates a new element.
 	/// @param TAGNAME The new element tag name.
 	/// @param ID The new element ID.
@@ -164,10 +170,11 @@ public:
 	// Event fired when the mouse wheel is moved on the element.
 	ev_HTMLElement(onwheel);
 
-		char* query;
+	char* query;
 protected:
 	char* runFunction(const char* fname, const char* p1, const char* p2 = "null");
 	const char* getJSHandler(EventHandler* handler, bool function = false);
 	bool inBody;
 	char* docname;
+	int cindex = 0;
 };

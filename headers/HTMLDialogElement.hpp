@@ -3,7 +3,7 @@
 
 class HTMLDialogElement : public HTMLElement {
     public:
-    HTMLDialogElement(HTMLElement el) : HTMLElement(el.query) {}
+    HTMLDialogElement(HTMLElement el) : HTMLElement(el) {}
 
     prop(returnValue);
 

@@ -3,7 +3,7 @@
 
 class HTMLButtonElement : public HTMLElement {
 public:
-    HTMLButtonElement(HTMLElement el) : HTMLElement(el.query) {}
+    HTMLButtonElement(HTMLElement el) : HTMLElement(el) {}
 
     void click();
 

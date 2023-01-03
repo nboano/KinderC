@@ -3,7 +3,7 @@
 
 class HTMLMediaElement : public HTMLElement {
 public:
-    HTMLMediaElement(HTMLElement el) : HTMLElement(el.query) {}
+    HTMLMediaElement(HTMLElement el) : HTMLElement(el) {}
 
     prop(src);
 
