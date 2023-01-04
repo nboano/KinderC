@@ -79,8 +79,14 @@ char* HTMLElement::getAttribute(const char* key) {
 	return runFunction("getAttribute", k);
 }
 void HTMLElement::removeAttribute(const char* key) {
-	string s = (string)"\"" + (string)key + "\"";
+	string s = (string)"\"" + key + "\"";
 	runFunction("removeAttribute", s);
+}
+bool HTMLElement::hasAttribute(const char* key) {
+	char* resp = runFunction("hasAttribute", (string)"\"" + key + "\"");
+	bool r = strcmp(resp, "true") == 0;
+	free(resp);
+	return r;
 }
 void HTMLElement::setStyleProperty(const char* key, const char* value) {
 	char s[64] = "";

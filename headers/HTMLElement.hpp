@@ -66,6 +66,8 @@ public:
 	/// @return The attribute value.
 	char* getAttribute(const char* key);
 
+	bool hasAttribute(const char* key);
+
 	/// @brief Removes an attribute from an element.
 	/// @param key The attribute name.
 	void removeAttribute(const char* key);
