@@ -111,7 +111,7 @@ char* HTMLElement::runFunction(const char* fname, const char* p1, const char* p2
 	return JavaScript::Eval(s);
 }
 HTMLElement HTMLElement::Find(const char* CSS_QUERY) {
-	return HTMLElement((string)query + " " + CSS_QUERY, cindex);
+	return HTMLElement(CSS_QUERY, HTMLDocument(String::Format("%s.querySelectorAll('%s')[%i]", docname, query, cindex)));
 }
 const char* HTMLElement::getJSHandler(EventHandler* handler, bool function) {
 	HTMLElement snd = HTMLElement(query);
