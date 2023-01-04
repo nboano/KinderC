@@ -230,6 +230,7 @@ void Control<T>::ChangeHandler(void*) {
         if(coll[i].getProperty("kc_rendered") == 0) {
             coll[i].innerHTML = T(coll[i]).Render();
             coll[i].setProperty("kc_rendered", "1");
+			T(coll[i]).PostRender();
         }
     }
 }
