@@ -104,6 +104,9 @@ char* HTMLElement::runFunction(const char* fname, const char* p1, const char* p2
 	else sprintf(s, "window['%s']['%s'](%s, %s)", query, fname, p1, p2);
 	return JavaScript::Eval(s);
 }
+HTMLElement HTMLElement::Find(const char* CSS_QUERY) {
+	return HTMLElement((string)query + " " + CSS_QUERY, cindex);
+}
 const char* HTMLElement::getJSHandler(EventHandler* handler, bool function) {
 	HTMLElement snd = HTMLElement(query);
 	HTMLElement* sender = (HTMLElement*)malloc(sizeof(HTMLElement));

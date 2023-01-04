@@ -80,6 +80,11 @@ public:
 	/// @return The property value.
 	char* getStyleProperty(const char* key);
 
+	/// @brief Returns the first matching descendant of a given CSS query.
+	/// @param CSS_QUERY A given CSS query.
+	/// @return The first matching descendant of the element.
+	HTMLElement Find(const char* CSS_QUERY);
+
 	/// @brief Sets a CSS property of the element.
 	/// @param property_name The property name.
 	/// @param value The property value.
