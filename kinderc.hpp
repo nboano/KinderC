@@ -51,6 +51,7 @@
 #include "headers/datetime.hpp"
 #include "headers/list.hpp"
 #include "headers/control.hpp"
+#include "headers/TextBox.hpp"
 
 
 #include "code/string.cpp"

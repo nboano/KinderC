@@ -17,7 +17,3 @@ public:
     ev_HTMLElement(onsearch);
     ev_HTMLElement(onselectionchange);
 };
-
-typedef HTMLInputElement TextBox;
-typedef HTMLInputElement RadioButton;
-typedef HTMLInputElement CheckBox;
