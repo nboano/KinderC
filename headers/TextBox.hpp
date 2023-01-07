@@ -7,6 +7,7 @@ class TextBox : public Control<TextBox> {
 
     /// Pointer to the input tag inside the TextBox.
     #define __INPUTBOX Find("input")
+    #define __LABEL Find("label > span")
 
     // Initialises the TextBox control.
     ControlInit(TextBox);
@@ -18,6 +19,16 @@ class TextBox : public Control<TextBox> {
         },
         [](void* elm, const char* value) {
             ((TextBox*)elm)->__INPUTBOX.setProperty("value", value);
+        }, this
+    };
+
+    /// @brief Sets or gets the description of the TextBox (desc attribute).
+    Property<const char*> Description {
+        [](void* elm) {
+            return (const char*)((TextBox*)elm)->__LABEL.innerHTML;
+        },
+        [](void* elm, const char* value) {
+            ((TextBox*)elm)->__LABEL.innerHTML = value;
         }, this
     };
 
@@ -73,7 +84,7 @@ class TextBox : public Control<TextBox> {
 
     /// @brief Method executed to render the control.
     string Render() {
-        return (string)"<label>" + getAttribute("desc") + "&nbsp;&nbsp;<input type='text' value=\"" + innerText + "\"/></label>";
+        return (string)"<label><span></span>&nbsp;&nbsp;<input type='text' value=\"" + innerText + "\"/></label>";
     }
 
     /// @brief Method executed after the render.
@@ -89,6 +100,8 @@ class TextBox : public Control<TextBox> {
 
         AllowOnlyNumbers = hasAttribute("number");
         Required = hasAttribute("required");
+
+        if(hasAttribute("desc"))        Description = getAttribute("desc");
         if(hasAttribute("pattern"))     Pattern = getAttribute("pattern");
         if(hasAttribute("min"))         MinValue = atoi(getAttribute("min"));
         if(hasAttribute("max"))         MaxValue = atoi(getAttribute("max"));
@@ -97,4 +110,5 @@ class TextBox : public Control<TextBox> {
     }
 
     #undef __INPUTBOX
+    #undef __LABEL
 };
