@@ -52,6 +52,7 @@
 #include "headers/list.hpp"
 #include "headers/control.hpp"
 #include "headers/TextBox.hpp"
+#include "headers/ComboBox.hpp"
 
 
 #include "code/string.cpp"
