@@ -1,7 +1,7 @@
 #pragma once
 #include "../kinderc.hpp"
 
-/// @brief This Control allows the user to input text or numbers. It's composed by a label (desc attribute) and an input tag.
+/// @brief This Control allows the user to input text or numbers. It's composed by a label (Description) and an input tag (Value).
 class TextBox : public Control<TextBox> {
     public:
 
