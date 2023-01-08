@@ -32,10 +32,10 @@ public:
     /// @brief Sets or gets the value of the element.
     Property<const char*> Value {
         [](void* elm) {
-            return (const char*)((TextBox*)elm)->__SELECT.getProperty("value");
+            return (const char*)((ComboBox*)elm)->__SELECT.getProperty("value");
         },
         [](void* elm, const char* value) {
-            ((TextBox*)elm)->__SELECT.setProperty("value", value);
+            ((ComboBox*)elm)->__SELECT.setProperty("value", value);
         }, this
     };
 
