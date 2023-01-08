@@ -87,6 +87,8 @@ public:
 	/// @return The first matching descendant of the element.
 	HTMLElement Find(const char* CSS_QUERY);
 
+	HTMLElementCollection FindAll(const char* CSS_QUERY);
+
 	/// @brief Sets a CSS property of the element.
 	/// @param property_name The property name.
 	/// @param value The property value.

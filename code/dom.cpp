@@ -113,6 +113,10 @@ char* HTMLElement::runFunction(const char* fname, const char* p1, const char* p2
 HTMLElement HTMLElement::Find(const char* CSS_QUERY) {
 	return HTMLElement(CSS_QUERY, HTMLDocument(String::Format("%s.querySelectorAll('%s')[%i]", docname, query, cindex)));
 }
+class HTMLElementCollection;
+HTMLElementCollection HTMLElement::FindAll(const char* CSS_QUERY) {
+	return HTMLElementCollection(CSS_QUERY, HTMLDocument(String::Format("%s.querySelectorAll('%s')[%i]", docname, query, cindex)));
+}
 const char* HTMLElement::getJSHandler(EventHandler* handler, bool function) {
 	HTMLElement snd = HTMLElement(query);
 	HTMLElement* sender = (HTMLElement*)malloc(sizeof(HTMLElement));
