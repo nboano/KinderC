@@ -82,6 +82,16 @@ class TextBox : public Control<TextBox> {
         }, this
     };
 
+    /// @brief Tells if the element is enabled or not.
+    Property<bool> Enabled {
+        [](void* elm) {
+            return !((TextBox*)elm)->__INPUTBOX.hasAttribute("disabled");
+        },
+        [](void* elm, bool value) {
+            value? ((TextBox*)elm)->__INPUTBOX.removeAttribute("disabled") : ((TextBox*)elm)->__INPUTBOX.setAttribute("disabled", ""); 
+        }, this
+    };
+
     /// @brief Method executed to render the control.
     string Render() {
         return (string)"<label><span></span>&nbsp;&nbsp;<input type='text' value=\"" + innerText + "\"/></label>";

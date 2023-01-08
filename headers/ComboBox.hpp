@@ -49,6 +49,23 @@ public:
         }, this
     };
 
+    /// @brief Tells if the element is enabled or not.
+    Property<bool> Enabled {
+        [](void* elm) {
+            return !((ComboBox*)elm)->__SELECT.hasAttribute("disabled");
+        },
+        [](void* elm, bool value) {
+            value? ((ComboBox*)elm)->__SELECT.removeAttribute("disabled") : ((ComboBox*)elm)->__SELECT.setAttribute("disabled", ""); 
+        }, this
+    };
+
+    /// @brief Adds an handler for when the selection is changed
+    Property<void(*)(void*)> OnChange {
+        [](void* elm, void(*h)(void*)) {
+            HTMLInputElement(((ComboBox*)elm)->__SELECT).onchange = (void(*)(HTMLElement&))h;
+        }, this
+    };
+
     /// @brief Renders the control.
     /// @return The HTML content of the control.
     string Render() {
@@ -56,6 +73,15 @@ public:
     };
 
     void PostRender() {
+        CSS("display", "inline-block");
+        CSS("padding", "5px");
+        CSS("margin", "10px");
+        CSS("border-radius", "5px");
+        CSS("font-family", "sans-serif");
+
+        __SELECT.CSS("border-radius", "5px");
+        __SELECT.CSS("border", "1px solid grey");
+
         if(hasAttribute("desc")) Description = getAttribute("desc");
         if(hasAttribute("value")) Value = getAttribute("value");
     }
