@@ -23,12 +23,12 @@ void puts(const char* text);
 /// @brief Converts a string into an integer (Base 10). NOTE: If the string is not an integer, an undefined behaviour will occur.
 /// @param str The string to convert (Base 10).
 /// @return The integer result.
-int atoi(char* str);
+int atoi(const char* str);
 
 /// @brief Converts a string into a floating point number. NOTE: If the string is not an integer, an undefined behaviour will occur.
 /// @param str The string to convert (Base 10).
 /// @return A floating point number.
-float atof(char* str);
+float atof(const char* str);
 
 /// @brief Converts a string into an integer (Base 16). NOTE: If the string is not an integer, an undefined behaviour will occur.
 /// @param c The string to convert (Base 16).
