@@ -39,6 +39,16 @@ public:
         }, this
     };
 
+    /// @brief Sets or gets the selected index of the element.
+    Property<int> SelectedIndex {
+        [](void* elm) {
+            return (int)((ComboBox*)elm)->__SELECT.getProperty("selectedIndex");
+        },
+        [](void* elm, int value) {
+            ((ComboBox*)elm)->__SELECT.setProperty("selectedIndex", (string)value);
+        }, this
+    };
+
     /// @brief Renders the control.
     /// @return The HTML content of the control.
     string Render() {
@@ -47,6 +57,7 @@ public:
 
     void PostRender() {
         if(hasAttribute("desc")) Description = getAttribute("desc");
+        if(hasAttribute("value")) Value = getAttribute("value");
     }
 
     #undef __SELECT
