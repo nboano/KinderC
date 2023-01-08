@@ -44,6 +44,9 @@ class Application {
     /// @param URL The URL (absolute or relative).
     static void IncludeStyleSheet(string URL);
 
+    /// @brief Enables KinderC controls such as TextBox, ComboBox etc. inside the application.
+    static void UseControls();
+
     /// @brief Sets an handler for when the user leaves the application.
     static Property<void(*)(void*)> OnBlur;
 

@@ -57,6 +57,11 @@ void Application::UseScreens() {
     document.body.onhashchange = new EventHandler(screen_handle_change);
 }
 
+void Application::UseControls() {
+    TextBox::Use();
+    ComboBox::Use();
+}
+
 void Application::IncludeScript(string URL) {
     $("head") << (string)"<script src='" + URL + "'></script>";
 }
