@@ -3,6 +3,7 @@
 
 class ComboBox : public Control<ComboBox> {
     #define __SELECT Find("select")
+    #define __LABEL Find("label > span")
 public:
     ControlInit(ComboBox);
 
@@ -18,11 +19,36 @@ public:
         }, this
     };
 
+    /// @brief Sets or gets the description of the element (desc attribute).
+    Property<const char*> Description {
+        [](void* elm) {
+            return (const char*)((ComboBox*)elm)->__LABEL.innerHTML;
+        },
+        [](void* elm, const char* value) {
+            ((ComboBox*)elm)->__LABEL.innerHTML = value;
+        }, this
+    };
+
+    /// @brief Sets or gets the value of the element.
+    Property<const char*> Value {
+        [](void* elm) {
+            return (const char*)((TextBox*)elm)->__SELECT.getProperty("value");
+        },
+        [](void* elm, const char* value) {
+            ((TextBox*)elm)->__SELECT.setProperty("value", value);
+        }, this
+    };
+
     /// @brief Renders the control.
     /// @return The HTML content of the control.
     string Render() {
-        return (string)"<select>" + innerHTML + "</select>";
+        return (string)"<label><span></span>&nbsp;&nbsp;<select>" + innerHTML + "</select></label>";
     };
 
+    void PostRender() {
+        if(hasAttribute("desc")) Description = getAttribute("desc");
+    }
+
     #undef __SELECT
+    #undef __LABEL
 };
