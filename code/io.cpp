@@ -1,13 +1,13 @@
 #pragma once
 #include "../kinderc.hpp"
-int atoi(char* str)
+int atoi(const char* str)
 {
 	int res = 0;
 	for (int i = 0; str[i] != '\0'; ++i)
 		res = res * 10 + str[i] - '0';
 	return res;
 }
-float atof(char *arr)
+float atof(const char *arr)
 {
 	float val = 0;
 	int afterdot=0;
