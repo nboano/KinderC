@@ -232,9 +232,9 @@ void Control<T>::ChangeHandler(void*) {
 	int l = coll.length;
 
     for(int i = 0; i < l; i++) {
-        if(coll[i].getProperty("kc_rendered") == 0) {
+        if(!coll[i].hasAttribute("kc_rendered")) {
             coll[i].innerHTML = T(coll[i]).Render();
-            coll[i].setProperty("kc_rendered", "1");
+            coll[i].setAttribute("kc_rendered", "");
 			T(coll[i]).PostRender();
         }
     }
