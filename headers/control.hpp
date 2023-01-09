@@ -11,6 +11,10 @@ template<class T>
 class Control : public HTMLElement {
 public:
 
+    /// @brief Function executed when all the controls of the specified type are rendered.
+    /// @tparam T The control type.
+    static void(*OnRender)();
+
     /// @brief Allows you to cast a generic HTMLElement to a Control.
     /// @param el A generic HTMLElement object.
     Control(HTMLElement el) : HTMLElement(el) {}

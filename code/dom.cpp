@@ -237,7 +237,12 @@ void Control<T>::ChangeHandler(void*) {
 			T(coll[i]).PostRender();
         }
     }
+
+	OnRender();
 }
+
+template<class T>
+void(*Control<T>::OnRender)() = [](){};
 
 HTMLElement $(const char* CSS_QUERY) {
 	return document.querySelector(CSS_QUERY);
