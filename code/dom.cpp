@@ -229,8 +229,9 @@ void Control<T>::Use() {
 template<class T>
 void Control<T>::ChangeHandler(void*) {
     HTMLElementCollection coll = $$(T::TagName);
+	int l = coll.length;
 
-    for(int i = 0; i < coll.length; i++) {
+    for(int i = 0; i < l; i++) {
         if(coll[i].getProperty("kc_rendered") == 0) {
             coll[i].innerHTML = T(coll[i]).Render();
             coll[i].setProperty("kc_rendered", "1");
@@ -238,11 +239,21 @@ void Control<T>::ChangeHandler(void*) {
         }
     }
 
+	if(firstrender && l) {
+		OnFirstRender();
+		firstrender = false;
+	} 
 	OnRender();
 }
 
 template<class T>
 void(*Control<T>::OnRender)() = [](){};
+
+template<class T>
+void(*Control<T>::OnFirstRender)() = [](){};
+
+template<class T>
+bool Control<T>::firstrender = true;
 
 HTMLElement $(const char* CSS_QUERY) {
 	return document.querySelector(CSS_QUERY);

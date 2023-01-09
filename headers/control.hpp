@@ -12,8 +12,10 @@ class Control : public HTMLElement {
 public:
 
     /// @brief Function executed when all the controls of the specified type are rendered.
-    /// @tparam T The control type.
     static void(*OnRender)();
+
+    /// @brief Function executed on the first rendering process.
+    static void(*OnFirstRender)();
 
     /// @brief Allows you to cast a generic HTMLElement to a Control.
     /// @param el A generic HTMLElement object.
@@ -29,4 +31,6 @@ public:
     void PostRender() {}
 private:
     static void ChangeHandler(void*);
+
+    static bool firstrender;
 };
