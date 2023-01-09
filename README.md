@@ -120,7 +120,7 @@ kccompile main.cpp main.wasm
 Per i sistemi UNIX, è necessario utilizzare il comando completo, richiamando il compilatore `clang`.
 
 ```bash
-clang --target=wasm32 -Wl,--no-entry -Wl,--export-dynamic -Wl,--allow-undefined -Wl,--lto-O3 -Wl,--import-memory -O3 -flto -nostdlib -fdeclspec -o main.wasm main.cpp
+clang --target=wasm32 -Wl,--no-entry -Wl,--export-dynamic -Wl,--allow-undefined -Wl,--lto-O3 -Wl,--import-memory -O3 -s -flto -nostdlib -fdeclspec -o main.wasm main.cpp
 ```
 
 
