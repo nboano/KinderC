@@ -1,8 +1,41 @@
 #pragma once
 #include "../kinderc.hpp"
 
+
+enum TextBoxType {
+    /// @brief Disables autocomplete.
+    NOAUTOCOMPLETE,
+    
+    /// @brief Enables generic autocomplete.
+    DEFAULT,
+
+    /// @brief Suggests a person name.
+    PERSON_NAME,
+
+    /// @brief Suggests an email.
+    EMAIL,
+
+    /// @brief Suggests a username.
+    USERNAME,
+
+    /// @brief Suggests a new password.
+    NEW_PASSWORD,
+
+    /// @brief Suggests a password.
+    PASSWORD,
+
+    /// @brief Suggests a one-time-code (OTC).
+    OTC,
+
+    /// @brief Allows the user to enter only a number.
+    NUMBER = -1
+};
+
 /// @brief This Control allows the user to input text or numbers. It's composed by a label (Description) and an input tag (Value).
 class TextBox : public Control<TextBox> {
+    private:
+    static constexpr const char* types[] = {"off", "on", "name", "email", "username", "new-password", "password", "one-time-code"};
+
     public:
 
     /// Pointer to the input tag inside the TextBox.
@@ -89,6 +122,27 @@ class TextBox : public Control<TextBox> {
         },
         [](void* elm, bool value) {
             value? ((TextBox*)elm)->__INPUTBOX.removeAttribute("disabled") : ((TextBox*)elm)->__INPUTBOX.setAttribute("disabled", ""); 
+        }, this
+    };
+
+    Property<TextBoxType> Type {
+        [](void* elm, TextBoxType value) {
+            switch (value)
+            {
+                case EMAIL:
+                    ((TextBox*)elm)->__INPUTBOX.setAttribute("type", "email");
+                    break;
+                case PASSWORD:
+                case NEW_PASSWORD:
+                    ((TextBox*)elm)->__INPUTBOX.setAttribute("type", "password");
+                    break;
+                case NUMBER:
+                    ((TextBox*)elm)->AllowOnlyNumbers = true;
+                    break;
+                default:
+                    ((TextBox*)elm)->__INPUTBOX.setAttribute("autocomplete", types[value]);
+                    break;
+            }
         }, this
     };
 
