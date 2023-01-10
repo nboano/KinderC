@@ -1,7 +1,7 @@
 #pragma once
 #include "../kinderc.hpp"
 
-
+/// @brief Enum of the possible types of a TextBox.
 enum TextBoxType {
     /// @brief Disables autocomplete.
     NOAUTOCOMPLETE,
@@ -125,6 +125,7 @@ class TextBox : public Control<TextBox> {
         }, this
     };
 
+    /// @brief Sets the type of the TextBox, for example EMAIL, PASSWORD... (see TextBoxType)
     Property<TextBoxType> Type {
         [](void* elm, TextBoxType value) {
             switch (value)
