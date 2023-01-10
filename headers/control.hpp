@@ -26,9 +26,13 @@ public:
 
     /// @brief The control render function. This will be called when a control should be rendered.
     /// @return An HTML string that will be written inside the control.
-    string Render() { return ""; }
+    virtual string Render();
 
+    /// @brief The control post render function. This will be called after Render();
     void PostRender() {}
+
+    /// @brief The control custom tag name.
+    static constexpr const char* TagName = "";
 private:
     static void ChangeHandler(void*);
 
