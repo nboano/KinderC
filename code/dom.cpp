@@ -220,10 +220,10 @@ void HTMLDialogElement::Close() {
 	runFunction("close", "null", "null");
 }
 template<class T>
-void Control<T>::Use() {
+void Control<T>::Use(HTMLElement elm) {
     ChangeHandler(nullptr);
     Handler hndl { ChangeHandler };
-    JavaScript::Eval("new MutationObserver(%s).observe(document.body,{childList:true})", (char*)hndl.GetWithPointer(0, true));
+    JavaScript::Eval("new MutationObserver(%s).observe(document.querySelector('%s'),{childList:true})", (char*)hndl.GetWithPointer(0, true), elm.query);
 }
 
 template<class T>

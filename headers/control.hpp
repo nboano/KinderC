@@ -22,7 +22,7 @@ public:
     Control(HTMLElement el) : HTMLElement(el) {}
 
     /// @brief Tells the enviroment that the custom control must be activated.
-    static void Use();
+    static void Use(HTMLElement element = $("body"));
 
     /// @brief The control render function. This will be called when a control should be rendered.
     /// @return An HTML string that will be written inside the control.
