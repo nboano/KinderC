@@ -181,6 +181,12 @@ public:
 	ev_HTMLElement(onmousewheel);
 	// Event fired when the mouse wheel is moved on the element.
 	ev_HTMLElement(onwheel);
+	// Event fired when a key is pressed on the element.
+	ev_HTMLElement(onkeydown);
+	// Event fired when a key is pressed on the element (DEPRECATED).
+	ev_HTMLElement(onkeypress);
+	// Event fired when a key is released on the element.
+	ev_HTMLElement(onkeyup);
 
 	char* query;
 protected:

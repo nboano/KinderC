@@ -42,6 +42,12 @@ Di seguito vengono elencate e descritte tutte le proprietà e i metodi della cla
   ```
   Permette di aggiungere in coda all'elemento o un testo o un altro `HTMLElement`.
 
+- **Metodo `CSS()`**
+  ```cpp
+  el.CSS("font-family", "sans-serif");
+  ```
+  Permette di impostare o di ottenere il valore di una data proprietà CSS dell'elemento.
+
 - **Operatore `<<`**
   ```cpp
   el << "TESTO";
@@ -181,3 +187,33 @@ Di seguito vengono elencate e descritte tutte le proprietà e i metodi della cla
   Specifica il tasto che, premuto in combinazione con **`ALT`**, attiva l'elemento.
 
 ### Eventi dell'`HTMLElement`
+
+- `onclick`   
+  Evento generato al click sull'elemento.
+
+- `ondblclick`   
+  Evento generato al doppio click sull'elemento.
+
+- `onmousedown`   
+  Evento generato alla pressione del pulsante del mouse sull'elemento.
+
+- `onmousemove`   
+  Evento generato al movimento del mouse sull'elemento.
+
+- `onmouseout`   
+  Evento generato quando il cursore esce dalla zona dell' elemento.
+
+- `onmouseover`   
+  Evento generato quando il cursore del mouse passa al di sopra dell'elemento.
+
+- `onmouseup`   
+  Evento generato quando un tasto del mouse viene rilasciato.
+
+- `onmousewheel`   
+  Evento generato quando la rotella del mouse viene azionata.
+
+- `onkeydown`   
+  Evento generato alla pressione di un tasto sulla tastiera.
+
+- `onkeyup`   
+  Evento generato al rilascio di un tasto sulla tastiera.
