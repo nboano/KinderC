@@ -28,3 +28,19 @@ void clearTimeout(int timeoutID);
 /// @brief Deletes a given interval.
 /// @param intervalID The interval identifier.
 void clearInterval(int intervalID);
+
+/// @brief Handles dates and times.
+class DateTime {
+    public:
+    /// @brief Creates a new DateTime object.
+    /// @param UNIX_TIMESTAMP A UNIX timestamp in seconds. Defaults to the current time.
+    DateTime(unsigned long UNIX_TIMESTAMP = time());
+
+    unsigned int Day;
+    unsigned int Month;
+    unsigned int Year;
+
+    unsigned int Hours;
+    unsigned int Minutes;
+    unsigned int Seconds;
+};
