@@ -223,7 +223,7 @@ template<class T>
 void Control<T>::Use(HTMLElement elm) {
     ChangeHandler(nullptr);
     Handler hndl { ChangeHandler };
-    JavaScript::Eval("new MutationObserver(%s).observe(document.querySelector('%s'),{childList:true})", (char*)hndl.GetWithPointer(0, true), elm.query);
+    JavaScript::Eval("new MutationObserver(%s).observe(document.querySelector('%s'),{childList:true,subtree:true,attributes:true})", (char*)hndl.GetWithPointer(0, true), elm.query);
 }
 
 template<class T>
