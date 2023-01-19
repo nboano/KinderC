@@ -65,9 +65,9 @@ Utilizzare una stringa rispetto a un array di caratteri ha alcuni vantaggi:
 
 ### Esempio di utilizzo dell'oggetto `string`
 
-#### **`index.html`** [Visualizza](examples/08-strings/index.html) *(Omesso in quanto senza contenuto nel body)*
+#### **`index.html`** [Visualizza](../../examples/08-strings/index.html) *(Omesso in quanto senza contenuto nel body)*
 
-#### **`main.cpp`** [Visualizza](examples/08-strings/main.cpp)
+#### **`main.cpp`** [Visualizza](../../examples/08-strings/main.cpp)
 ```cpp
 #include "../../kinderc.hpp"
 
