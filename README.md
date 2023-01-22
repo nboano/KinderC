@@ -5,10 +5,62 @@
 
 # &nbsp;
 
+## Get started!
 
-Install clang and clone the repository to start!
+First, install the ```clang```/```llvm``` compiler:
+
+```bash
+sudo apt-get install llvm
+```
+
+(*If you are using Windows, go [there](https://releases.llvm.org/download.html).*)
+
+Then, clone this repository:
 ```bash
 git clone https://github.com/nboano/kinderc.git
 ```
 
-**[Guide (Italian)](guides/it/index.md)**
+Create a new C++ file, for example ```main.cpp```:
+
+```cpp
+#include "/path/to/kinderc.hpp"
+
+int main() {
+    printf("<h1>Hello World!</h1>");
+}
+```
+
+Compile it into a new ```wasm``` file:
+```bash
+clang --target=wasm32 -Wl,--no-entry -Wl,--export-dynamic -Wl,--allow-undefined -Wl,--lto-O3 -Wl,--import-memory -O3 -s -flto -nostdlib -fdeclspec -o main.wasm main.cpp
+```
+
+Create a new HTML file, that will be your webpage:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KinderC Hello World</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/nboano/kinderc/kinderc.js"></script>
+    <assembly src="main.wasm"></assembly>
+</head>
+<body>
+    
+</body>
+</html>
+```
+
+Open your webpage (that should be hosted on an HTTP server):
+![](guides/images/03-hello-world.png)
+
+**That's it!**
+
+## Documentation
+
+## &#127470;&#127481; **[ITALIAN](guides/it/index.md)**
+
+## &#127468;&#127463; **[ENGLISH]()**
+ *Work in progress*
