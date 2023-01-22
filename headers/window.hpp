@@ -13,4 +13,4 @@ public:
     */
 };
 
-Window window;
+#define window Window()

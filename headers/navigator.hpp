@@ -16,4 +16,4 @@ public:
     prop(vendorSub);
 };
 
-Navigator navigator;
+#define navigator Navigator()

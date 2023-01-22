@@ -18,4 +18,4 @@ public:
     void reload() {operator[]("reload")();}
 };
 
-Location location;
+#define location Location()

@@ -20,4 +20,4 @@ private:
     #endif
 };
 
-History history;
+#define history History()

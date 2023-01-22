@@ -21,7 +21,7 @@ class Response : public Request {
 };
 
 /// @brief Default fetch options (GET request with empty body)
-const FetchOptions Fetch_defaults = {"GET" , ""};
+#define FETCH_DEFAULTS {"GET", ""}
 
 /// @brief Use the fetch API to perform async network requests.
 class Fetch {
@@ -30,13 +30,13 @@ public:
     /// @brief Makes a network request.
     /// @param _url The request URL.
     /// @param _options The request options. Defaults to GET with empty body.
-    Fetch(string _url, FetchOptions _options = Fetch_defaults);
+    Fetch(string _url, FetchOptions _options = FETCH_DEFAULTS);
 
     /// @brief Makes a sync network request. NOTE: This request will block the main thread until it's completed.
     /// @param URL The request URL.
     /// @param options The request options. Defaults to GET with empty body.
     /// @return The request object.
-    static Response sync(string URL, FetchOptions options = {"GET", ""});
+    static Response sync(string URL, FetchOptions options = FETCH_DEFAULTS);
 
     /// @brief Specifies an handler for when the request has completed.
     /// @param handler The handler.
