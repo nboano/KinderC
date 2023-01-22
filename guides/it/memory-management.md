@@ -108,7 +108,7 @@ exported void allocate_and_print(int n) {
 
     for (int i = 0; i < n; i++)
     {
-        array[i] = i + 1;
+        array[i] = rand() % 100;
         rs += (char*)string::Format("<b>array[%i]</b>: %i<br>", i, array[i]);
     } 
 
@@ -118,5 +118,7 @@ exported void allocate_and_print(int n) {
     // Same as free(array);
 }
 
-int main() {}
+int main() {
+    srand(time());
+}
 ```
