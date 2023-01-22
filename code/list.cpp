@@ -9,9 +9,7 @@ List<T>::List(int size) {
 
 template <typename T>
 T List<T>::operator [](int index) {
-    if(index <= _count)
-        return arrptr[index];
-    else return (T)0;
+    return arrptr[index];
 }
 
 template <typename T>
