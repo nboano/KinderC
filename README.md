@@ -3,8 +3,6 @@
 
 ### *Develop modern and fast Web Applications using C++, combined with the WebAssembly technology.*
 
-# &nbsp;
-
 ## Get started!
 
 First, install the ```clang```/```llvm``` compiler:
