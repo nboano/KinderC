@@ -60,7 +60,5 @@ Open your webpage (that should be hosted on an HTTP server):
 
 ## Documentation
 
-## &#127470;&#127481; **[ITALIAN](guides/it/index.md)**
-
-## &#127468;&#127463; **[ENGLISH]()**
- *Work in progress*
+[![](https://emojiguide.org/images/emoji/5/1elf6is1u8zc45.png)](guides/it/index.md)
+[![](https://emojiguide.org/images/emoji/o/1kyh8vbea3jmo.png)](#)
