@@ -61,4 +61,4 @@ Open your webpage (that should be hosted on an HTTP server):
 ## Documentation
 
 [![](https://emojiguide.org/images/emoji/5/1elf6is1u8zc45.png)](guides/it/index.md)
-[![](https://emojiguide.org/images/emoji/o/1kyh8vbea3jmo.png)](#)
+[![](https://emojiguide.org/images/emoji/o/1kyh8vbea3jmo.png)](guides/en/index.md)
