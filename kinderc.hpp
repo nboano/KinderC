@@ -20,6 +20,7 @@
 #include "headers/javascript.hpp"
 #include "headers/memory.hpp"
 #include "headers/string.hpp"
+#include "headers/format.hpp"
 #include "headers/math.hpp"
 #include "headers/exceptions.hpp"
 #include "headers/console.hpp"
