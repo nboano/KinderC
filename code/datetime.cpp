@@ -16,7 +16,7 @@ void clearInterval(int intervalID) {
     JavaScript::Eval("clearInterval(%i)", intervalID);
 }
 
-DateTime::DateTime(unsigned long s) {
+void DateTime::buildfromunixts(unsigned long s) {
     int z = s / 86400 + 719468;
     int era = (z >= 0 ? z : z - 146096) / 146097;
     unsigned int doe = (z - era * 146097);
@@ -32,4 +32,18 @@ DateTime::DateTime(unsigned long s) {
     Hours = extraTime / 3600;
     Minutes = (extraTime % 3600) / 60;
     Seconds = (extraTime % 3600) % 60;
+}
+string DateTime::pad2(int n) {
+    char bf[3] = "";
+    if(n < 10) sprintf(bf, "0%i", n);
+    else sprintf(bf, "%i", n);
+    return bf;
+}
+
+string DateTime::ToISOString() {
+    return string::Format("%i-%s-%sT%s:%s:%s", Year, (char*)pad2(Month), (char*)pad2(Day), (char*)pad2(Hours), (char*)pad2(Minutes), (char*)pad2(Seconds));
+}
+
+DateTime::DateTime(unsigned long s) {
+    buildfromunixts(s);
 }

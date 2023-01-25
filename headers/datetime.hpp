@@ -43,4 +43,10 @@ class DateTime {
     unsigned int Hours;
     unsigned int Minutes;
     unsigned int Seconds;
+
+    string ToISOString();
+
+    private:
+    void buildfromunixts(unsigned long s);
+    string pad2(int n);
 };
