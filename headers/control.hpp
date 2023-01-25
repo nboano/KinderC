@@ -1,6 +1,9 @@
 #pragma once
 #include "../kinderc.hpp"
 
+// Use this macro to initialize the control class, passing the control type as first parameter and the tag name as second parameter. (Es. MyControl, "MyControl")
+#define CustomControlInit(type, tagname) type(HTMLElement el) : Control(el) {}; static constexpr const char* TagName = tagname;
+
 // Use this macro to initialize the control class, passing the control type as first parameter. (Es. MyControl)
 #define ControlInit(name) name(HTMLElement el) : Control(el) {}; static constexpr const char* TagName = #name;
 
