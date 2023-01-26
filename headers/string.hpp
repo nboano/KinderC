@@ -106,6 +106,18 @@ public:
     /// @return Lowerized string.
     String ToLower();
 
+    /// @brief Adds a character to the left of the string until reacher the specified length.
+    /// @param length The desired length.
+    /// @param ch The character to add. Defaults to a whitespace.
+    /// @return A new, padded string.
+    String PadLeft(int length, char ch = ' ');
+
+    /// @brief Adds a character to the left of the string until reacher the specified length.
+    /// @param length The desired length.
+    /// @param ch The character to add. Defaults to a whitespace.
+    /// @return A new, padded string.
+    String PadRight(int length, char ch = ' ');
+
     /// @brief Check if a string starts with another string.
     /// @param s The other string.
     /// @return A boolean value (true / false)

@@ -217,6 +217,16 @@ bool String::EndsWith(String s) {
 			return false;
 	return true;
 }
+String String::PadLeft(int n, char c) {
+	string s = CharArray;
+	while (s.Length < n) s = string::Format("%c%s", c, (char*)s);
+	return s;
+}
+String String::PadRight(int n, char c) {
+	string s = CharArray;
+	while (s.Length < n) s += c;
+	return s;
+}
 String* String::Split(char separator) {
 	String tmp = CharArray;
 	if(tmp[tmp.Length - 1] != separator) tmp += separator;
