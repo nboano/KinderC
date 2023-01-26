@@ -32,9 +32,14 @@ void clearInterval(int intervalID);
 /// @brief Handles dates and times.
 class DateTime {
     public:
+
     /// @brief Creates a new DateTime object.
-    /// @param UNIX_TIMESTAMP A UNIX timestamp in seconds. Defaults to the current time.
-    DateTime(unsigned long UNIX_TIMESTAMP = time());
+    /// @param UnixTimeStamp A UNIX timestamp in seconds. Defaults to the current time.
+    DateTime(double UnixTimeStamp = time());
+
+    float TimeZone = 0.0;
+
+    double TimeStamp;
 
     unsigned int Day;
     unsigned int Month;
@@ -44,9 +49,10 @@ class DateTime {
     unsigned int Minutes;
     unsigned int Seconds;
 
+    unsigned int Milliseconds;
+
     string ToISOString();
 
     private:
-    void buildfromunixts(unsigned long s);
-    string pad2(int n);
+    void buildfromunixts(double s);
 };

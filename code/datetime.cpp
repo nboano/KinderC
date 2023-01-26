@@ -16,7 +16,10 @@ void clearInterval(int intervalID) {
     JavaScript::Eval("clearInterval(%i)", intervalID);
 }
 
-void DateTime::buildfromunixts(unsigned long s) {
+void DateTime::buildfromunixts(double ts) {
+    TimeStamp = ts;
+    int s = floor(ts);
+    Milliseconds = (ts - s) * 10e2;
     int z = s / 86400 + 719468;
     int era = (z >= 0 ? z : z - 146096) / 146097;
     unsigned int doe = (z - era * 146097);
@@ -33,17 +36,21 @@ void DateTime::buildfromunixts(unsigned long s) {
     Minutes = (extraTime % 3600) / 60;
     Seconds = (extraTime % 3600) % 60;
 }
-string DateTime::pad2(int n) {
-    char bf[3] = "";
-    if(n < 10) sprintf(bf, "0%i", n);
-    else sprintf(bf, "%i", n);
-    return bf;
-}
 
 string DateTime::ToISOString() {
-    return string::Format("%i-%s-%sT%s:%s:%s", Year, (char*)pad2(Month), (char*)pad2(Day), (char*)pad2(Hours), (char*)pad2(Minutes), (char*)pad2(Seconds));
+    if(TimeZone == 0)
+        return string::Format("%i-%s-%sT%s:%s:%s.%s", 
+            Year, 
+            (char*)String(Month).PadLeft(2, '0'), 
+            (char*)String(Day).PadLeft(2, '0'), 
+            (char*)String(Hours).PadLeft(2, '0'), 
+            (char*)String(Minutes).PadLeft(2, '0'), 
+            (char*)String(Seconds).PadLeft(2, '0'), 
+            (char*)String(Milliseconds).PadLeft(3, '0')
+        );
+    return DateTime(TimeStamp + TimeZone * 3600).ToISOString();
 }
 
-DateTime::DateTime(unsigned long s) {
-    buildfromunixts(s);
+DateTime::DateTime(double UnixTimeStamp) {
+    buildfromunixts(UnixTimeStamp);
 }
