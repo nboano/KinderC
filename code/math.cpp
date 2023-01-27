@@ -34,15 +34,36 @@ double reduce_angle(double x) {
     while(x >= M_PI * 2) x -= M_PI * 2; 
     return x;
 }
-double sin(double x) {
-    x = reduce_angle(x);
-    double res = 0, pow = x, fact = 1;
-    for (int i = 0; i < 7; i++) {
-        res += pow / fact;
-        pow *= -1 * x * x;
-        fact *= (2*(i+1))*(2*(i+1)+1);
+double factorial(double n) {
+    // 0! = 1 so just return it
+    if(n == 0) {
+        return 1;
     }
-    return res;
+    // Recursively call factorial with n-1 until n == 0
+    return n * (factorial(n - 1));
+}
+double pow(double n, double power) {
+    double result = n;
+    for(int i = 1; i < power; i++) {
+        result *= n;
+    }
+    return result;
+}
+double sin(double n) {
+    n = reduce_angle(n);
+    double result = n;
+    double coefficent = 3.0;
+    for(int i = 0; i < 10; i++) {
+        double pw = pow(n, coefficent);
+        double frac = factorial(coefficent);
+        if(i % 2 == 0) {
+            result = result - (pw/frac);
+        } else {
+            result = result + (pw/frac);
+        }
+        coefficent = coefficent + 2;
+    }
+    return result; 
 }
 double cos(double x) {
     x = reduce_angle(x);
