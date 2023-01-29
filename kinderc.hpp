@@ -38,6 +38,7 @@
 #include "headers/HTMLDialogElement.hpp"
 #include "headers/HTMLMediaElement.hpp"
 #include "headers/HTMLBodyElement.hpp"
+#include "headers/HTMLCanvasElement.hpp"
 #include "headers/file.hpp"
 #include "headers/filepicker.hpp"
 #include "headers/application.hpp"
