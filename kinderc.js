@@ -1,3 +1,7 @@
+/*
+    KinderC v. 20230204
+    By Niccolò Boano
+*/
 const env = {};
 const dp = [null];
 
