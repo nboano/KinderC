@@ -1,6 +1,7 @@
 /*
-    KinderC v. 20230204
-    By Niccolò Boano
+    KinderC (https://github.com/nboano/kinderc)
+    Copyright 2021-2023 Niccolò Boano
+    Licensed under MIT (https://github.com/nboano/kinderc/blob/master/LICENSE)
 */
 const env = {};
 const dp = [null];
