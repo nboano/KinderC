@@ -1,83 +1,36 @@
 #pragma once
+#include "impl/StdStringsMethods/StdStringsMethods.hpp"
 
 unsigned long strlen(const char* str) {
-	const char* s;
-	for (s = str; *s; ++s) {}
-	return(s - str);
+	return Implementations::StdStringsMethods::GetLength(str);
 }
 char* strcat(char* s1, const char* s2)
 {
-	char* start = s1;
-	while (*start != '\0')
-		start++;
-	while (*s2 != '\0')
-		*start++ = *s2++;
-	*start = '\0';
-	return s1;
+	return Implementations::StdStringsMethods::UnsafeConcatenation(s1, s2);
 }
 void strrev(char* str)
 {
-	int i;
-	int j;
-	unsigned char a;
-	unsigned long len = strlen((const char*)str);
-	for (i = 0, j = len - 1; i < j; i++, j--)
-	{
-		a = str[i];
-		str[i] = str[j];
-		str[j] = a;
-	}
+	return Implementations::StdStringsMethods::Reverse(str);
 }
 int strcmp(const char* X, const char* Y)
 {
-	while (*X)
-	{
-		if (*X != *Y) {
-			break;
-		}
-		X++;
-		Y++;
-	}
-	return *(const unsigned char*)X - *(const unsigned char*)Y;
+	return Implementations::StdStringsMethods::Compare(X, Y);
 }
 char* strcpy(char* destination, const char* source)
 {
-	char* ptr = destination;
-	while (*source != '\0')
-	{
-		*destination = *source;
-		destination++;
-		source++;
-	}
-	*destination = '\0';
-	return ptr;
+	return Implementations::StdStringsMethods::UnsafeCopy(destination, source);
 }
 void strcat_c(char* str, char c)
 {
-	//for (; *str; str++);
-	//*str++ = c;
-	//*str++ = 0;
-	str += strlen(str);
-	*str++ = c;
-	*str++ = 0;
+	Implementations::StdStringsMethods::UnsafeSingleCharacterConcatenation(str, c);
 }
-char* strupr(char* string)
+char* strupr(char* str)
 {
-	for (char* p = string; *p != '\0'; p++)
-	{
-		if (*p >= 'a' && *p <= 'z')
-			*p -= 32;
-	}
-	return string;
+	return Implementations::StdStringsMethods::Upperize(str);
 }
-char* strlwr(char* string)
+char* strlwr(char* str)
 {
-	for (char* p = string; *p != '\0'; p++)
-	{
-		if (*p >= 'A' && *p <= 'Z')
-			*p += 32;
-	}
-	return string;
+	return Implementations::StdStringsMethods::Lowerize(str);
 }
 
 char* strtok(char* s, char d)
@@ -182,13 +135,12 @@ char String::operator[] (int index) {
 	return CharArray[index];
 }
 String String::Format(const char* fmt, ...) {
-	int _sprintf(char* string, const char* fmt, va_list arg);
 	va_list arg;
 	int length;
 	char buffer[strlen(fmt) + 8192];
 	va_start(arg, fmt);
 	strcpy(buffer, "");
-	length = _sprintf(buffer, fmt, arg);
+	length = Implementations::StdStringsMethods::UnsafeVariadicFormat(buffer, fmt, arg);
 	va_end(arg);
 	return String(buffer);
 }

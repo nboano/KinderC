@@ -54,10 +54,3 @@ int printf(const char* fmt, ...);
 /// @param [P] Optional formatter params.
 /// @return The string length.
 int sprintf(char* string, const char* fmt, ...);
-
-/// @brief Custom sprintf with variable list arguments.
-/// @param string The string buffer.
-/// @param fmt The base string.
-/// @param arg Argument list <stdarg.h>.
-/// @return The string length.
-int _sprintf(char* string, const char* fmt, va_list arg);
