@@ -28,6 +28,15 @@ public:
         Add(args...);
     }
 
+    /// @brief Initialises the list with the given elements.
+    /// @param element The elements to add.
+    /// @param ...args The elements to add.
+    template<typename... Args>
+    List(T element, Args... args) : List() {
+        Add(element);
+        Add(args...);
+    }
+
     /// @brief Gets an element from the list.
     /// @param index The element index.
     /// @return The corresponding element, or (T)0 if it does not exists.
@@ -39,6 +48,10 @@ public:
             return ((List<T>*)lst)->_count;
         }, this
     };
+
+    /// @brief Creates a new array with the contents of the list.
+    /// @return A new array (dynamically allocated).
+    T* ToArray();
 protected:
     T* arrptr;
     int _count = 0;

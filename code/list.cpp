@@ -35,3 +35,13 @@ template<typename T>
 List<T>::~List() {
     free(arrptr);
 }
+
+template<typename T>
+T* List<T>::ToArray() {
+    T* ptr = (T*)malloc(_count*sizeof(T));
+    for (int i = 0; i < _count; i++)
+    {
+        ptr[i] = arrptr[i];
+    }
+    return ptr;
+}
