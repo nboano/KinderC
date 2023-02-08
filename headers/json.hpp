@@ -12,21 +12,44 @@ public:
     /// @exception JSONNotValid
     static object Parse(string s);
 
+    /// @brief Serializes the current object into a JSON string.
+    /// @param pretty Sets this to true if you want the string to be prettified (with tabulations, spaces ecc.). Defaults to true.
+    /// @param tabnumber Sets the default number of tabulations. Defaults to 1.
+    /// @return A JSON string representing the object.
+    string Serialize(bool pretty = true, int tabnumber = 1);
+
     struct Value;
+
+    /// @brief A JSON non-typised array. It can contain a variable number of elements of different type.
+    /// @example JSON::Array a = {1, "sd", "a", false};
     typedef List<Value> Array;
 
+    /// @brief Represents a JSON value of a specified type.
     struct Value {
     private:
+
+        /// @brief Enumerator that lists all the JSON type available.
         enum DataType {
+
+            /// @brief JSON null data type.
             NULL_T,
 
+            /// @brief JSON string data type.
             STRING,
+
+            /// @brief JSON integer data type (Number).
             INT,
+
+            /// @brief JSON floating-point data type (Number).
             DOUBLE,
+
+            /// @brief JSON boolean data type.
             BOOL,
 
+            /// @brief JSON array data type.
             ARRAY,
 
+            /// @brief JSON object data type.
             OBJECT,
         } type;
 
@@ -42,81 +65,29 @@ public:
 
     public:
 
-        const char* GetJSONValue(bool pretty = true, int tabnumber = 1) {
-            switch (type)
-            {
-                case STRING:
-                    return String::Format("\"%s\"", value_string);
-                case INT:
-                    return String::Format("%i", value_int);
-                case DOUBLE:
-                    return String::Format("%f", value_double);
-                case BOOL:
-                    return value_bool ? "true" : "false";
-                case ARRAY:
-                {
-                    String s = "[";
-                    for (int i = 0; i < array_count; i++)
-                    {
-                        s += value_array[i].GetJSONValue(value_array[i].type == OBJECT ? false : pretty, tabnumber + 1);
-                        if(i != array_count - 1) s += pretty? ", " : ",";
-                    }
-                    s += "]";
-                    return s;
-                }
-                case OBJECT:
-                    return value_object->Serialize(pretty, tabnumber + 1);
-                default:
-                    return "null";
-            }
-        }
+        const char* GetJSONValue(bool pretty = true, int tabnumber = 1);
 
-        operator int() {
-            return value_int;
-        }
-        operator const char*() {
-            return value_string;
-        }
-        operator char*() {
-            return (char*)value_string;
-        }
-        operator string() {
-            return (string)value_string;
-        }
-        operator double() {
-            return value_double;
-        }
-        operator Array() {
-            Array a { array_count };
-            for (int i = 0; i < array_count; i++)
-            {
-                a[i] = value_array[i];
-            }
-            return a;
-        }
-        operator JSON() {
-            return *value_object;
-        }
+        operator int();
+        operator const char*();
+        operator char*();
+        operator string();
+        operator double();
+        operator Array();
+        operator JSON();
 
-        Value(decltype(__nullptr) nul) {type = NULL_T;}
-        Value(int n) {value_int = n; type = INT;}
-        Value(unsigned int n) {value_int = n; type = INT;}
-        Value(const char* s) {value_string = s; type = STRING;}
-        Value(char* s) {value_string = s; type = STRING;}
-        Value(string s) {value_string = s; type = STRING;}
-        Value(double n) {value_double = n; type = DOUBLE;}
-        Value(bool b) {value_bool = b; type = BOOL;}
-        Value(Array lst) {
-            array_count = lst.Count;
-            value_array = lst.ToArray();
-            type = ARRAY;
-        }
-        Value(JSON* obj) {
-            value_object = obj;
-            type = OBJECT;
-        }
+        Value(decltype(__nullptr) nul);
+        Value(int n);
+        Value(unsigned int n);
+        Value(const char* s);
+        Value(char* s);
+        Value(string s);
+        Value(double n);
+        Value(bool b);
+        Value(Array lst);
+        Value(JSON* obj);
     };
 
+    /// @brief Represents a JSON field (Key/Value pair) of a certain type.
     struct Field {
         Field(const char* key, Value value) : Key(key), Value(value) {}
 
@@ -124,52 +95,22 @@ public:
         Value Value;
     };
 
-    List<Field> lst;
+    /// @brief List of fields of the object.
+    List<Field> Fields;
 
-    Value operator[](const char* key) {
-        for (int i = 0; i < lst.Count; i++)
-            if(strcmp(lst[i].Key, key) == 0)
-                return lst[i].Value;
-        return nullptr;        
-    }
+    /// @brief Retrieves a certain field value from the JSON object, if available.
+    /// @param key The key.
+    /// @return The field. If the key does not exists, nullptr is returned.
+    Value operator[](const char* key);
 
-    void AddField(Field f) {
-        lst.Add(f);
-    }
+    /// @brief Constructs a new JSON from a field.
+    /// @param f A JSON Field.
+    JSON(Field f);
 
-    JSON(Field f) {
-        AddField(f);
-    }
-
-    JSON() {
-        
-    }
+    JSON();
 
     template<typename... Args>
-    JSON(Field f, Args... args) {
-        AddField(Field(f));
-        AddField(args...);
-    }
 
-    template<typename... Args>
-    void AddField(Field f, Args... args) {
-        AddField(Field(f));
-        AddField(args...);
-    }
-
-    string Serialize(bool pretty = true, int tabnumber = 1) {
-        string s = "{";
-        if(pretty) s += "\n";
-        for (int i = 0; i < lst.Count; i++)
-        {
-            if(pretty) s += String::Format("%s\"%s\" : %s%s", (char*)String("").PadRight(tabnumber, '\t'), lst[i].Key, lst[i].Value.GetJSONValue(pretty, tabnumber), i != lst.Count - 1 ? ",\n" : "");
-            else s += String::Format("\"%s\":%s%s", lst[i].Key, lst[i].Value.GetJSONValue(pretty, tabnumber), i != lst.Count - 1 ? "," : "");
-        }
-        if(pretty)  {
-            s += "\n";
-            s += String("").PadRight(tabnumber - 1, '\t');
-        }
-        s += "}";
-        return s;
-    }
+    /// @brief Constructs a new JSON from multiple fields. 
+    JSON(Field f, Args... args);
 };
