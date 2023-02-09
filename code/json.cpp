@@ -81,6 +81,15 @@ JSON::Value::Value(JSON* obj) {
 	type = OBJECT;
 }
 
+JSON::Value::Value(Object flist) {
+	value_object = new JSON();
+	for (int i = 0; i < flist.Count; i++)
+	{
+		value_object->Fields.Add(flist[i]);
+	}
+	type = OBJECT;
+}
+
 JSON::Value JSON::operator[](const char* key) {
 	for (int i = 0; i < Fields.Count; i++)
 		if(strcmp(Fields[i].Key, key) == 0)

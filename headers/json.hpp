@@ -20,9 +20,13 @@ public:
 
     struct Value;
 
+    struct Field;
+
     /// @brief A JSON non-typised array. It can contain a variable number of elements of different type.
     /// @example JSON::Array a = {1, "sd", "a", false};
     typedef List<Value> Array;
+
+    typedef List<Field> Object;
 
     /// @brief Represents a JSON value of a specified type.
     struct Value {
@@ -85,6 +89,7 @@ public:
         Value(bool b);
         Value(Array lst);
         Value(JSON* obj);
+        Value(Object flist);
     };
 
     /// @brief Represents a JSON field (Key/Value pair) of a certain type.
