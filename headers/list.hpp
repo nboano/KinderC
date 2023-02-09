@@ -52,6 +52,10 @@ public:
     /// @brief Creates a new array with the contents of the list.
     /// @return A new array (dynamically allocated).
     T* ToArray();
+
+    void SetValueAt(int index, T value) {
+        arrptr[index] = value;
+    }
 protected:
     T* arrptr;
     int _count = 0;
