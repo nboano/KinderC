@@ -311,7 +311,7 @@ void objdump(JSON::Array flist) {
             printf("[%i] => <i>(array)</i><br>", i);
             break;
         case JSON::Value::DataType::NULL_T:
-            printf("[%s] => <i>(null)</i><br>", i);
+            printf("[%i] => <i>(null)</i><br>", i);
         default:
             break;
         }
