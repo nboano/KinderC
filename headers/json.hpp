@@ -30,7 +30,6 @@ public:
 
     /// @brief Represents a JSON value of a specified type.
     struct Value {
-    private:
 
         /// @brief Enumerator that lists all the JSON type available.
         enum DataType {
@@ -55,7 +54,10 @@ public:
 
             /// @brief JSON object data type.
             OBJECT,
-        } type;
+        };
+        
+    private:
+        DataType type;
 
         const char* value_string;
         int value_int;
@@ -69,6 +71,8 @@ public:
 
     public:
 
+        DataType GetType() { return type; };
+
         const char* GetJSONValue(bool pretty = true, int tabnumber = 1);
 
         operator int();
@@ -78,6 +82,7 @@ public:
         operator double();
         operator Array();
         operator JSON();
+        operator Object();
 
         Value(decltype(__nullptr) nul);
         Value(int n);

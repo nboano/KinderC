@@ -61,6 +61,9 @@ JSON::Value::operator Array() {
 JSON::Value::operator JSON() {
 	return *value_object;
 }
+JSON::Value::operator JSON::Object() {
+	return value_object->Fields;
+}
 
 JSON::Value::Value(decltype(__nullptr) nul) {type = NULL_T;}
 JSON::Value::Value(int n) {value_int = n; type = INT;}
