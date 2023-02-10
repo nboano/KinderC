@@ -51,18 +51,19 @@ JSON::Value::operator double() {
 	return value_double;
 }
 JSON::Value::operator Array() {
-	Array a { array_count };
-	for (int i = 0; i < array_count; i++)
-	{
-		a[i] = value_array[i];
-	}
-	return a;
+	// Array a { array_count };
+	// for (int i = 0; i < array_count; i++)
+	// {
+	// 	a[i] = value_array[i];
+	// }
+	// return a;
+	return JSON::Parser::DeserializeArray(value_string);
 }
 JSON::Value::operator JSON() {
 	return *value_object;
 }
 JSON::Value::operator JSON::Object() {
-	return value_object->Fields;
+	return JSON::Parser::DeserializeObject(value_string);
 }
 
 JSON::Value::Value(decltype(__nullptr) nul) {type = NULL_T;}
