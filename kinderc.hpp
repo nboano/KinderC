@@ -73,3 +73,4 @@
 #include "code/apis.cpp"
 #include "code/math.cpp"
 #include "code/list.cpp"
+#include "code/dump.cpp"
