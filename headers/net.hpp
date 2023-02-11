@@ -61,8 +61,12 @@ public:
     string getResponseHeader(const char* headername);
 
     /// @brief Parses the response into an object, if possible.
-    /// @return An object pointer.
-    object JSON();
+    /// @return A JSON::Object.
+    JSON::Object ToJSONObject();
+
+    /// @brief Parses the response into an array, if possible.
+    /// @return A JSON::Array.
+    JSON::Array ToJSONArray();
 
     /// @brief Gets the response text.
     /// @return A string containing the response text.

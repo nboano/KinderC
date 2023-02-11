@@ -1,11 +1,6 @@
 #pragma once
 #include "../kinderc.hpp"
 
-DynamicObject JSON::Parse(string s) {
-	int index = (int)DynamicObject("dp")["push"](String::Format("JSON.parse(`%s`)", s.CharArray)) - 1;
-	return DynamicObject(String::Format("dp[%i]", index));
-}
-
 const char* JSON::Value::GetJSONValue(bool pretty, int tabnumber) {
 	switch (type)
 	{
@@ -57,13 +52,13 @@ JSON::Value::operator Array() {
 	// 	a[i] = value_array[i];
 	// }
 	// return a;
-	return JSON::Parser::DeserializeArray(value_string);
+	return JSON::DeserializeArray(value_string);
 }
 JSON::Value::operator JSON() {
 	return *value_object;
 }
 JSON::Value::operator JSON::Object() {
-	return JSON::Parser::DeserializeObject(value_string);
+	return JSON::DeserializeObject(value_string);
 }
 
 JSON::Value::Value(decltype(__nullptr) nul) {type = NULL_T;}

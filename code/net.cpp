@@ -90,8 +90,11 @@ string XMLHttpRequest::get_statusText() {
 string XMLHttpRequest::getAttribute(const char* name) {
 	return object("dp")[index][name];
 }
-object XMLHttpRequest::JSON() {
-	return JSON::Parse((char*)response);
+JSON::Object XMLHttpRequest::ToJSONObject() {
+	return JSON::DeserializeObject((char*)response);
+}
+JSON::Array XMLHttpRequest::ToJSONArray() {
+	return JSON::DeserializeArray((char*)response);
 }
 string XMLHttpRequest::Text() {
 	return String((char*)response);

@@ -6,14 +6,6 @@
 class JSON {
 public:
 
-    class Parser;
-
-    /// @brief Parses a JSON string into an object.
-    /// @param s A valid JSON string.
-    /// @return An object pointer.
-    /// @exception JSONNotValid
-    static object Parse(string s);
-
     /// @brief Serializes the current object into a JSON string.
     /// @param pretty Sets this to true if you want the string to be prettified (with tabulations, spaces ecc.). Defaults to true.
     /// @param tabnumber Sets the default number of tabulations. Defaults to 1.
@@ -27,7 +19,7 @@ public:
     /// @brief A JSON non-typised array. It can contain a variable number of elements of different type.
     /// @example JSON::Array a = {1, "sd", "a", false};
     class Array: public List<Value> {
-
+        public:
     };
 
     class Object: public List<Field> {
@@ -139,6 +131,12 @@ public:
 
     /// @brief Constructs a new JSON from multiple fields. 
     JSON(Field f, Args... args);
+
+
+
+    static Object DeserializeObject(const char* str);
+
+    static Array DeserializeArray(const char* str);
 };
 
 #include "JSONParser.hpp"
