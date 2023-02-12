@@ -15,3 +15,8 @@ template<typename T>
 T JSON::DeserializeObjectAs(const char* str) {
     return Implementations::JSON::Parser::DeserializeObjectAs<T>(str);
 }
+
+template<typename T>
+List<T> JSON::DeserializeArrayAs(const char* str) {
+    return Implementations::JSON::Parser::DeserializeArrayAs<T>(str);
+}
