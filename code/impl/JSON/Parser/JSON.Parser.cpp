@@ -78,3 +78,18 @@
     return flist;
 }
 
+template<typename T>
+T Implementations::JSON::Parser::DeserializeObjectAs(const char* str) {
+    ::JSON::Object jobj = Implementations::JSON::Parser::DeserializeObject(str);
+    T obj;
+
+    T::Fields::Init();
+
+    for (int i = 0; i < jobj.Count; i++)
+    {
+        (T::Fields::List)[i].AssignTo(obj, jobj[i].Value);
+    }
+    
+    return obj;
+}
+

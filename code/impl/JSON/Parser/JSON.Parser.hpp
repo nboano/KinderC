@@ -7,6 +7,9 @@ namespace Implementations::JSON::Parser
     ::JSON::Object DeserializeObject(const char* str);
 
     ::JSON::Array DeserializeArray(const char* str);
+
+    template<typename T>
+    T DeserializeObjectAs(const char* str);
 } // namespace Implementations::JSON::Parser
 
 namespace Implementations::JSON::Parser::Helpers

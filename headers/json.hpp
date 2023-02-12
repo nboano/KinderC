@@ -137,6 +137,9 @@ public:
     static Object DeserializeObject(const char* str);
 
     static Array DeserializeArray(const char* str);
+
+    template<typename T>
+    static T DeserializeObjectAs(const char* str);
 };
 
 #include "JSONParser.hpp"

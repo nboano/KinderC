@@ -10,3 +10,8 @@ JSON::Object JSON::DeserializeObject(const char* str) {
 JSON::Array JSON::DeserializeArray(const char* str) {
     return Implementations::JSON::Parser::DeserializeArray(str);
 }
+
+template<typename T>
+T JSON::DeserializeObjectAs(const char* str) {
+    return Implementations::JSON::Parser::DeserializeObjectAs<T>(str);
+}
