@@ -55,6 +55,7 @@
 #include "headers/control.hpp"
 #include "headers/TextBox.hpp"
 #include "headers/ComboBox.hpp"
+#include "headers/reflection.hpp"
 
 
 #include "code/string.cpp"
