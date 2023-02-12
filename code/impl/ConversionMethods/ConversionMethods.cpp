@@ -39,31 +39,44 @@ int Implementations::ConversionMethods::UnsafeBase16AsciiStringToUnsignedInteger
 	}
 	return numero;
 }
-
-float Implementations::ConversionMethods::UnsafeBase10AsciiStringToFloatingPoint(const char* arr) {
-    float val = 0;
-	int afterdot=0;
-	float scale=1;
-	int neg = 0; 
-
-	if (*arr == '-') {
-		arr++;
-		neg = 1;
+float Implementations::ConversionMethods::UnsafeBase10AsciiStringToFloatingPoint(const char* s) {
+	double a = 0.0;
+	int e = 0;
+	int c;
+	while ((c = *s++) != '\0' && (c >= '0' && c <= '9')) {
+		a = a * 10.0 + (c - '0');
 	}
-	while (*arr) {
-		if (afterdot) {
-		scale = scale/10;
-		val = val + (*arr-'0')*scale;
-		} else {
-		if (*arr == '.') 
-		afterdot++;
-		else
-		val = val * 10.0 + (*arr - '0');
+	if (c == '.') {
+		while ((c = *s++) != '\0' && (c >= '0' && c <= '9')) {
+		a = a*10.0 + (c - '0');
+		e = e-1;
 		}
-		arr++;
 	}
-	if(neg) return -val;
-	else    return  val;
+	if (c == 'e' || c == 'E') {
+		int sign = 1;
+		int i = 0;
+		c = *s++;
+		if (c == '+')
+		c = *s++;
+		else if (c == '-') {
+		c = *s++;
+		sign = -1;
+		}
+		while ((c >= '0' && c <= '9')) {
+		i = i*10 + (c - '0');
+		c = *s++;
+		}
+		e += i*sign;
+	}
+	while (e > 0) {
+		a *= 10.0;
+		e--;
+	}
+	while (e < 0) {
+		a *= 0.1;
+		e++;
+	}
+	return a;
 }
 
 char* Implementations::ConversionMethods::UnsafeFloatingPointToAsciiString(double value, char* buffer) {
