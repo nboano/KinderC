@@ -143,6 +143,9 @@ public:
 
     template<typename T>
     static List<T> DeserializeArrayAs(const char* str);
+
+    template<typename T>
+    static const char* SerializeObjectOfType(T obj, bool pretty = true, int tabnumber = 1);
 };
 
 #include "JSONParser.hpp"

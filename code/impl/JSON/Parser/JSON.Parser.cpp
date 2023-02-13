@@ -114,3 +114,15 @@ List<T> Implementations::JSON::Parser::DeserializeArrayAs(const char* str) {
     return lst;
 }
 
+template<typename T>
+const char* Implementations::JSON::Parser::SerializeObjectOfType(T structure, bool pretty, int tabnumber) {
+    T::Fields::Init();
+    int l = T::Fields::Count;
+    ::JSON j;
+    for (int i = 0; i < l; i++)
+    {
+        j.Fields.Add({T::Fields::List[i].Name, T::Fields::List[i].GetValueFrom(structure)});
+    }
+    return j.Serialize(pretty, tabnumber);
+}
+

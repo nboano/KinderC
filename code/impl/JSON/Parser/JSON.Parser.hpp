@@ -13,6 +13,9 @@ namespace Implementations::JSON::Parser
 
     template<typename T>
     List<T> DeserializeArrayAs(const char* str);
+
+    template<typename T>
+    const char* SerializeObjectOfType(T obj, bool pretty, int tabnumber);
 } // namespace Implementations::JSON::Parser
 
 namespace Implementations::JSON::Parser::Helpers
