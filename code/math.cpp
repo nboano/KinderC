@@ -30,24 +30,65 @@ void srand(unsigned int seed) {
     random_next = seed;
 }
 
-double __builtin_pow(double, double);
-double __builtin_sin(double);
-double __builtin_cos(double);
-double __builtin_tan(double);
-double __builtin_sqrt(double);
-
+double reduce_angle(double x) {
+    while(x >= M_PI * 2) x -= M_PI * 2; 
+    return x;
+}
+double factorial(double n) {
+    // 0! = 1 so just return it
+    if(n == 0) {
+        return 1;
+    }
+    // Recursively call factorial with n-1 until n == 0
+    return n * (factorial(n - 1));
+}
 double pow(double n, double power) {
-    return __builtin_pow(n, power);
+    double result = n;
+    for(int i = 1; i < power; i++) {
+        result *= n;
+    }
+    return result;
 }
 double sin(double n) {
-    return __builtin_sin(n);
+    n = reduce_angle(n);
+    double result = n;
+    double coefficent = 3.0;
+    for(int i = 0; i < 10; i++) {
+        double pw = pow(n, coefficent);
+        double frac = factorial(coefficent);
+        if(i % 2 == 0) {
+            result = result - (pw/frac);
+        } else {
+            result = result + (pw/frac);
+        }
+        coefficent = coefficent + 2;
+    }
+    return result; 
 }
 double cos(double x) {
-    return __builtin_cos(x);
+    x = reduce_angle(x);
+    return sin(x + M_PI / 2);
 }
 double tan(double x) {
-    return __builtin_tan(x);
+    x = reduce_angle(x);
+    return sin(x) / cos(x);
 }
-double sqrt(double n) { 
-    return __builtin_sqrt(n);
+
+float rsqrt(float number) {
+    long i;
+    float x2, y;
+    const float threehalfs = 1.5F;
+
+    x2 = number * 0.5F;
+    y  = number;
+    i  = *(long*) &y;
+    i  = 0x5f3759df - (i >> 1);
+    y  = *(float*)&i;
+
+    for (int j = 0; j < 3; j++) 
+        y *= ( threehalfs - ( x2 * y * y ) ); 
+
+    return y;
 }
+
+float sqrt(float n) { return 1 / rsqrt(n);}
