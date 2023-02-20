@@ -52,3 +52,5 @@
     - [Metodi e operatori](htmlelement-class.md#metodi-e-operatori-di-htmlelement)
     - [Proprietà](htmlelement-class.md#proprietà-di-htmlelement)
     - [Eventi](htmlelement-class.md#eventi-dellhtmlelement)
+18. [La classe JSON](json-class.md)
+    - [Serializzazione](json-serialisation.md)
