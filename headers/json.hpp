@@ -24,15 +24,16 @@ public:
 
     class Object: public List<Field> {
         public:
-        Field operator[](int i) {
+        Field& operator[](int i) {
             return arrptr[i];
         }
-        Value operator[](const char* key) {
+        Value& operator[](const char* key) {
             for (int i = 0; i < Count; i++) {
                 if(strcmp(arrptr[i].Key, key) == 0)
                     return arrptr[i].Value;
             }
-            return nullptr;    
+            static Value notfound = nullptr;
+            return notfound;    
         };
     };
 
@@ -146,6 +147,8 @@ public:
 
     template<typename T>
     static const char* SerializeObjectOfType(T obj, bool pretty = true, int tabnumber = 1);
+
+    static string SerializeObject(JSON::Object obj, bool pretty = true, int tabnumber = 1);
 };
 
 #include "JSONParser.hpp"

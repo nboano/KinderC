@@ -122,3 +122,9 @@ string JSON::Serialize(bool pretty, int tabnumber) {
 	s += "}";
 	return s;
 }
+
+string JSON::SerializeObject(JSON::Object obj, bool pretty, int tabnumber) {
+	JSON j;
+	j.Fields = obj;
+	return j.Serialize(pretty, tabnumber);
+}
