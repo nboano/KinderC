@@ -33,7 +33,8 @@ void List<T>::doublesize() {
 
 template<typename T>
 List<T>::~List() {
-    free(arrptr);
+    if(Destroyable)
+        free(arrptr);
 }
 
 template<typename T>

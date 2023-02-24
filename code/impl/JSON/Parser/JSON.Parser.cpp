@@ -18,6 +18,7 @@
     *(chptr - 1) = ' ';
 
     ::JSON::Object flist;
+    flist.Destroyable = false;
 
     do
     {
@@ -86,22 +87,15 @@ T Implementations::JSON::Parser::DeserializeObjectAs(const char* str) {
 
 template<typename T> 
 List<T> Implementations::JSON::Parser::DeserializeArrayAs(const char* str) {
-    ::JSON::Array j_arr = Implementations::JSON::Parser::DeserializeArray(str);
+    List<T> lst;
+    ::JSON::Array arr = Implementations::JSON::Parser::DeserializeArray(str);
 
-    T arr[1024];
-
-    for (int i = 0; i < j_arr.Count; i++)
+    for (int i = 0; i < arr.Count; i++)
     {
-        arr[i] = Implementations::JSON::Parser::DeserializeObjectAs<T>(j_arr[i]);
+        T o = Implementations::JSON::Parser::DeserializeObjectAs<T>(arr[i]);
+        lst.Add(o);
     }
     
-    List<T> lst {(int)j_arr.Count};
-
-    for (int i = 0; i < j_arr.Count; i++)
-    {
-        lst.Add(arr[i]);
-    }
-
     return lst;
 }
 

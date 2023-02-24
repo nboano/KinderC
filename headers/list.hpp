@@ -8,6 +8,9 @@ template<typename T>
 class List {
 public:
 
+    /// @brief Tells if the list is destroyable or not.
+    bool Destroyable = true;
+
     /// @brief Creates a new List with a given size.
     /// @param size The List initial size. Defaults to 16.
     List(int size = LIST_DEFAULT_SIZE);
