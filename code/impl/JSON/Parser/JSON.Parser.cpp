@@ -80,17 +80,8 @@
 
 template<typename T>
 T Implementations::JSON::Parser::DeserializeObjectAs(const char* str) {
-    ::JSON::Object jobj = Implementations::JSON::Parser::DeserializeObject(str);
-    T obj;
-
-    T::Fields::Init();
-
-    for (int i = 0; i < jobj.Count; i++)
-    {
-        (T::Fields::List)[i].AssignTo(obj, jobj[i].Value);
-    }
-    
-    return obj;
+    ::JSON::Object obj = Implementations::JSON::Parser::DeserializeObject(str);
+    return *((T*)&obj);
 }
 
 template<typename T> 
@@ -112,17 +103,5 @@ List<T> Implementations::JSON::Parser::DeserializeArrayAs(const char* str) {
     }
 
     return lst;
-}
-
-template<typename T>
-const char* Implementations::JSON::Parser::SerializeObjectOfType(T structure, bool pretty, int tabnumber) {
-    T::Fields::Init();
-    int l = T::Fields::Count;
-    ::JSON j;
-    for (int i = 0; i < l; i++)
-    {
-        j.Fields.Add({T::Fields::List[i].Name, T::Fields::List[i].GetValueFrom(structure)});
-    }
-    return j.Serialize(pretty, tabnumber);
 }
 

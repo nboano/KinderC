@@ -22,6 +22,15 @@ public:
         public:
     };
 
+    template<typename T>
+    class TypisedArray: public Array {
+        public:
+
+        T operator[](int index) {
+            return JSON::DeserializeObjectAs<T>(arrptr[index]);
+        }
+    };
+
     class Object: public List<Field> {
         public:
         Field& operator[](int i) {
@@ -144,9 +153,6 @@ public:
 
     template<typename T>
     static List<T> DeserializeArrayAs(const char* str);
-
-    template<typename T>
-    static const char* SerializeObjectOfType(T obj, bool pretty = true, int tabnumber = 1);
 
     static string SerializeObject(JSON::Object obj, bool pretty = true, int tabnumber = 1);
 };

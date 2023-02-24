@@ -20,8 +20,3 @@ template<typename T>
 List<T> JSON::DeserializeArrayAs(const char* str) {
     return Implementations::JSON::Parser::DeserializeArrayAs<T>(str);
 }
-
-template<typename T>
-const char* JSON::SerializeObjectOfType(T obj, bool pretty, int tabnumber) {
-    return Implementations::JSON::Parser::SerializeObjectOfType<T>(obj, pretty, tabnumber);
-}
