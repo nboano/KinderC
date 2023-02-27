@@ -45,11 +45,24 @@ char* strupr(char* string);
 /// @return A pointer to the string.
 char* strlwr(char* string);
 
-/// @brief 
-/// @param string 
-/// @param separator 
+/// @brief Retrieves the first occurency of a given character in a string.
+/// @param string The string.
+/// @param separator The separator character.
 /// @return 
 char* strtok(char* string, char separator);
+
+/// @brief Compares two strings for the first n characters.
+/// @param s1 The first string.
+/// @param s2 The second string.
+/// @param n The number of characters to compare.
+/// @return A number, which is 0 if the strings are equals.
+int strncmp(const char* s1, const char* s2, unsigned int n);
+
+/// @brief Retrieves a pointer to a given substring into a string.
+/// @param str The string.
+/// @param substr The substring to look for.
+/// @return A pointer to the first occurrency of the substring. If it does not exist, null is returned.
+const char* strstr(const char* str, const char* substr);
 
 /// @brief Use this class to manage strings.
 class String {
