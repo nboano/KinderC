@@ -8,7 +8,7 @@ List<T>::List(int size) {
 }
 
 template <typename T>
-T List<T>::operator [](int index) {
+T& List<T>::operator [](int index) {
     return arrptr[index];
 }
 

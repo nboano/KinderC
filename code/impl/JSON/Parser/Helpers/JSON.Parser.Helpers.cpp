@@ -72,7 +72,8 @@ void Implementations::JSON::Parser::Helpers::TypiseObject(::JSON::Object flist) 
                     cval[i] = 0;
                     break;
                 }
-            flist.SetValueAt(i, {flist[i].Key, cval});
+            //flist.SetValueAt(i, {flist[i].Key, cval});
+            flist[i] = {flist[i].Key, cval};
             break;
         case '0':
         case '1':
@@ -97,14 +98,14 @@ void Implementations::JSON::Parser::Helpers::TypiseObject(::JSON::Object flist) 
                 }
             }
 
-            if(f) flist.SetValueAt(i, {flist[i].Key, atof(cval)});
-            else  flist.SetValueAt(i, {flist[i].Key, atoi(cval)});
+            if(f) flist[i] = {flist[i].Key, atof(cval)};
+            else  flist[i] = {flist[i].Key, atoi(cval)};
 
             delete[] cval;
             break;
         }
         case 'n':
-            flist.SetValueAt(i, {flist[i].Key, nullptr});
+            flist[i] = {flist[i].Key, nullptr};
 
             delete[] cval;
             break;
@@ -132,7 +133,8 @@ void Implementations::JSON::Parser::Helpers::TypiseArray(::JSON::Array flist) {
                     cval[i] = 0;
                     break;
                 }
-            flist.SetValueAt(i, cval);
+            //flist.SetValueAt(i, cval);
+            flist[i] = cval;
             break;
         case '0':
         case '1':
@@ -157,14 +159,14 @@ void Implementations::JSON::Parser::Helpers::TypiseArray(::JSON::Array flist) {
                 }
             }
 
-            if(f) flist.SetValueAt(i, atof(cval));
-            else  flist.SetValueAt(i, atoi(cval));
+            if(f) flist[i] = atof(cval);
+            else  flist[i] = atoi(cval);
 
             delete[] cval;
             break;
         }
         case 'n':
-            flist.SetValueAt(i, nullptr);
+            flist[i] = nullptr;
 
             delete[] cval;
             break;

@@ -11,6 +11,16 @@ public:
     /// @brief Tells if the list is destroyable or not.
     bool Destroyable = true;
 
+    /// @brief Pointer to the first element of the list.
+    T* begin() {
+        return arrptr;
+    }
+
+    /// @brief Pointer to the last element of the list.
+    T* end() {
+        return arrptr + _count;
+    }
+
     /// @brief Creates a new List with a given size.
     /// @param size The List initial size. Defaults to 16.
     List(int size = LIST_DEFAULT_SIZE);
@@ -43,7 +53,7 @@ public:
     /// @brief Gets an element from the list.
     /// @param index The element index.
     /// @return The corresponding element, or (T)0 if it does not exists.
-    T operator[](int index);
+    T& operator[](int index);
 
     /// @brief The number of the inserted elements into the list.
     Property<int> Count {
@@ -55,10 +65,6 @@ public:
     /// @brief Creates a new array with the contents of the list.
     /// @return A new array (dynamically allocated).
     T* ToArray();
-
-    void SetValueAt(int index, T value) {
-        arrptr[index] = value;
-    }
 protected:
     T* arrptr;
     int _count = 0;
