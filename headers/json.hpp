@@ -31,6 +31,7 @@ public:
         }
     };
 
+    /// @brief A JSON object, which can contain a list of various fields.
     class Object: public List<Field> {
         public:
         Field& operator[](int i) {
@@ -41,8 +42,13 @@ public:
                 if(strcmp(arrptr[i].Key, key) == 0)
                     return arrptr[i].Value;
             }
-            static Value notfound = nullptr;
-            return notfound;    
+
+            JSON::Value init_val = nullptr;
+            init_val = 0;
+            init_val = "";
+
+            Add({ key, init_val });
+            return operator[](key); 
         };
     };
 
