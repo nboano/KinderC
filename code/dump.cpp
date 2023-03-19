@@ -29,44 +29,51 @@ void __var_dump(string s, const char* vname, const char* fname, int line) {
 }
 
 void __var_dump(JSON::Object flist, const char* vname, const char* fname, int line) {
-    printf("<br><code>JSON::Object</code> <b>%s</b> at %s:%i<br><br>", vname, fname, line);
+    string s = string::Format("<br><code>JSON::Object</code> <b>%s</b> at %s:%i<br><br>", vname, fname, line);
 
     int size = 0;
     int l;
+    int sys_size = 0;
 
     for (int i = 0; i < flist.Count; i++)
     {
+        sys_size += strlen(flist[i].Key) + 1;
+        sys_size += sizeof(JSON::Value);
+
         switch (flist[i].Value.GetType())
         {
         case JSON::Value::DataType::STRING:
-            l = strlen(flist[i].Value);
-            printf("[%s] => <code>(const char*)[%i]</code> <b>%s</b><br>", flist[i].Key, l, (const char*)flist[i].Value);
+            l = strlen(flist[i].Value) + 1;
+            s += string::Format("[%s] => <code>(const char*)[%i]</code> <b>%s</b><br>", flist[i].Key, l, (const char*)flist[i].Value);
+
+            sys_size += l;
             break;
         case JSON::Value::DataType::INT:
             l = sizeof(int);
-            printf("[%s] => <code>(int)[%i]</code> <b>%i</b><br>", flist[i].Key, l, (int)flist[i].Value);
+            s += string::Format("[%s] => <code>(int)[%i]</code> <b>%i</b><br>", flist[i].Key, l, (int)flist[i].Value);
             break;
         case JSON::Value::DataType::DOUBLE:
             l = sizeof(double);
-            printf("[%s] => <code>(double)[%i]</code> <b>%f</b><br>", flist[i].Key, l, (double)flist[i].Value);
+            s += string::Format("[%s] => <code>(double)[%i]</code> <b>%f</b><br>", flist[i].Key, l, (double)flist[i].Value);
             break;
         case JSON::Value::DataType::OBJECT:
             l = sizeof(JSON::Object);
-            printf("[%s] => <code>(object)[%i]</code><br>", l, flist[i].Key);
+            s += string::Format("[%s] => <code>(object)[%i]</code><br>", l, flist[i].Key);
             break;
         case JSON::Value::DataType::ARRAY:
             l = sizeof(JSON::Array);
-            printf("[%s] => <code>(array)[%i]</code> <br>", l, flist[i].Key);
+            s += string::Format("[%s] => <code>(array)[%i]</code> <br>", l, flist[i].Key);
             break;
         case JSON::Value::DataType::NULL_T:
             l = sizeof(nullptr);
-            printf("[%s] => <code>(null)[%i]</code>  <br>", l, flist[i].Key);
+            s += string::Format("[%s] => <code>(null)[%i]</code>  <br>", l, flist[i].Key);
         default:
             break;
         }
         size += l;
     }
-    printf("<br><b>%i</b> fields. <b>%i</b> B.<br>", (int)flist.Count, size);
+    s += string::Format("<br><b>%i</b> fields. <b>%i</b> B total fields size. <b>%i</b> B on system.<br>", (int)flist.Count, size, sys_size);
+    puts(s);
 }
 
 void __var_dump(JSON::Array flist, const char* vname, const char* fname, int line) {
