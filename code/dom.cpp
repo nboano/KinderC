@@ -235,8 +235,8 @@ void Control<T>::ChangeHandler(void*) {
         if(!coll[i].hasAttribute("kc_rendered")) {
             coll[i].innerHTML = T(coll[i]).Render();
             coll[i].setAttribute("kc_rendered", "");
+			T(coll[i]).PostRender();
         }
-		T(coll[i]).PostRender();
     }
 
 	if(firstrender && l) {
