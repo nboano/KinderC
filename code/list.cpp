@@ -46,3 +46,31 @@ T* List<T>::ToArray() {
     }
     return ptr;
 }
+
+
+template<typename T>
+void qsort(T vett[], int left, int right, int(*comparefn)(T, T))
+{
+    int i = left, j = right;
+    T pivot = vett[(left + right) / 2];
+    while (i <= j)
+    {
+        while (comparefn(vett[i], pivot) < 0)
+            i++;
+        while (comparefn(vett[j], pivot) > 0)
+            j--;
+        if (i <= j)
+        {
+            int el = vett[i];
+            vett[i] = vett[j];
+            vett[j] = el;
+
+            i++;
+            j--;
+        }
+    }
+    if (left < j)
+        qsort(vett, left, j, comparefn);
+    if (i < right)
+        qsort(vett, i, right, comparefn);
+}
