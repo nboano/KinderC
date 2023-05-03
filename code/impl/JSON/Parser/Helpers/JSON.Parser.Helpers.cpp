@@ -17,7 +17,9 @@ const char* Implementations::JSON::Parser::Helpers::GetFieldName(char*& chptr) {
 const char* Implementations::JSON::Parser::Helpers::GetFieldValue(char*& chptr) {
     string fvalue = "";
 
-    int n_apici = 0, n_quadre = 0, n_graffe = 0;
+    int n_apici = 0,
+        n_quadre_aperte = 0, n_quadre_chiuse = 0,
+        n_graffe_aperte = 0, n_graffe_chiuse = 0;
 
     do
     {
@@ -27,12 +29,16 @@ const char* Implementations::JSON::Parser::Helpers::GetFieldValue(char*& chptr) 
                 n_apici++;
                 break;
             case '{':
+                n_graffe_aperte++;
+                break;
             case '}':
-                n_graffe++;
+                n_graffe_chiuse++;
                 break;
             case '[':
+                n_quadre_aperte++;
+                break;
             case ']':
-                n_graffe++;
+                n_quadre_chiuse++;
                 break;
         }
         fvalue += *chptr;
@@ -40,8 +46,8 @@ const char* Implementations::JSON::Parser::Helpers::GetFieldValue(char*& chptr) 
     } while (
         *chptr != ',' ||
         n_apici % 2 != 0 ||
-        n_quadre % 2 != 0 ||
-        n_graffe % 2 != 0
+        n_quadre_aperte != n_quadre_chiuse ||
+        n_graffe_aperte != n_graffe_chiuse
     );
     
     chptr++;
