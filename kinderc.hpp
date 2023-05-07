@@ -56,6 +56,7 @@
 #include "headers/TextBox.hpp"
 #include "headers/ComboBox.hpp"
 #include "headers/reflection.hpp"
+#include "headers/Threading.hpp"
 
 
 #include "code/string.cpp"
@@ -75,3 +76,4 @@
 #include "code/math.cpp"
 #include "code/list.cpp"
 #include "code/dump.cpp"
+#include "code/threading.cpp"
