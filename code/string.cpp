@@ -89,6 +89,11 @@ String::String(int n) {
 	strcpy(CharArray, "");
 	itoa(n, CharArray, 10);
 }
+String::String(double d) {
+	CharArray = (char*)malloc(24);
+	strcpy(CharArray, "");
+	ftoa_fixed(CharArray, d);
+}
 String::~String() {
 	free(CharArray);
 }

@@ -85,6 +85,10 @@ public:
     /// @param n An integer that will be converted to a string.
     String(int n);
 
+    /// @brief Creates a string object from a double.
+    /// @param d The double number that will be converted.
+    String(double d);
+
     /// @brief Destroys a string, deallocating the memory associated.
     ~String();
 
