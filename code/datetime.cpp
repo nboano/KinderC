@@ -41,12 +41,12 @@ string DateTime::ToISOString() {
     if(TimeZone == 0)
         return string::Format("%i-%s-%sT%s:%s:%s.%s", 
             Year, 
-            (char*)String(Month).PadLeft(2, '0'), 
-            (char*)String(Day).PadLeft(2, '0'), 
-            (char*)String(Hours).PadLeft(2, '0'), 
-            (char*)String(Minutes).PadLeft(2, '0'), 
-            (char*)String(Seconds).PadLeft(2, '0'), 
-            (char*)String(Milliseconds).PadLeft(3, '0')
+            (char*)String((int)Month).PadLeft(2, '0'), 
+            (char*)String((int)Day).PadLeft(2, '0'), 
+            (char*)String((int)Hours).PadLeft(2, '0'), 
+            (char*)String((int)Minutes).PadLeft(2, '0'), 
+            (char*)String((int)Seconds).PadLeft(2, '0'), 
+            (char*)String((int)Milliseconds).PadLeft(3, '0')
         );
     return DateTime(TimeStamp + TimeZone * 3600).ToISOString();
 }
