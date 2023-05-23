@@ -92,7 +92,7 @@ String::String(int n) {
 String::String(double d) {
 	CharArray = (char*)malloc(24);
 	strcpy(CharArray, "");
-	ftoa_fixed(CharArray, d);
+	sprintf(CharArray, "%f", d);
 }
 String::~String() {
 	free(CharArray);
