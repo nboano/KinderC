@@ -1,6 +1,6 @@
 #pragma once
 
-#define LAMBDA_MAX_LEN 128
+#define LAMBDA_MAX_LEN 4096
 
 static void(*__lambda_list[LAMBDA_MAX_LEN])(void*);
 
