@@ -91,10 +91,16 @@ string XMLHttpRequest::getAttribute(const char* name) {
 	return object("dp")[index][name];
 }
 JSON::Object XMLHttpRequest::ToJSONObject() {
-	return JSON::DeserializeObject((char*)response);
+	char* resp_ptr = (char*)response;
+	JSON::Object parsed = JSON::DeserializeObject(resp_ptr);
+	free(resp_ptr);
+	return parsed;
 }
 JSON::Array XMLHttpRequest::ToJSONArray() {
-	return JSON::DeserializeArray((char*)response);
+	char* resp_ptr = (char*)response;
+	JSON::Array parsed = JSON::DeserializeArray(resp_ptr);
+	free(resp_ptr);
+	return parsed;
 }
 string XMLHttpRequest::Text() {
 	return String((char*)response);
