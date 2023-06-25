@@ -32,10 +32,11 @@ public:
     /// @param _options The request options. Defaults to GET with empty body.
     Fetch(string _url, FetchOptions _options = FETCH_DEFAULTS);
 
-    /// @brief Makes a sync network request. NOTE: This request will block the main thread until it's completed.
+    /// @brief Makes a sync network request.
+    /// @note This request will block the main thread until it's completed.
     /// @param URL The request URL.
     /// @param options The request options. Defaults to GET with empty body.
-    /// @return The request object.
+    /// @return The response object.
     static Response sync(string URL, FetchOptions options = FETCH_DEFAULTS);
 
     /// @brief Specifies an handler for when the request has completed.

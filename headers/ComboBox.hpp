@@ -1,6 +1,8 @@
 #pragma once
 #include "../kinderc.hpp"
 
+/// @brief Represents a ComboBox, usable writing the <ComboBox> tag.
+/// @attention The <ComboBox> tag will be enabled only after you call ComboBox::Use().
 class ComboBox : public Control<ComboBox> {
     #define __SELECT Find("select")
     #define __LABEL Find("label > span")
@@ -72,6 +74,7 @@ public:
         return (string)"<label><span></span>&nbsp;&nbsp;<select>" + innerHTML + "</select></label>";
     };
 
+    /// @brief Code executed after that the ComboBox has been rendered.
     void PostRender() {
         CSS("display", "inline-block");
         CSS("padding", "5px");

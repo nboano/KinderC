@@ -11,7 +11,7 @@ struct ScreenInformations {
     int Height;
 };
 
-/// @brief Class that allows you to get the information about the browser, the network and the device.
+/// @brief Class that allows you to get the information about the browser, the network and the device. All of these informations are imported from the browser enviroment.
 class Enviroment {
     public:
 
@@ -24,7 +24,7 @@ class Enviroment {
     /// @brief The browser User Agent.
     static Property<const char*> UserAgent;
 
-    /// @brief The number of threads reserved for the applications.
+    /// @brief The number of threads reserved for the application.
     static Property<int> ThreadsNumber;
 
     /// @brief Tells you if the device is online or not.

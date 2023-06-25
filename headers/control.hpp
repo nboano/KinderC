@@ -7,10 +7,10 @@
 // Use this macro to initialize the control class, passing the control type as first parameter. (Es. MyControl)
 #define ControlInit(name) name(HTMLElement el) : Control(el) {}; static constexpr const char* TagName = #name;
 
-template<class T>
-
 /// @brief Use this class to create and manage custom HTML Controls. This class inherits HTMLElement.
 /// @tparam T The Type of the custom control.
+/// @attention The custom control class must implement the Control::Render() member.
+template<class T>
 class Control : public HTMLElement {
 public:
 
@@ -25,6 +25,7 @@ public:
     Control(HTMLElement el) : HTMLElement(el) {}
 
     /// @brief Tells the enviroment that the custom control must be activated.
+    /// @param father The element where the custom control will be rendered. Defaults to the body of the current page.
     static void Use(HTMLElement father = $("body"));
 
     /// @brief The control render function. This will be called when a control should be rendered.

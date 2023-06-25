@@ -2,6 +2,7 @@
 #include "../kinderc.hpp"
 
 /// @brief This class handles JavaScript objects.
+/// @deprecated Do not use this class to call JavaScript methods. It is preferrable to import them or to call JavaScript::Eval() or JavaScript::VoidEval().
 class DynamicObject {
 public:
 

@@ -1,6 +1,8 @@
 #pragma once
 #include "../kinderc.hpp"
 
+/// @brief Reprensents an exception.
+/// @warning This class has only experimental support.
 class Exception {
 	public:
 

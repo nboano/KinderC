@@ -7,7 +7,7 @@ public:
 
     /// @brief Writes in the browser console
     /// @param fmt A string. You can use printf-like flags, too.
-    /// @param [FORMAT PARAMS] Optional params.
+    /// @param ... Optional params.
     static void Write(const char* fmt, ...);
 
     /// @brief Writes a red error message in the console.
