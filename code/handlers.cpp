@@ -1,19 +1,22 @@
 #pragma once
 
-#define LAMBDA_MAX_LEN 4096
+//#define LAMBDA_MAX_LEN 4096
 
-static void(*__lambda_list[LAMBDA_MAX_LEN])(void*);
+//static void(*__lambda_list[LAMBDA_MAX_LEN])(void*);
+
+List<void(*)(void*)>* __lambda_list = nullptr;
 
 int __lambda_add(void(*lb)(void*)) {
-	static int ctr = -1;
-	ctr++;
-	if (ctr == LAMBDA_MAX_LEN) ctr = 0;
-	__lambda_list[ctr] = lb;
-	return ctr;
+
+	if(__lambda_list == nullptr) __lambda_list = new List<void(*)(void*)>;
+
+	__lambda_list->Add(lb);
+	return __lambda_list->Count - 1;
+	
 }
 
 exported void __lambda_call(int index, void* param = 0) {
-	__lambda_list[index](param);
+	(*__lambda_list)[index](param);
 }
 
 Handler::Handler(const char* fnname) {
