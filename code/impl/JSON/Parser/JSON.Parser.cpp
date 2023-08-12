@@ -1,7 +1,7 @@
 #pragma once
 #include "JSON.Parser.hpp"
 
-::JSON::Object Implementations::JSON::Parser::DeserializeObject(const char* str) {
+KinderC::Serialization::JSON::Object Implementations::JSON::Parser::DeserializeObject(const char* str) {
     char* aptr = new char[strlen(str) + 1];
     strcpy(aptr, str);
 
@@ -17,7 +17,7 @@
     while(*chptr++ != '{');
     *(chptr - 1) = ' ';
 
-    ::JSON::Object flist;
+    KinderC::Serialization::JSON::Object flist;
     flist.Destroyable = false;
 
     do
@@ -43,7 +43,7 @@
     return flist;
 }
 
-::JSON::Array Implementations::JSON::Parser::DeserializeArray(const char* str) {
+KinderC::Serialization::JSON::Array Implementations::JSON::Parser::DeserializeArray(const char* str) {
     char* aptr = new char[strlen(str) + 1];
     strcpy(aptr, str);
 
@@ -59,7 +59,7 @@
     while(*chptr++ != '[');
     *(chptr - 1) = ' ';
 
-    ::JSON::Array flist;
+    KinderC::Serialization::JSON::Array flist;
 
     do
     {
@@ -81,18 +81,26 @@
 
 template<typename T>
 T Implementations::JSON::Parser::DeserializeObjectAs(const char* str) {
-    ::JSON::Object obj = Implementations::JSON::Parser::DeserializeObject(str);
-    return *((T*)&obj);
+    KinderC::Serialization::JSON::Object obj = Implementations::JSON::Parser::DeserializeObject(str);
+    
+    T el;
+    for(KinderC::Serialization::JSON::Field f : obj) el[f.Key] = f.Value;
+
+    obj.~Object();
+    return el;
+
+    //return *((T*)&obj);
 }
 
 template<typename T> 
 List<T> Implementations::JSON::Parser::DeserializeArrayAs(const char* str) {
     List<T> lst;
-    ::JSON::Array arr = Implementations::JSON::Parser::DeserializeArray(str);
+    KinderC::Serialization::JSON::Array arr = Implementations::JSON::Parser::DeserializeArray(str);
 
     for (int i = 0; i < arr.Count; i++)
     {
         T o = Implementations::JSON::Parser::DeserializeObjectAs<T>(arr[i]);
+        o.Destroyable = false;
         lst.Add(o);
     }
     

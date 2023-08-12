@@ -27,7 +27,10 @@
 #include "headers/io.hpp"
 #include "headers/handler.hpp"
 #include "headers/dobject.hpp"
-#include "headers/json.hpp"
+
+// KinderC::Serialization
+#include "KinderC/Serialization/KinderC.Serialization.hpp"
+
 #include "headers/net.hpp"
 #include "headers/fetch.hpp"
 #include "headers/HTMLDocument.hpp"
@@ -61,7 +64,6 @@
 
 #include "code/string.cpp"
 #include "code/dobject.cpp"
-#include "code/json.cpp"
 #include "code/handlers.cpp"
 #include "code/io.cpp"
 #include "code/malloc.cpp"

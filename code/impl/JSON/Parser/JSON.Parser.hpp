@@ -1,12 +1,13 @@
 #pragma once
-#include "../../../../headers/json.hpp"
+#include "../../../../KinderC/Serialization/KinderC.Serialization.hpp"
 #include "../../../../headers/string.hpp"
 
 namespace Implementations::JSON::Parser
 {
-    ::JSON::Object DeserializeObject(const char* str);
 
-    ::JSON::Array DeserializeArray(const char* str);
+    KinderC::Serialization::JSON::Object DeserializeObject(const char* str);
+
+    KinderC::Serialization::JSON::Array DeserializeArray(const char* str);
 
     template<typename T>
     T DeserializeObjectAs(const char* str);
@@ -26,9 +27,9 @@ namespace Implementations::JSON::Parser::Helpers
 
     void GetSeparator(char*& chptr);
 
-    void TypiseObject(::JSON::Object array);
+    void TypiseObject(KinderC::Serialization::JSON::Object array);
 
-    void TypiseArray(::JSON::Array array);
+    void TypiseArray(KinderC::Serialization::JSON::Array array);
 } // namespace Implementations::JSON::Parser::Helpers
 
 #include "JSON.Parser.cpp"

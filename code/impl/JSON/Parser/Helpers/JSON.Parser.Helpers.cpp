@@ -59,7 +59,7 @@ void Implementations::JSON::Parser::Helpers::GetSeparator(char*& chptr) {
     while(*chptr++ != ':');
 }
 
-void Implementations::JSON::Parser::Helpers::TypiseObject(::JSON::Object flist) {
+void Implementations::JSON::Parser::Helpers::TypiseObject(KinderC::Serialization::JSON::Object flist) {
     for (int i = 0; i < flist.Count; i++)
     {
         char* cval = flist[i].Value;
@@ -121,7 +121,7 @@ void Implementations::JSON::Parser::Helpers::TypiseObject(::JSON::Object flist) 
     }
 }
 
-void Implementations::JSON::Parser::Helpers::TypiseArray(::JSON::Array flist) {
+void Implementations::JSON::Parser::Helpers::TypiseArray(KinderC::Serialization::JSON::Array flist) {
     for (int i = 0; i < flist.Count; i++)
     {
         char* cval = flist[i];

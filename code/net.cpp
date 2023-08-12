@@ -90,15 +90,15 @@ string XMLHttpRequest::get_statusText() {
 string XMLHttpRequest::getAttribute(const char* name) {
 	return object("dp")[index][name];
 }
-JSON::Object XMLHttpRequest::ToJSONObject() {
+KinderC::Serialization::JSON::Object XMLHttpRequest::ToJSONObject() {
 	char* resp_ptr = (char*)response;
-	JSON::Object parsed = JSON::DeserializeObject(resp_ptr);
+	KinderC::Serialization::JSON::Object parsed = KinderC::Serialization::JSON::DeserializeObject(resp_ptr);
 	free(resp_ptr);
 	return parsed;
 }
-JSON::Array XMLHttpRequest::ToJSONArray() {
+KinderC::Serialization::JSON::Array XMLHttpRequest::ToJSONArray() {
 	char* resp_ptr = (char*)response;
-	JSON::Array parsed = JSON::DeserializeArray(resp_ptr);
+	KinderC::Serialization::JSON::Array parsed = KinderC::Serialization::JSON::DeserializeArray(resp_ptr);
 	free(resp_ptr);
 	return parsed;
 }

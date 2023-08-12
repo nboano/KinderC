@@ -28,7 +28,10 @@ void __var_dump(string s, const char* vname, const char* fname, int line) {
     puts("<br>");
 }
 
-void __var_dump(JSON::Object flist, const char* vname, const char* fname, int line) {
+void __var_dump(KinderC::Serialization::JSON::Object flist, const char* vname, const char* fname, int line) {
+    
+    using KinderC::Serialization::JSON;
+
     string s = string::Format("<br><code>JSON::Object</code> <b>%s</b> at %s:%i<br><br>", vname, fname, line);
 
     int size = 0;
@@ -76,7 +79,9 @@ void __var_dump(JSON::Object flist, const char* vname, const char* fname, int li
     puts(s);
 }
 
-void __var_dump(JSON::Array flist, const char* vname, const char* fname, int line) {
+void __var_dump(KinderC::Serialization::JSON::Array flist, const char* vname, const char* fname, int line) {
+
+    using KinderC::Serialization::JSON;
 
     printf("<br><code>JSON::Array</code> <b>%s</b> at %s:%i<br><br>", vname, fname, line);
     for (int i = 0; i < flist.Count; i++)
