@@ -47,6 +47,9 @@ class Application {
     /// @brief Enables KinderC controls such as TextBox, ComboBox etc. inside the application.
     static void UseControls();
 
+    template<typename T>
+    static void UseControl();
+
     /// @brief Sets an handler for when the user leaves the application.
     static Property<void(*)(void*)> OnBlur;
 

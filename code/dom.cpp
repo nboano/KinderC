@@ -9,6 +9,13 @@ HTMLDocument::HTMLDocument() {
 	name = (char*)-1;
 }
 
+HTMLElement::HTMLElement(const HTMLElement& cc) {
+	docname = (char*)malloc(strlen(cc.docname));
+	strcpy(docname, cc.docname);
+	query = (char*)malloc(strlen(cc.query));
+	strcpy(query, cc.query);
+	inBody = cc.inBody;
+}
 HTMLElement::HTMLElement(const char* CSS_QUERY, HTMLDocument doc) {
 	docname = (char*)malloc(strlen(doc.Name));
 	strcpy(docname, doc.Name);

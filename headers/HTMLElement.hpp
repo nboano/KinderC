@@ -23,6 +23,10 @@ public:
 	/// @param doc The location where the new element will be created. Defaults to the current document.
 	HTMLElement(const char* TAGNAME, const char* ID, HTMLDocument doc = document);
 
+	/// @brief Creates a new object from a given one.
+	/// @param cc The object to copy
+	HTMLElement(const HTMLElement& cc);
+
 	/// @brief Destroys the pointer to the element
 	~HTMLElement();
 

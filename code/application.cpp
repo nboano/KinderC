@@ -58,8 +58,13 @@ void Application::UseScreens() {
 }
 
 void Application::UseControls() {
-    TextBox::Use();
-    ComboBox::Use();
+    UseControl<TextBox>();
+    UseControl<ComboBox>();
+}
+
+template<typename T>
+void Application::UseControl() {
+    T::Use();
 }
 
 void Application::IncludeScript(string URL) {
