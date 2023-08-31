@@ -256,6 +256,13 @@ void Control<T>::ChangeHandler(void*) {
 }
 
 template<class T>
+void Control<T>::ForceRender() {
+	innerHTML = Render();
+	setAttribute("kc_rendered", "");
+	PostRender();
+}
+
+template<class T>
 void(*Control<T>::OnRender)() = [](){};
 
 template<class T>

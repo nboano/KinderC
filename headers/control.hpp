@@ -35,6 +35,9 @@ public:
     /// @brief The control post render function. This will be called after Render();
     void PostRender() {}
 
+    /// @brief Forces the rendering of the current control.
+    void ForceRender();
+
     /// @brief The control custom tag name.
     static constexpr const char* TagName = "";
 private:
