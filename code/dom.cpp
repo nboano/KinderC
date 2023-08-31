@@ -15,6 +15,7 @@ HTMLElement::HTMLElement(const HTMLElement& cc) {
 	query = (char*)malloc(strlen(cc.query));
 	strcpy(query, cc.query);
 	inBody = cc.inBody;
+	cindex = cc.cindex;
 }
 HTMLElement::HTMLElement(const char* CSS_QUERY, HTMLDocument doc) {
 	docname = (char*)malloc(strlen(doc.Name));
@@ -165,6 +166,7 @@ HTMLElementCollection::HTMLElementCollection(string CSS_QUERY, HTMLDocument doc)
 		HTMLElement el = HTMLElement(CSS_QUERY, i, doc);
 		el.Destroyable = false;
 		collectionptr[i] = el;
+		collectionptr[i].Destroyable = false;
 	}
 }
 HTMLElementCollection::~HTMLElementCollection() {
