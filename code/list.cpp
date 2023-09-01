@@ -61,7 +61,7 @@ void qsort(T vett[], int left, int right, int(*comparefn)(T, T))
             j--;
         if (i <= j)
         {
-            int el = vett[i];
+            T el = vett[i];
             vett[i] = vett[j];
             vett[j] = el;
 
@@ -73,4 +73,9 @@ void qsort(T vett[], int left, int right, int(*comparefn)(T, T))
         qsort(vett, left, j, comparefn);
     if (i < right)
         qsort(vett, i, right, comparefn);
+}
+
+template<typename T>
+void List<T>::Sort(int(*CompareFn)(T, T)) {
+    qsort<T>(arrptr, 0, _count, CompareFn);
 }

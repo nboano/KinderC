@@ -65,6 +65,8 @@ public:
     /// @brief Creates a new array with the contents of the list.
     /// @return A new array (dynamically allocated).
     T* ToArray();
+
+    void Sort(int(*CompareFn)(T, T));
 protected:
     T* arrptr;
     int _count = 0;
