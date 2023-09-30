@@ -43,10 +43,10 @@ class DateTime {
 
     double TimeStamp;
 
-    /// @brief The day of the month.
+    /// @brief The day of the month (1-31).
     unsigned int Day;
 
-    /// @brief The month of the year.
+    /// @brief The month of the year (1-12).
     unsigned int Month;
 
     /// @brief The Year.
@@ -63,6 +63,13 @@ class DateTime {
 
     /// @brief The milliseconds.
     unsigned int Milliseconds;
+
+    
+    /// @brief The day of the year (0-366).
+    unsigned int DayOfYear;
+
+    /// @brief The Week Day (0-6).
+    unsigned int WeekDay;
 
     /// @brief Formats the current object into a date/time string in the ISO format.
     /// @return A date/time string in the ISO format.

@@ -35,6 +35,11 @@ void DateTime::buildfromunixts(double ts) {
     Hours = extraTime / 3600;
     Minutes = (extraTime % 3600) / 60;
     Seconds = (extraTime % 3600) % 60;
+
+    int daysFromStart = era * 146097 + (int)doe - 719468;
+    WeekDay = (unsigned int)(daysFromStart >= -4 ? (daysFromStart+4) % 7 : (daysFromStart+5) % 7 + 6) - 1;
+
+    DayOfYear = (153*(Month + (Month > 2 ? -3 : 9)) + 2)/5 + Day - 1 + 60;
 }
 
 string DateTime::ToISOString() {
