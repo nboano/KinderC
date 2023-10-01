@@ -75,6 +75,14 @@ class DateTime {
     /// @return A date/time string in the ISO format.
     string ToISOString();
 
+    /// @brief Formats the current object into a date string (dd/MM/yyyy).
+    /// @return The date string.
+    string ToDateString();
+
+    /// @brief Formats the current object into a time string (hh:mm:ss).
+    /// @return The time string.
+    string ToTimeString();
+
     private:
     void buildfromunixts(double s);
 };

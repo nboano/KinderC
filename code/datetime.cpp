@@ -56,6 +56,26 @@ string DateTime::ToISOString() {
     return DateTime(TimeStamp + TimeZone * 3600).ToISOString();
 }
 
+string DateTime::ToDateString() {
+    if(TimeZone == 0)
+        return string::Format("%s/%s/%i",  
+            (char*)String((int)Day).PadLeft(2, '0'),
+            (char*)String((int)Month).PadLeft(2, '0'), 
+            Year
+        );
+    return DateTime(TimeStamp + TimeZone * 3600).ToDateString();
+}
+
+string DateTime::ToTimeString() {
+    if(TimeZone == 0)
+        return string::Format("%s:%s:%s", 
+            (char*)String((int)Hours).PadLeft(2, '0'), 
+            (char*)String((int)Minutes).PadLeft(2, '0'), 
+            (char*)String((int)Seconds).PadLeft(2, '0')
+        );
+    return DateTime(TimeStamp + TimeZone * 3600).ToTimeString();
+}
+
 DateTime::DateTime(double UnixTimeStamp) {
     buildfromunixts(UnixTimeStamp);
 }
