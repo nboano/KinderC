@@ -76,6 +76,10 @@ string DateTime::ToTimeString() {
     return DateTime(TimeStamp + TimeZone * 3600).ToTimeString();
 }
 
+DateTime DateTime::ToTimeZone(int timeZone) {
+    return DateTime(TimeStamp + timeZone*3600);
+}
+
 DateTime::DateTime(double UnixTimeStamp) {
     buildfromunixts(UnixTimeStamp);
 }

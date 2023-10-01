@@ -83,6 +83,11 @@ class DateTime {
     /// @return The time string.
     string ToTimeString();
 
+    /// @brief Returns a DateTime object with a certain timezone.
+    /// @param timeZone The timezone (ex. +2, -1)
+    /// @return Another DateTime object with the timezone set.
+    DateTime ToTimeZone(int timeZone);
+
     private:
     void buildfromunixts(double s);
 };
