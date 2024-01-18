@@ -2,6 +2,9 @@
 #include "JSON.Parser.hpp"
 
 KinderC::Serialization::JSON::Object Implementations::JSON::Parser::DeserializeObject(const char* str) {
+
+    if(strcmp(str, "{}") == 0) return KinderC::Serialization::JSON::Object();
+
     char* aptr = new char[strlen(str) + 1];
     strcpy(aptr, str);
 
@@ -44,6 +47,9 @@ KinderC::Serialization::JSON::Object Implementations::JSON::Parser::DeserializeO
 }
 
 KinderC::Serialization::JSON::Array Implementations::JSON::Parser::DeserializeArray(const char* str) {
+
+    if(strcmp(str, "[]") == 0) return KinderC::Serialization::JSON::Array();
+
     char* aptr = new char[strlen(str) + 1];
     strcpy(aptr, str);
 
