@@ -89,8 +89,9 @@ template<typename T>
 T Implementations::JSON::Parser::DeserializeObjectAs(const char* str) {
     KinderC::Serialization::JSON::Object obj = Implementations::JSON::Parser::DeserializeObject(str);
     
-    T el;
-    for(KinderC::Serialization::JSON::Field f : obj) el[f.Key] = f.Value;
+    // T el;
+    // for(KinderC::Serialization::JSON::Field f : obj) el[f.Key] = f.Value;
+    T el = (T)obj;
 
     obj.~Object();
     return el;
