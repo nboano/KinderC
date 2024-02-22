@@ -37,6 +37,36 @@ namespace KinderC::Serialization {
             }
         };
 
+        template<>
+        class TypisedArray<const char*> : public List<const char*> {
+            public:
+            TypisedArray(Array arr) {
+                for(Value val : arr) {
+                    this->Add(val);
+                }
+            }
+        };
+
+        template<>
+        class TypisedArray<int> : public List<int> {
+            public:
+            TypisedArray(Array arr) {
+                for(Value val : arr) {
+                    this->Add(val);
+                }
+            }
+        };
+
+        template<>
+        class TypisedArray<double> : public List<double> {
+            public:
+            TypisedArray(Array arr) {
+                for(Value val : arr) {
+                    this->Add(val);
+                }
+            }
+        };
+
         /// @brief A JSON object, which can contain a list of various fields.
         class Object: public List<Field> {
             public:
