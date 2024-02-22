@@ -26,11 +26,14 @@ namespace KinderC::Serialization {
         };
 
         template<typename T>
-        class TypisedArray: public Array {
+        class TypisedArray: public List<T> {
             public:
-
-            T operator[](int index) {
-                return JSON::DeserializeObjectAs<T>(arrptr[index]);
+            TypisedArray(Array arr) {
+                for(Value val : arr) {
+                    T elm = (T)val;
+                    elm.Destroyable = false;
+                    this->Add(elm);
+                }
             }
         };
 

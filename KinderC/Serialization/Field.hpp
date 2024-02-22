@@ -10,12 +10,21 @@ namespace KinderC::Serialization {
         private:
             JSON::Value* inner_value;
         public:
-            operator T() {
+            T Get() {
                 return (T)*inner_value;
             }
-            void operator =(T value) {
+
+            void Set(T value) {
                 *inner_value = value;
             }
+
+            operator T() {
+                return Get();
+            }
+            void operator =(T value) {
+                Set(value);
+            }
+
 
             Field(Serializable* obj, const char* field_name) : inner_value(&(*obj)[field_name]) {
                 
