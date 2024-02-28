@@ -80,8 +80,8 @@ namespace KinderC::Serialization {
                 }
 
                 JSON::Value init_val = nullptr;
-                init_val = 0;
-                init_val = "";
+                // init_val = 0;
+                // init_val = "";
 
                 Add({ key, init_val });
                 return operator[](key); 

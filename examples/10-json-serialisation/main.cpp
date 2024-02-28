@@ -1,16 +1,38 @@
 #include "../../kinderc.hpp"
 
-struct Person
-{
-    const char* Name;
-    const char* Surname;
-    int BirthYear;
+using namespace KinderC::Serialization;
 
-    FIELDS(Person,
-        FIELD(Person, Name),
-        FIELD(Person, Surname),
-        FIELD(Person, BirthYear)
-    )
+class Address;
+class SocialEntry;
+
+class Person : public Serializable {
+    public:
+        using Serializable::Serializable;
+
+        Field<const char*> Name {this, "name"};
+        Field<const char*> Surname {this, "surname"};
+        Field<const char*> Thumbnail {this, "thumbnail"};
+        Field<Address> Address {this, "address"};
+        Field<JSON::TypisedArray<const char*>> Interests {this, "interests"};
+        Field<JSON::TypisedArray<SocialEntry>> Socials {this, "socials"};
+};
+
+class Address : public Serializable {
+    public:
+        using Serializable::Serializable;
+
+        Field<const char*> Address {this, "address"};
+        Field<const char*> City {this, "city"};
+        Field<const char*> PostalCode {this, "postalCode"};
+};
+
+class SocialEntry : public Serializable {
+    public:
+        using Serializable::Serializable;
+
+        Field<const char*> Name {this, "name"};
+        Field<const char*> Link {this, "link"};
+        Field<const char*> Image {this, "img"};
 };
 
 
@@ -19,7 +41,7 @@ int main() {
 
     p1.Name = "Lorenzo";
     p1.Surname = "Rossi";
-    p1.BirthYear = 2003;
 
-    printf(JSON::SerializeObjectOfType<Person>(p1));
+    document << "<pre id='jsonContainer'></pre>";
+    $("#jsonContainer") << JSON::SerializeObject(p1);
 }
