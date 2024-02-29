@@ -2,9 +2,9 @@
 #include "../kinderc.hpp"
 
 template<typename T>
-List<T>::List(int size) {
-    arrptr = (T*)malloc(size * sizeof(T));
-    _size = size; 
+List<T>::List() {
+    arrptr = (T*)malloc(LIST_DEFAULT_SIZE * sizeof(T));
+    _size = LIST_DEFAULT_SIZE; 
 }
 
 template <typename T>

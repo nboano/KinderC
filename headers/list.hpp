@@ -21,9 +21,8 @@ public:
         return arrptr + _count;
     }
 
-    /// @brief Creates a new List with a given size.
-    /// @param size The List initial size. Defaults to 16.
-    List(int size = LIST_DEFAULT_SIZE);
+    /// @brief Creates a new List with default size (DEFAULT_LIST_SIZE).
+    List();
 
     /// @brief Destroys the List.
     ~List();
@@ -48,6 +47,10 @@ public:
     List(T element, Args... args) : List() {
         Add(element);
         Add(args...);
+    }
+
+    List(T element) : List() {
+        Add(element);
     }
 
     /// @brief Gets an element from the list.

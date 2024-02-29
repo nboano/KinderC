@@ -94,6 +94,16 @@ namespace KinderC::Serialization {
 		value_array = lst.ToArray();
 		type = ARRAY;
 	}
+	template<typename T>
+    JSON::Value::Value(JSON::TypisedArray<T> tArr) {
+		JSON::Array arr;
+		for(T el : tArr) {
+			arr.Add((JSON::Value)el);
+		}
+		array_count = arr.Count;
+		value_array = arr.ToArray();
+		type = ARRAY;
+	}
 
 	JSON::Value::Value(JSON* obj) {
 		value_object = obj;

@@ -28,6 +28,7 @@ namespace KinderC::Serialization {
         template<typename T>
         class TypisedArray: public List<T> {
             public:
+            using List<T>::List;
             TypisedArray(Array arr) {
                 for(Value val : arr) {
                     T elm = (T)val;
@@ -40,6 +41,7 @@ namespace KinderC::Serialization {
         template<>
         class TypisedArray<const char*> : public List<const char*> {
             public:
+            using List<const char*>::List;
             TypisedArray(Array arr) {
                 for(Value val : arr) {
                     this->Add(val);
@@ -50,6 +52,7 @@ namespace KinderC::Serialization {
         template<>
         class TypisedArray<int> : public List<int> {
             public:
+            using List<int>::List;
             TypisedArray(Array arr) {
                 for(Value val : arr) {
                     this->Add(val);
@@ -60,6 +63,7 @@ namespace KinderC::Serialization {
         template<>
         class TypisedArray<double> : public List<double> {
             public:
+            using List<double>::List;
             TypisedArray(Array arr) {
                 for(Value val : arr) {
                     this->Add(val);
@@ -155,6 +159,8 @@ namespace KinderC::Serialization {
             Value(Array lst);
             Value(JSON* obj);
             Value(Object flist);
+            template<typename T>
+            Value(TypisedArray<T> tArr);
         };
 
         /// @brief Represents a JSON field (Key/Value pair) of a certain type.

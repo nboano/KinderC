@@ -111,12 +111,23 @@ class SocialEntry : public Serializable {
 
 int main() {
     Person p1;
+    Address addr;
+    SocialEntry test;
+    test.Image = "https://test.com/image.png";
+    test.Name = "Facebook";
+    test.Destroyable = false;
+
+    addr.Address = "Test Address";
+    addr.PostalCode = "1234";
 
     p1.Name = "Lorenzo";
     p1.Surname = "Rossi";
+    p1.Address = addr;
+    p1.Interests = {"Basket", "Programming", "C++"};
+    p1.Socials = {test};
 
     document << "<pre id='jsonContainer'></pre>";
-    $("#jsonContainer") << JSON::SerializeObject(p1);
+    $("#jsonContainer") << JSON::SerializeObject(p1, true);
 }
 ```
 
@@ -126,8 +137,12 @@ Il codice produrrà un output simile al seguente:
 	"name" : "Lorenzo",
 	"surname" : "Rossi",
 	"thumbnail" : null,
-	"address" : null,
-	"interests" : null,
-	"socials" : null
+	"address" : {
+		"address" : "Test Address",
+		"city" : null,
+		"postalCode" : "1234"
+	},
+	"interests" : ["Basket", "Programming", "C++"],
+	"socials" : [{"name":"Facebook","link":null,"img":"https://test.com/image.png"}]
 }
 ```
