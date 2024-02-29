@@ -53,5 +53,7 @@
     - [Proprietà](htmlelement-class.md#proprietà-di-htmlelement)
     - [Eventi](htmlelement-class.md#eventi-dellhtmlelement)
 18. Namespace KinderC
-    - Serilization
-        - [Classe JSON](json-class.md)
+    - Serialization
+        - [Classe JSON](json-class.md) - Serializzazione e deserializzazione di dati in formato JSON
+            - [Introduzione](json-class.md#introduzione)
+            - [Serializzare un oggetto qualunque](json-class.md#serializzare-un-oggetto-qualunque)

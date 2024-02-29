@@ -92,13 +92,20 @@ Viene fornito un esempio che mostra come serializzare un oggetto di tipo `Person
 
 using namespace KinderC::Serialization;
 
-struct Person : public Serializable
-{
-    using Serializable::Serializable;
+class Address;
+class SocialEntry;
 
-    Field<const char*> Name {this, "name"};
-    Field<const char*> Surname {this, "surname"};
-    Field<int> BirthYear {this, "birthYear"};
+// Vedi sopra
+class Person : public Serializable {
+    ...
+};
+
+class Address : public Serializable {
+    ...
+};
+
+class SocialEntry : public Serializable {
+    ...
 };
 
 
