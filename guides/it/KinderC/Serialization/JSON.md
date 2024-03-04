@@ -83,9 +83,9 @@ La libreria vi consente, dato un oggetto di qualunque tipo che eredita da `Seria
 
 Viene fornito un esempio che mostra come serializzare un oggetto di tipo `Person` con alcuni campi.
 
-#### **`index.html`** [Visualizza](../../examples/10-json-serialisation/index.html) *(Omesso in quanto senza contenuto nel body)*
+#### **`index.html`** [Visualizza](../../../../examples/10-json-serialisation/index.html) *(Omesso in quanto senza contenuto nel body)*
 
-#### **`main.cpp`** [Visualizza](../../examples/10-json-serialisation/main.cpp)
+#### **`main.cpp`** [Visualizza](../../../../examples/10-json-serialisation/main.cpp)
 
 ```cpp
 #include "../../kinderc.hpp"

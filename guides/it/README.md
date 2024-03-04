@@ -54,6 +54,6 @@
     - [Eventi](htmlelement-class.md#eventi-dellhtmlelement)
 18. Namespace KinderC
     - Serialization
-        - [Classe JSON](json-class.md) - Serializzazione e deserializzazione di dati in formato JSON
-            - [Introduzione](json-class.md#introduzione)
-            - [Serializzare un oggetto qualunque](json-class.md#serializzare-un-oggetto-qualunque)
+        - [Classe JSON](KinderC/Serialization/JSON.md) - Serializzazione e deserializzazione di dati in formato JSON
+            - [Introduzione](KinderC/Serialization/JSON.md#introduzione)
+            - [Serializzare un oggetto qualunque](KinderC/Serialization/JSON.md#serializzare-un-oggetto-qualunque)
