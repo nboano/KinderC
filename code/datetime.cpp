@@ -77,7 +77,9 @@ string DateTime::ToTimeString() {
 }
 
 DateTime DateTime::ToTimeZone(int timeZone) {
-    return DateTime(TimeStamp + timeZone*3600);
+    DateTime dt = DateTime(TimeStamp);
+    dt.TimeZone = timeZone;
+    return dt;
 }
 
 DateTime::DateTime(double UnixTimeStamp) {
