@@ -10,6 +10,10 @@ imported double time();
 /// @return The timestamp in milliseconds, as a double.
 imported double microtime();
 
+/// @brief Returns the current UTC offset, in hours.
+/// @return The current UTC offset, in hours.
+int current_utc_offset();
+
 /// @brief Waits for a certain number of milliseconds, and then calls the handler. This function is directly imported from the JavaScript enviroment.
 /// @param handler The timeout handler.
 /// @param milliseconds The number of milliseconds to wait.

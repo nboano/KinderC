@@ -15,6 +15,9 @@ void clearTimeout(int timeoutID) {
 void clearInterval(int intervalID) {
     JavaScript::Eval("clearInterval(%i)", intervalID);
 }
+int current_utc_offset() {
+    return (-(int)JavaScript::Eval("new Date().getTimezoneOffset()"))/60;
+}
 
 void DateTime::buildfromunixts(double ts) {
     TimeStamp = ts;
