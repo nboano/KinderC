@@ -37,13 +37,44 @@ void clearInterval(int intervalID);
 /// @brief Handles dates and times.
 /// @warning The class is currently partially completed.
 class DateTime {
+    private:
+        static constexpr int DaysToMonth365[] = { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 };
+        static constexpr int DaysToMonth366[] = { 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 };
+        static const long TicksInMillisecond = 10000L;
+        static const long TicksInSecond = TicksInMillisecond * 1000L;
+
+        static long long DateToTicks(int year, int month, int day);
+        static long long TimeToTicks(int hour, int minute, int second);
     public:
 
-    /// @brief Creates a new DateTime object.
-    /// @param UnixTimeStamp A UNIX timestamp in seconds. Defaults to the current time, retreived using the time() function.
-    DateTime(double UnixTimeStamp = time());
+    /// @brief Calculates the Unix Timestamp from a date.
+    /// @param year The year.
+    /// @param month The month.
+    /// @param day The day of the month.
+    /// @param hour The hours.
+    /// @param minute The minutes.
+    /// @param second The seconds.
+    /// @param milliseconds The milliseconds.
+    /// @return A double representing the UNIX timestamp, in seconds. The decimal part are the milliseconds.
+    static double GetTimeStamp(int year, int month, int day, int hour, int minute, int second, int milliseconds);
 
-    float TimeZone = 0.0;
+    /// @brief Parses a DateTime written in the ISO format. Es. 2022-08-28, 2022-08-28T21:45:31, 2022-08-28T21:45:31.123, 2022-08-28T21:45:31+02:00, 2022-08-28T21:45:31.123+02:00
+    /// @return The parsed DateTime object.
+    static DateTime ParseISO(const char* ISODateTime);
+
+    /// @brief Tells if a certain year is leap or not.
+    /// @param year The year.
+    /// @return A boolean telling if the year is leap or not.
+    static bool IsLeapYear(int year);
+
+    /// @brief Creates a new DateTime object that points to the current time and timezone, both retreived from the system.
+    DateTime();
+
+    /// @brief Creates a new DateTime object with a given UNIX timestamp.
+    /// @param UnixTimeStamp A UNIX timestamp in seconds.
+    DateTime(double UnixTimeStamp);
+
+    int TimeZone = +0;
 
     double TimeStamp;
 
