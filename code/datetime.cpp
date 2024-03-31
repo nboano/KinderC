@@ -46,17 +46,19 @@ void DateTime::buildfromunixts(double ts) {
 }
 
 string DateTime::ToISOString() {
-    return string::Format("%i-%s-%sT%s:%s:%s.%s%c%s:00", 
-        Year, 
-        (char*)String((int)Month).PadLeft(2, '0'), 
-        (char*)String((int)Day).PadLeft(2, '0'), 
-        (char*)String((int)Hours).PadLeft(2, '0'), 
-        (char*)String((int)Minutes).PadLeft(2, '0'), 
-        (char*)String((int)Seconds).PadLeft(2, '0'), 
-        (char*)String((int)Milliseconds).PadLeft(3, '0'),
-        (char)(TimeZone >= 0 ? '+' : '-'),
-        (char*)String((int)(TimeZone >= 0 ? TimeZone : -TimeZone)).PadLeft(2, '0')
-    );
+    if(TimeZone == 0)
+        return string::Format("%i-%s-%sT%s:%s:%s.%s%c%s:00", 
+            Year, 
+            (char*)String((int)Month).PadLeft(2, '0'), 
+            (char*)String((int)Day).PadLeft(2, '0'), 
+            (char*)String((int)Hours).PadLeft(2, '0'), 
+            (char*)String((int)Minutes).PadLeft(2, '0'), 
+            (char*)String((int)Seconds).PadLeft(2, '0'), 
+            (char*)String((int)Milliseconds).PadLeft(3, '0'),
+            (char)(TimeZone >= 0 ? '+' : '-'),
+            (char*)String((int)(TimeZone >= 0 ? TimeZone : -TimeZone)).PadLeft(2, '0')
+        );
+    return DateTime(TimeStamp + TimeZone * 3600).ToISOString();
 }
 
 string DateTime::ToDateString() {
@@ -188,7 +190,7 @@ DateTime DateTime::ParseISO(const char* ISODateTime) {
         tzone = atoi(tzone_bf);
         if(neg) tzone = -tzone;
     }
-    return DateTime(GetTimeStamp(year, month, day, hour, min, sec, msec)).ToTimeZone(tzone);
+    return DateTime(GetTimeStamp(year, month, day, hour, min, sec, msec)-(tzone*3600)).ToTimeZone(tzone);
 }
 
 DateTime::DateTime(double UnixTimeStamp) {
