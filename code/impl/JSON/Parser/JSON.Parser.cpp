@@ -47,7 +47,6 @@ KinderC::Serialization::JSON::Object Implementations::JSON::Parser::DeserializeO
 }
 
 KinderC::Serialization::JSON::Array Implementations::JSON::Parser::DeserializeArray(const char* str) {
-
     if(strcmp(str, "[]") == 0) return KinderC::Serialization::JSON::Array();
 
     char* aptr = new char[strlen(str) + 1];
@@ -66,6 +65,10 @@ KinderC::Serialization::JSON::Array Implementations::JSON::Parser::DeserializeAr
     *(chptr - 1) = ' ';
 
     KinderC::Serialization::JSON::Array flist;
+
+    if(*chptr == ',') {
+            return KinderC::Serialization::JSON::Array();
+    }
 
     do
     {
