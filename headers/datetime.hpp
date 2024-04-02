@@ -123,6 +123,54 @@ class DateTime {
     /// @return Another DateTime object with the timezone set.
     DateTime ToTimeZone(int timeZone);
 
+    /// @brief Adds a certain number of seconds to the date.
+    /// @param seconds The number of seconds you want to add or subtract (using a negative number).
+    /// @return A new date with the indicated timestamp.
+    DateTime AddSeconds(int seconds);
+
+    /// @brief Adds a certain number of minutes to the date.
+    /// @param minutes The number of minutes you want to add or subtract (using a negative number).
+    /// @return A new date with the indicated timestamp.
+    inline DateTime AddMinutes(int minutes);
+
+    /// @brief Adds a certain number of hours to the date.
+    /// @param hours The number of hours you want to add or subtract (using a negative number).
+    /// @return A new date with the indicated timestamp.
+    inline DateTime AddHours(int hours);
+
+    /// @brief Adds a certain number of days to the date.
+    /// @param days The number of days you want to add or subtract (using a negative number).
+    /// @return A new date with the indicated timestamp.
+    inline DateTime AddDays(int days);
+
     private:
-    void buildfromunixts(double s);
+    void buildfromunixts(double s, int tz);
 };
+
+namespace KinderC::Serialization {
+    template<>
+    class Field<DateTime> {
+        private:
+            JSON::Value* inner_value;
+        public:
+            DateTime Get() {
+                return DateTime::ParseISO((const char*)*inner_value);
+            }
+
+            void Set(DateTime value) {
+                *inner_value = (const char*)value.ToISOString();
+            }
+
+            operator DateTime() {
+                return Get();
+            }
+            void operator =(DateTime value) {
+                Set(value);
+            }
+
+
+            Field(Serializable* obj, const char* field_name) : inner_value(&(*obj)[field_name]) {
+                
+            }
+    };
+}

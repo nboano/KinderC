@@ -19,8 +19,10 @@ int current_utc_offset() {
     return (-(int)JavaScript::Eval("new Date().getTimezoneOffset()"))/60;
 }
 
-void DateTime::buildfromunixts(double ts) {
+void DateTime::buildfromunixts(double ts, int tz) {
     TimeStamp = ts;
+    TimeZone = tz;
+    ts += tz * 3600;
     int s = floor(ts);
     Milliseconds = (ts - s) * 10e2;
     int z = s / 86400 + 719468;
@@ -46,44 +48,38 @@ void DateTime::buildfromunixts(double ts) {
 }
 
 string DateTime::ToISOString() {
-    if(TimeZone == 0)
-        return string::Format("%i-%s-%sT%s:%s:%s.%s%c%s:00", 
-            Year, 
-            (char*)String((int)Month).PadLeft(2, '0'), 
-            (char*)String((int)Day).PadLeft(2, '0'), 
-            (char*)String((int)Hours).PadLeft(2, '0'), 
-            (char*)String((int)Minutes).PadLeft(2, '0'), 
-            (char*)String((int)Seconds).PadLeft(2, '0'), 
-            (char*)String((int)Milliseconds).PadLeft(3, '0'),
-            (char)(TimeZone >= 0 ? '+' : '-'),
-            (char*)String((int)(TimeZone >= 0 ? TimeZone : -TimeZone)).PadLeft(2, '0')
-        );
-    return DateTime(TimeStamp + TimeZone * 3600).ToISOString();
+    return string::Format("%i-%s-%sT%s:%s:%s.%s%c%s:00", 
+        Year, 
+        (char*)String((int)Month).PadLeft(2, '0'), 
+        (char*)String((int)Day).PadLeft(2, '0'), 
+        (char*)String((int)Hours).PadLeft(2, '0'), 
+        (char*)String((int)Minutes).PadLeft(2, '0'), 
+        (char*)String((int)Seconds).PadLeft(2, '0'), 
+        (char*)String((int)Milliseconds).PadLeft(3, '0'),
+        (char)(TimeZone >= 0 ? '+' : '-'),
+        (char*)String((int)(TimeZone >= 0 ? TimeZone : -TimeZone)).PadLeft(2, '0')
+    );
 }
 
 string DateTime::ToDateString() {
-    if(TimeZone == 0)
-        return string::Format("%s/%s/%i",  
-            (char*)String((int)Day).PadLeft(2, '0'),
-            (char*)String((int)Month).PadLeft(2, '0'), 
-            Year
-        );
-    return DateTime(TimeStamp + TimeZone * 3600).ToDateString();
+    return string::Format("%s/%s/%i",  
+        (char*)String((int)Day).PadLeft(2, '0'),
+        (char*)String((int)Month).PadLeft(2, '0'), 
+        Year
+    );
 }
 
 string DateTime::ToTimeString() {
-    if(TimeZone == 0)
-        return string::Format("%s:%s:%s", 
-            (char*)String((int)Hours).PadLeft(2, '0'), 
-            (char*)String((int)Minutes).PadLeft(2, '0'), 
-            (char*)String((int)Seconds).PadLeft(2, '0')
-        );
-    return DateTime(TimeStamp + TimeZone * 3600).ToTimeString();
+    return string::Format("%s:%s:%s", 
+        (char*)String((int)Hours).PadLeft(2, '0'), 
+        (char*)String((int)Minutes).PadLeft(2, '0'), 
+        (char*)String((int)Seconds).PadLeft(2, '0')
+    );
 }
 
 DateTime DateTime::ToTimeZone(int timeZone) {
-    DateTime dt = DateTime(TimeStamp);
-    dt.TimeZone = timeZone;
+    DateTime dt = DateTime(0);
+    dt.buildfromunixts(TimeStamp, timeZone);
     return dt;
 }
 
@@ -118,9 +114,8 @@ long long DateTime::TimeToTicks(int hour, int minute, int second)
 }
 
 double DateTime::GetTimeStamp(int year, int month, int day, int hour, int minute, int second, int milliseconds) {
-    long long timestamp = DateToTicks(year, month, day) + TimeToTicks(hour, minute, second);
-    long long ticks = timestamp + milliseconds * TicksInMillisecond;
-    return (ticks/10000 - 62135596800000)/1000;
+    long long ticks = DateToTicks(year, month, day) + TimeToTicks(hour, minute, second);
+    return ((ticks/10000 - 62135596800000)/1000)+milliseconds*0.001;
 }
 
 DateTime DateTime::ParseISO(const char* ISODateTime) {
@@ -158,8 +153,8 @@ DateTime DateTime::ParseISO(const char* ISODateTime) {
         memcpy(sec_bf, ISODateTime + 17, 2);
         sec = atoi(sec_bf);
     }
-    // Data e ora con millisec: 2022-08-28T21:45:31.123
-    if(len == 23) {
+    // Data e ora con millisec: 2022-08-28T21:45:31.123 / 2022-08-28T21:45:31.123Z
+    if(len == 23 || len == 24) {
         char msec_bf[4];
         memset(msec_bf, 0, 4);
         memcpy(msec_bf, ISODateTime + 20, 3);
@@ -194,9 +189,26 @@ DateTime DateTime::ParseISO(const char* ISODateTime) {
 }
 
 DateTime::DateTime(double UnixTimeStamp) {
-    buildfromunixts(UnixTimeStamp);
+    buildfromunixts(UnixTimeStamp, 0);
 }
 DateTime::DateTime() {
-    buildfromunixts(time());
-    TimeZone = current_utc_offset();
+    buildfromunixts(time(), current_utc_offset());
+}
+
+DateTime DateTime::AddSeconds(int seconds) {
+    DateTime dt = DateTime(0);
+    dt.buildfromunixts(TimeStamp + seconds, TimeZone);
+    return dt;
+}
+
+DateTime DateTime::AddMinutes(int minutes) {
+    return AddSeconds(60*minutes);
+}
+
+DateTime DateTime::AddHours(int hours) {
+    return AddMinutes(60*hours);
+}
+
+DateTime DateTime::AddDays(int days) {
+    return AddHours(24*days);
 }
