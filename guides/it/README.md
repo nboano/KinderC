@@ -57,3 +57,4 @@
         - [Classe JSON](KinderC/Serialization/JSON.md) - Serializzazione e deserializzazione di dati in formato JSON
             - [Introduzione](KinderC/Serialization/JSON.md#introduzione)
             - [Serializzare un oggetto qualunque](KinderC/Serialization/JSON.md#serializzare-un-oggetto-qualunque)
+19. [Gestione delle date](dates.md)
