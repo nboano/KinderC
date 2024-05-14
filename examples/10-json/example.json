@@ -1,0 +1,15 @@
+{
+    "name": "Pippo",
+    "surname": "De Pippis",
+    "thumbnail": "../images/tb1.png",
+    "address": {
+        "address":"Via Roma 15",
+        "city":"Benevagienna",
+        "postalCode":"12041"
+    },
+    "interests": ["Bocce", "Programmazione"],
+    "socials": [
+        {"name":"Instagram", "link":"https://www.instagram.com/testaccount", "img":"fonts/awbTIfYNeoMZ.svg"},
+        {"name":"Facebook", "link":"https://www.facebook.com/test", "img":"fonts/awbTIfYNeoMZ.svg"}
+    ]
+}

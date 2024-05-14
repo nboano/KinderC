@@ -14,7 +14,11 @@ In questo modo si avranno a disposizione:
 - La classe `Field`, che rappresenta il campo di un oggetto C++ e che lo associa al nome JSON del campo (ad esempio, il campo `Test.Field`, stringa, può essere serializzato come `"field":"..."`)
 
 Vediamo un esempio di mappatura a classi di un oggetto JSON:
+
+#### **`model.hpp`** [Visualizza](../../../../examples/10-json/model.hpp)
 ```cpp
+#include "../../kinderc.hpp"
+
 using namespace KinderC::Serialization; // Importa le classi necessarie
 
 class Address; // Predefinizione delle classi annidate
@@ -83,31 +87,12 @@ La libreria vi consente, dato un oggetto di qualunque tipo che eredita da `Seria
 
 Viene fornito un esempio che mostra come serializzare un oggetto di tipo `Person` con alcuni campi.
 
-#### **`index.html`** [Visualizza](../../../../examples/10-json-serialisation/index.html) *(Omesso in quanto senza contenuto nel body)*
+#### **`json-serialization.html`** [Visualizza](../../../../examples/10-json/json-serialization.html) *(Omesso in quanto senza contenuto nel body)*
 
-#### **`main.cpp`** [Visualizza](../../../../examples/10-json-serialisation/main.cpp)
+#### **`json-serialization.cpp`** [Visualizza](../../../../examples/10-json/json-serialization.cpp)
 
 ```cpp
-#include "../../kinderc.hpp"
-
-using namespace KinderC::Serialization;
-
-class Address;
-class SocialEntry;
-
-// Vedi sopra
-class Person : public Serializable {
-    ...
-};
-
-class Address : public Serializable {
-    ...
-};
-
-class SocialEntry : public Serializable {
-    ...
-};
-
+#include "model.hpp"
 
 int main() {
     Person p1;
@@ -144,5 +129,41 @@ Il codice produrrà un output simile al seguente:
 	},
 	"interests" : ["Basket", "Programming", "C++"],
 	"socials" : [{"name":"Facebook","link":null,"img":"https://test.com/image.png"}]
+}
+```
+
+## Deserializzare un oggetto qualunque
+
+In maniera uguale e contraria alla serializzazione, è possibile deserializzare una stringa JSON in un oggetto.
+
+In questo esempio, il file `example.json` viene letto e successivamente deserializzato dal parser.
+
+#### **`example.json`** [Visualizza](../../../../examples/10-json/example.json) 
+#### **`json-deserialization.html`** [Visualizza](../../../../examples/10-json/json-deserialization.html) *(Omesso in quanto senza contenuto nel body)*
+
+#### **`json-deserialization.cpp`** [Visualizza](../../../../examples/10-json/json-deserialization.cpp)
+
+```cpp
+int main() {
+    const char* _FPATH = "./example.json";
+
+    fetch(_FPATH).then([](Response& resp) {
+        Person p = JSON::DeserializeObjectAs<Person>(resp.Text());
+        Address addr = p.Address;
+        JSON::TypisedArray<SocialEntry> socials = p.Socials;
+
+        printf("<h2>%s %s</h2>", p.Name.Get(), p.Surname.Get());
+        printf("%s, <b>%s</b><br><br>", addr.Address.Get(), addr.City.Get());
+
+        for(SocialEntry sc : socials) {
+            printf("<a href='%s'>%s</a><br>", sc.Link.Get(), sc.Name.Get());
+        }
+
+        printf("<br>Interessi: ");
+
+        for(const char* intr : p.Interests.Get()) {
+            printf("<b>%s</b>; ", intr);
+        }
+    });
 }
 ```
