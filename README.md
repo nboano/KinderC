@@ -1,5 +1,5 @@
 # KinderC
-##### *By Niccolò Boano, 2022*
+##### *By Niccolò Boano, 2022-24*
 
 ### *Develop modern and fast Web Applications using C++, combined with the WebAssembly technology.*
 
