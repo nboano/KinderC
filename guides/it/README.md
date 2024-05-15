@@ -59,3 +59,18 @@
             - [Serializzare un oggetto qualunque](KinderC/Serialization/JSON.md#serializzare-un-oggetto-qualunque)
             - [Deserializzare un oggetto qualunque](KinderC/Serialization/JSON.md#deserializzare-un-oggetto-qualunque)
 19. [Gestione delle date](dates.md)
+
+## Lista Esempi
+
+1. [Hello World](../../examples/01-hello-world/index.html)
+2. [Importazione di metodi](../../examples/02-imported/index.html)
+3. [Esportazione di metodi](../../examples/03-exported/index.html)
+4. [Utilizzo della funzione *printf*](../../examples/04-printf/index.html)
+5. [Utilizzo delle finestre bloccanti (*alert*, *confirm*, *prompt*)](../../examples/05-blocking-windows/index.html)
+6. [Allocazione dinamica della memoria](../../examples/06-malloc-new/index.html)
+7. [Utilizzo delle stringhe *C-like*](../../examples/07-c-strings/index.html)
+8. [Utilizzo della classe `String`](../../examples/08-strings/index.html)
+9. [Utilizzo della classe `Property<T>`](../../examples/09-properties/index.html)
+10. Serializzazione e deserializzazione JSON
+    - [Serializzazione](../../examples/10-json/json-serialization.html)
+    - [Deserializzazione](../../examples/10-json/json-deserialization.html)
