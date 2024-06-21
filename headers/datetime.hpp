@@ -110,6 +110,10 @@ class DateTime {
     /// @return A date/time string in the ISO format.
     string ToISOString();
 
+    /// @brief Formats the current object into a date string in the ISO format.
+    /// @return A date string in the ISO format.
+    string ToISODateString();
+
     /// @brief Formats the current object into a date string (dd/MM/yyyy).
     /// @return The date string.
     string ToDateString();

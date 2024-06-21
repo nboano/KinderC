@@ -61,6 +61,14 @@ string DateTime::ToISOString() {
     );
 }
 
+string DateTime::ToISODateString() {
+    return string::Format("%i-%s-%s",
+        Year,
+        (char*)String((int)Month).PadLeft(2, '0'), 
+        (char*)String((int)Day).PadLeft(2, '0')
+    );
+}
+
 string DateTime::ToDateString() {
     return string::Format("%s/%s/%i",  
         (char*)String((int)Day).PadLeft(2, '0'),
