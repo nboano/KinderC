@@ -42,7 +42,7 @@ void DateTime::buildfromunixts(double ts, int tz) {
     Seconds = (extraTime % 3600) % 60;
 
     int daysFromStart = era * 146097 + (int)doe - 719468;
-    WeekDay = (unsigned int)(daysFromStart >= -4 ? (daysFromStart+4) % 7 : (daysFromStart+5) % 7 + 6) - 1;
+    WeekDay = (unsigned int)(((floor(ts / 86400) + 4)-1) % 7);
 
     DayOfYear = (153*(Month + (Month > 2 ? -3 : 9)) + 2)/5 + Day - 1 + 60;
 }
