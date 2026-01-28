@@ -12,8 +12,14 @@ Teach your students C/C++ **low-level**, **typised** programming while building 
 KinderC has support for the following functionalities:
 - 🟢 **DOM manipulation**: full support. Wrapper for the JavaScript API.
 - 🟢 **Network requests**: full support. Wrapper for the `XMLHttpRequest` API, and a pseudo-`fetch` API. Both asyncronous and synchronous requests are supported.
+- 🟢 **Geolocation and Motion** API wrappers.
+- 🟢 **Custom screens** (for example `#home`, `#about`) using the `<screen>` tag.
 - 🟢 **Custom controls**: create your own custom controls (HTML tags) that execute code on creation or on particular, custom events.
+- 🟢 **In-browser text-file reading** using the File API.
 - 🟡 **JSON parsing**: supported. KinderC features a custom JSON serializer/deserializer that supports all kinds of objects. Your C++ struct/classes can become JSON and vice-versa! KinderC offers a basic implementation of object reflection. It still has to be improved.
+- 🟡 **Threads**: Threads are partially supported, and use the JavaScript `Worker` API.
+- 🟡 Built-in **Date-Time handling**.
+- 🟡 Some **Math functions**, like `abs`, `sin`...
 
 ## Get started!
 
