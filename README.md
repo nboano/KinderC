@@ -1,19 +1,39 @@
-# KinderC
-##### *By Niccolò Boano, 2022-26*
+# KinderC 🌎
 
-### *Develop modern and fast Web Applications using C++, combined with the WebAssembly technology.*
+### From now on, C and C++ can go far beyond console developement!
+
+Build fast and usable web applications using nothing but the good, old, C and C++.
+
+> ❓ **Are you a computer science teacher?**<br>
+Teach your students C/C++ **low-level**, **typised** programming while building fantastic, **all-device web applications** that can run in every browser.
+
+## What does KinderC offer?
+
+KinderC has support for the following functionalities:
+- 🟢 **DOM manipulation**: full support. Wrapper for the JavaScript API.
+- 🟢 **Network requests**: full support. Wrapper for the `XMLHttpRequest` API, and a pseudo-`fetch` API. Both asyncronous and synchronous requests are supported.
+- 🟢 **Custom controls**: create your own custom controls (HTML tags) that execute code on creation or on particular, custom events.
+- 🟡 **JSON parsing**: supported. KinderC features a custom JSON serializer/deserializer that supports all kinds of objects. Your C++ struct/classes can become JSON and vice-versa! KinderC offers a basic implementation of object reflection. It still has to be improved.
 
 ## Get started!
 
-First, install the ```clang```/```llvm``` compiler:
+The library has NO external dependencies, but first you will need a compiler to transform your C/C++ code into a `.wasm` file.
 
-```bash
-sudo apt-get install llvm
-```
+So, let's start installing the ```clang```/```llvm``` compiler:
 
-(*If you are using Windows, go [there](https://releases.llvm.org/download.html).*)
+- **Windows**: click [there](https://releases.llvm.org/download.html), and download the latest version.
 
-Then, clone this repository:
+- **Linux**:
+    ```bash
+    sudo apt-get install llvm
+    ```
+
+- **MacOS** (with Brew):
+    ```bash
+    brew install llvm
+    ```
+
+Then, clone this repository in your new project folder:
 ```bash
 git clone https://github.com/nboano/kinderc.git
 ```
@@ -51,12 +71,14 @@ Create a new HTML file, that will be your webpage:
 </html>
 ```
 
+> **Note**: the `<assembly>` tag is not part of the HTML standard. The glue code (`kinderc.js`) will look for the file in the `<assembly>` tag, instantiate it and execute his `main()`.
+
 Open your webpage (that should be hosted on an HTTP server):
 ![](guides/images/03-hello-world.png)
 
-**That's it!**
+**And... That's it!**
 
 ## Documentation
 
-[![](https://emojiguide.org/images/emoji/5/1elf6is1u8zc45.png)](guides/it)
-[![](https://emojiguide.org/images/emoji/o/1kyh8vbea3jmo.png)](guides/en)
+- [English 🇬🇧](./guides/en/README.md), still has to be written.
+- [Italiano 🇮🇹](./guides/it/README.md), documentazione originale in fase di completamento.
