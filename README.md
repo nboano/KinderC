@@ -10,15 +10,20 @@ Teach your students C/C++ **low-level**, **typised** programming while building 
 ## What does KinderC offer?
 
 KinderC has support for the following functionalities:
+
+> Every feature in the list comes with a live, documented example, feel free to click and try it.
+
+- 🟢 [**JavaScript functions importing and C++ functions exporting**](./guides/en/examples/features/01_function_import_export/README.md).
+- 🟢 **Console** and **blocking windows** API wrappers.
 - 🟢 **DOM manipulation**: full support. Wrapper for the JavaScript API.
 - 🟢 **Network requests**: full support. Wrapper for the `XMLHttpRequest` API, and a pseudo-`fetch` API. Both asyncronous and synchronous requests are supported.
 - 🟢 **Geolocation and Motion** API wrappers.
 - 🟢 **Custom screens** (for example `#home`, `#about`) using the `<screen>` tag.
 - 🟢 **Custom controls**: create your own custom controls (HTML tags) that execute code on creation or on particular, custom events.
 - 🟢 **In-browser text-file reading** using the File API.
+- 🟢 Built-in **Date-Time handling**.
 - 🟡 **JSON parsing**: supported. KinderC features a custom JSON serializer/deserializer that supports all kinds of objects. Your C++ struct/classes can become JSON and vice-versa! KinderC offers a basic implementation of object reflection. It still has to be improved.
 - 🟡 **Threads**: Threads are partially supported, and use the JavaScript `Worker` API.
-- 🟡 Built-in **Date-Time handling**.
 - 🟡 Some **Math functions**, like `abs`, `sin`...
 
 ## Get started!
@@ -43,6 +48,7 @@ Then, clone this repository in your new project folder:
 ```bash
 git clone https://github.com/nboano/kinderc.git
 ```
+*If you don't plan to use GIT for your project, you can just download the repository zip file from GitHub.*
 
 Create a new C++ file, for example ```main.cpp```:
 
@@ -77,7 +83,7 @@ Create a new HTML file, that will be your webpage:
 </html>
 ```
 
-> **Note**: the `<assembly>` tag is not part of the HTML standard. The glue code (`kinderc.js`) will look for the file in the `<assembly>` tag, instantiate it and execute his `main()`.
+> **Note**: the `<assembly>` tag is not part of the HTML standard. The glue code (`kinderc.js`) will look for the file in the `<assembly>` tag, istantiate it and execute his `main()`.
 
 Open your webpage (that should be hosted on an HTTP server):
 ![](guides/images/03-hello-world.png)
@@ -86,5 +92,5 @@ Open your webpage (that should be hosted on an HTTP server):
 
 ## Documentation
 
-- [English 🇬🇧](./guides/en/README.md), still has to be written.
+- [English 🇬🇧](./guides/en/README.md), work in progress.
 - [Italiano 🇮🇹](./guides/it/README.md), documentazione originale in fase di completamento.
