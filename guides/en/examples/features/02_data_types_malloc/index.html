@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02 - Data types and memory</title>
+    <script src="../../../../../kinderc.js"></script>
+    <assembly src="./main.wasm"></assembly>
+    <style>
+        div#main {
+            font-family: sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>Welcome to KinderC!</h1>
+        <h3>02 - Data types and memory</h3>
+    </div>
+    <br>
+    <fieldset id="data_types">
+        <legend><b>Data types</b></legend>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend><b>Static allocation</b></legend>
+        <button onclick="sall();">Allocate 10 integers</button>
+        <div id="static_allocation"></div>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend><b>Variable Length Arrays</b></legend>
+        <input type="number" id="vla_len" placeholder="Insert size...">
+        <button onclick="vlarr();">Allocate</button>
+        <div id="vla"></div>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend><b>Dynamic allocation</b></legend><br>
+        <input type="number" id="dall_len" placeholder="Insert size...">
+        <button onclick="dallarr();">Allocate</button>
+        <div id="dall"></div>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend><b>List (with sorting)</b></legend><br>
+        <input type="number" id="list_len" placeholder="Insert size...">
+        <button onclick="intlst();">Allocate</button>
+        <div id="list"></div>
+    </fieldset>
+</body>
+</html>

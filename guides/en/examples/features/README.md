@@ -3,9 +3,18 @@
 # KinderC Features examples
 
 1. [Function import and export](#function-import-and-export)
+    - [Live example](./01_function_import_export/index.html)
     - [Importing JS functions into KinderC](#importing-js-functions-into-kinderc)
     - [Exporting C functions to JavaScript](#exporting-c-functions-to-javascript)
     - [Evaluating JavaScript code](#evaluating-javascript-code)
+
+2. [Data types and memory](#data-types-and-memory)
+    - [Live example](./02_data_types_malloc/index.html)
+    - [Data types](#data-types)
+    - [Static allocation](#static-allocation)
+    - [Variable Length Arrays (VLA)](#variable-length-arrays-vla)
+    - [Dynamic allocation](#dynamic-allocation)
+    - [List<T>](#listt)
 
 ## Function import and export
 
@@ -104,4 +113,62 @@ Use `JavaScript::VoidEval()` if you don't expect a result.
 JavaScript::VoidEval(R"(
 document.getElementById("voideval_output").innerHTML = 'Hello!';
 )");
+```
+
+## Data types and memory
+
+View the live example [here](./02_data_types_malloc/index.html).
+
+### Data types
+
+In KinderC, all the standard C/C++ types are available, and are mapped to the corresponding WebAssembly types.
+
+This includes:
+- `bool`
+- `char`
+- `short` (signed / unsigned)
+- `int` (signed / unsigned)
+- `long`(signed / unsigned)
+- Pointer types
+
+### Static allocation
+
+A static array has a fixed size, that cannot be changed.
+
+```cpp
+int arr[10];
+```
+
+### Variable Length Arrays (VLA)
+
+A VLA has variable size, and it's allocated on the function stack.
+
+```cpp
+int arr[size];
+```
+
+### Dynamic allocation
+
+Allocating memory dynamically gives you more flexibility. 
+Memory is allocated on the heap.
+You can use `new` and `delete` (C++), or `malloc` and `free`.
+
+```cpp
+int* el = malloc(sizeof(int)); /* ... */ free((void*)el);
+int* arr = malloc(n * sizeof(int)); /* ... */ free((void*)arr);
+
+int* el = new int; /* ... */ delete el;
+int* arr = new int[n]; /* ... */ delete[] arr;
+```
+
+### `List<T>`
+
+The `List` is a generic, dynamically allocated List of any type. Memory is managed automatically, and freed when it's no longer of use.
+
+```cpp
+List<int> lst;
+lst.Add(1);
+lst.Add(2, 3, 4);
+lst.Count; // 4
+lst.Sort([](int a, int b) { return a - b;}); // QuickSort
 ```
