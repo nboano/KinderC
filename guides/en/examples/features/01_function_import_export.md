@@ -1,6 +1,8 @@
 # 01 - Function import and export
 
-View the live example [here](./index.html).
+View the live example [here](./01_function_import_export/index.html).
+
+[Back to index](../../README.md)
 
 **index.html**
 ```html
@@ -39,7 +41,7 @@ View the live example [here](./index.html).
     </script>
 </head>
 <body>
-    <a href="README.md">Back</a>
+    <a href="../01_function_import_export.md">Back</a>
     <div style="text-align: center;">
         <h1>Welcome to KinderC!</h1>
         <h3>01 - Function import and export</h3>
@@ -126,4 +128,4 @@ int main() {
 }
 ```
 
-[Back](../../../README.md)
+[Back to index](../../README.md)

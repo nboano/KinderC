@@ -9,6 +9,6 @@ Teach your students C/C++ **low-level**, **typised** programming while building 
 # Index
 
 ## Features examples
-- [Importing and exporting functions](./examples/features/01_function_import_export/README.md)
+- [Importing and exporting functions](./examples/features/01_function_import_export.md)
 
 
