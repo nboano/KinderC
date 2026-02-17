@@ -14,7 +14,13 @@
     - [Static allocation](#static-allocation)
     - [Variable Length Arrays (VLA)](#variable-length-arrays-vla)
     - [Dynamic allocation](#dynamic-allocation)
-    - [List<T>](#listt)
+    - [List class](#listt)
+
+3. [Simple I/O](#simple-io)
+    - [Live example](./03_simple_io/index.html)
+    - [Console class](#console-class)
+    - [Blocking windows](#blocking-windows)
+    - [printf and puts](#printf-and-puts)
 
 ## Function import and export
 
@@ -171,4 +177,38 @@ lst.Add(1);
 lst.Add(2, 3, 4);
 lst.Count; // 4
 lst.Sort([](int a, int b) { return a - b;}); // QuickSort
+```
+
+## Simple IO
+
+View the live example [here](./03_simple_io/index.html).
+
+### Console class
+
+The `Console` class allows you to write something into the browser console for debugging purposes.
+
+You can use printf-like flags in `Console::Write`, as shown.
+
+```cpp
+Console::Write("This is a test console message on %s line %i.", __FILE__, __LINE__);
+Console::Info("This is a test info message.");
+Console::Error("This is a test error message.");
+```
+
+### Blocking windows
+
+Blocking windows are wrappers for the corresponding JavaScript functions.
+
+- `void alert(const char*)` shows and alert message.
+- `bool confirm(const char*)` asks the user a Yes/No question (or Ok/Cancel, depending on the browser) and returns the result as a boolean.
+- `char* prompt(const char*, const char*)` ask the user a question, specified by the 1st parameter. The user can write a text response, which is returned and must be freed. The second parameter is the default response. 
+
+### `printf` and `puts`
+
+`printf` and `puts` have the same syntax as C. They append content at the bottom of the page.
+
+```cpp
+puts("This content was printed using puts.<br>");
+
+printf("This content was printed using <code>%s</code>.<br>The current file is %s, the current line is %d.", "printf", __FILE__, __LINE__);
 ```

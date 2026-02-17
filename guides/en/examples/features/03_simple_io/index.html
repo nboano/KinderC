@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03 - Simple I/O</title>
+    <script src="../../../../../kinderc.js"></script>
+    <assembly src="./main.wasm"></assembly>
+    <style>
+        div#main {
+            font-family: sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>Welcome to KinderC!</h1>
+        <h3>03 - Simple I/O</h3>
+    </div>
+    <br>
+    <fieldset>
+        <legend><b><code>Console</code> class</b></legend>
+        <button onclick="console_test()">Test console output</button>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend><b>Blocking windows</b></legend>
+        <button onclick="alert_test()">Test alert</button>
+        <button onclick="confirm_test()">Test confirm</button>
+        <button onclick="prompt_test()">Test prompt</button>
+        <br><br>
+        <div id="result"></div>
+    </fieldset>
+</body>
+</html>

@@ -14,7 +14,7 @@ KinderC has support for the following functionalities:
 > Every feature in the list comes with a live, documented example, feel free to click and try it.
 
 - 🟢 [**JavaScript functions importing and C++ functions exporting**](./guides/en/examples/features/README.md#function-import-and-export).
-- 🟢 **Console** and **blocking windows** API wrappers.
+- 🟢 [**Console** and **blocking windows** API wrappers](./guides/en/examples/features/README.md#simple-io).
 - 🟢 **DOM manipulation**: full support. Wrapper for the JavaScript API.
 - 🟢 **Network requests**: full support. Wrapper for the `XMLHttpRequest` API, and a pseudo-`fetch` API. Both asyncronous and synchronous requests are supported.
 - 🟢 **Geolocation and Motion** API wrappers.
